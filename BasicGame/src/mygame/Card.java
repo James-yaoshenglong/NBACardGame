@@ -5,6 +5,7 @@
  */
 package mygame;
 
+import com.jme3.app.Application;
 import com.jme3.app.SimpleApplication;
 import com.jme3.light.AmbientLight;
 import com.jme3.light.DirectionalLight;
@@ -29,22 +30,24 @@ import java.util.ArrayList;
 
 
 public class Card extends Node{
-    private ArrayList<Player> allplayers;
+//    private ArrayList<Player> allplayers;
     float width;
     float height;
     Player player;
+    Application app;
     
-    public Card(int id, float camera_width, float camera_height){
-        this.player = Player.searchPlayer(allplayers,id);
-        this.width = camera_width/5;
-        this.height = camera_height/3;
+    public Card(int id, float camera_width, Application anApp){
+        this.player = Player.getPlayer(id);
+        this.width = camera_width/6;
+        this.height = width*7/5;
+        this.app = anApp;
     }
     
     public Geometry getPic(){
         Quad quad = new Quad(width,height);
         Geometry geom = new Geometry("Card", quad);
-        Texture tex = assetManager.loadTexture(player.getImage());
-        Material mat = new Material(assetManager,"Common/MatDefs/Misc/Unshaded.j3md");
+        Texture tex = app.getAssetManager().loadTexture(player.getImage());
+        Material mat = new Material(app.getAssetManager(),"Common/MatDefs/Misc/Unshaded.j3md");
         mat.setTexture("ColorMap",tex);
         
         geom.setMaterial(mat);
