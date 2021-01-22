@@ -1,5 +1,7 @@
 package Main;
 
+import Battle.MainGame;
+//import Welcome.WelcomeInterface;
 import com.jme3.app.SimpleApplication;
 import com.jme3.light.AmbientLight;
 import com.jme3.light.DirectionalLight;
@@ -25,7 +27,8 @@ import com.jme3.ui.Picture;
  * @author normenhansen
  */
 public class Main extends SimpleApplication {
-    private Geometry geom;
+    private WelcomeInterface welcomeUI;
+    private MainGame mainGame;
     
     
     public static void main(String[] args) {
@@ -34,40 +37,39 @@ public class Main extends SimpleApplication {
     }
 
 
-@Override
+    @Override
 
-public void simpleInitApp() {
-    
-    flyCam.setEnabled(false);
-    constructBackground();
-    initBox();
-
-}
+    public void simpleInitApp() {
+//          welcomeUI = new WelcomeInterface();
+          mainGame = new MainGame();
+        
+          stateManager.attach(mainGame);
+    }
 
     /**
     This just makes a box so I can see if the background is rendered last
 
     */
 
-    private void initBox(){
-
-        //Make a box
-
-        Box b = new Box(Vector3f.ZERO, 10f, 10f, 10f); // create cube shape at the origin
-
-        geom = new Geometry("Box", b); // create cube geometry from the shape
-
-        Material mat = new Material(assetManager,
-
-        "Common/MatDefs/Misc/Unshaded.j3md"); // create a simple material
-
-        mat.setColor("Color", ColorRGBA.Blue); // set color of material to blue
-
-        geom.setMaterial(mat); // set the cube’s material
-
-        rootNode.attachChild(geom);
-
-    }
+//    private void initBox(){
+//
+//        //Make a box
+//
+//        Box b = new Box(Vector3f.ZERO, 10f, 10f, 10f); // create cube shape at the origin
+//
+//        geom = new Geometry("Box", b); // create cube geometry from the shape
+//
+//        Material mat = new Material(assetManager,
+//
+//        "Common/MatDefs/Misc/Unshaded.j3md"); // create a simple material
+//
+//        mat.setColor("Color", ColorRGBA.Blue); // set color of material to blue
+//
+//        geom.setMaterial(mat); // set the cube’s material
+//
+//        rootNode.attachChild(geom);
+//
+//    }
     
     
     
@@ -75,14 +77,14 @@ public void simpleInitApp() {
     @Override
     public void simpleUpdate(float tpf) {
         //TODO: add update code
-        float[] angles = new float[3];
-        angles[0] = (float) Math.toRadians(0.25f);
-        angles[1] = (float) Math.toRadians(0);
-        angles[2] = (float) Math.toRadians(0.25f);
-
-        Quaternion rot = new Quaternion(angles);
-
-        geom.rotate(rot);
+//        float[] angles = new float[3];
+//        angles[0] = (float) Math.toRadians(0.25f);
+//        angles[1] = (float) Math.toRadians(0);
+//        angles[2] = (float) Math.toRadians(0.25f);
+//
+//        Quaternion rot = new Quaternion(angles);
+//
+//        geom.rotate(rot);
         
     }
 
