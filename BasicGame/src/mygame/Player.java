@@ -14,15 +14,19 @@ import java.util.ArrayList;
 public class Player {
     private String name, image;
     private int id;
-    private int attack, power, defence;
+    private int S, B, P, DB, DS, DP, power;
     private static ArrayList<Player> allplayers;
     
-    public Player(int id, String aName, int attack, int power, int defence, String image){
+    public Player(int id, String aName, int aS, int aB, int aP, int aDB, int aDS, int aDP, int apower, String image){
         this.id = id;
         this.name = aName;
-        this.attack = attack;
-        this.power = power;
-        this.defence = defence;
+        this.S = aS;
+        this.B = aB;
+        this.P = aP;
+        this.DB = aDB;
+        this.DS = aDS;
+        this.DP = aDP;
+        this.power = apower;
         this.image = image;
         allplayers.add(this);
     }
