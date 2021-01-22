@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package mygame;
+package Main;
 
 import com.jme3.material.Material;
 import com.jme3.scene.Geometry;
