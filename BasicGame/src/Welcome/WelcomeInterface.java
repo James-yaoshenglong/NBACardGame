@@ -16,6 +16,7 @@ import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector3f;
 import com.jme3.renderer.Camera;
 import com.jme3.scene.Geometry;
+import com.jme3.scene.Node;
 import com.jme3.scene.shape.Box;
 import com.jme3.scene.shape.Quad;
 import com.jme3.texture.Texture;
@@ -30,6 +31,7 @@ public class WelcomeInterface extends BaseAppState{
     private AppStateManager stateManager;
     private InputManager inputManager;
     private Camera cam;
+    private Node guiNode;
     
     @Override
     protected void initialize(Application mainApp) {
@@ -38,6 +40,7 @@ public class WelcomeInterface extends BaseAppState{
         this.stateManager = mainApp.getStateManager();
         this.inputManager = mainApp.getInputManager();
         this.cam = mainApp.getCamera();
+        this.guiNode = app.getGuiNode();
         
         Box b = new Box(Vector3f.ZERO, 10f, 10f, 10f); // create cube shape at the origin
         Geometry geom = new Geometry("Box", b); // create cube geometry from the shape

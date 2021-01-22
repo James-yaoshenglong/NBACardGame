@@ -1,7 +1,7 @@
 package Main;
 
 import Battle.MainGame;
-//import Welcome.WelcomeInterface;
+import Welcome.WelcomeInterface;
 import com.jme3.app.SimpleApplication;
 import com.jme3.light.AmbientLight;
 import com.jme3.light.DirectionalLight;
@@ -43,7 +43,7 @@ public class Main extends SimpleApplication {
 //          welcomeUI = new WelcomeInterface();
           mainGame = new MainGame();
         
-          stateManager.attach(mainGame);
+          stateManager.attach(welcomeUI);
     }
 
     /**
