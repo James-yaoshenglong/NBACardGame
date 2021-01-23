@@ -4,3 +4,5 @@ BasicGame/*
 !BasicGame/src/
 !BasicGame/assets/
 BasicGame/nbproject/private
+BasicGame/lib/.*
+BasicGame/src/.*
