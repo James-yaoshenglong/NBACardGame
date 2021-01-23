@@ -1,2 +1,6 @@
-BasicGame/build/
-BasicGame/nbproject/
+BasicGame/*
+!BasicGame/nbproject/
+!BasicGame/lib/
+!BasicGame/src/
+!BasicGame/assets/
+BasicGame/nbproject/private
