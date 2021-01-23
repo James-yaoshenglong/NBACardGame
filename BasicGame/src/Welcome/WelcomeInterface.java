@@ -21,6 +21,12 @@ import com.jme3.scene.shape.Box;
 import com.jme3.scene.shape.Quad;
 import com.jme3.texture.Texture;
 
+import com.simsilica.lemur.Button;
+import com.simsilica.lemur.Command;
+import com.simsilica.lemur.Container;
+import com.simsilica.lemur.GuiGlobals;
+import com.simsilica.lemur.Label;
+import com.simsilica.lemur.style.BaseStyles;
 /**
  *
  * @author shenglyao2
@@ -32,7 +38,6 @@ public class WelcomeInterface extends BaseAppState{
     private InputManager inputManager;
     private Camera cam;
     private Node guiNode;
-    
     @Override
     protected void initialize(Application mainApp) {
         this.app = (SimpleApplication)mainApp;
@@ -41,8 +46,6 @@ public class WelcomeInterface extends BaseAppState{
         this.inputManager = mainApp.getInputManager();
         this.cam = mainApp.getCamera();
         this.guiNode = app.getGuiNode();
-        
-        
     }
 
     @Override
@@ -52,8 +55,38 @@ public class WelcomeInterface extends BaseAppState{
 
     @Override
     protected void onEnable() {
-        Geometry bg = getpic();
-        guiNode.attachChild(bg);
+        constructBG();
+        // 初始化Lemur GUI
+		GuiGlobals.initialize(app);
+
+		// 加载 'glass' 样式
+		BaseStyles.loadGlassStyle();
+
+		// 将'glass'设置为GUI默认样式
+		GuiGlobals.getInstance().getStyles().setDefaultStyle("glass");
+
+		// 创建一个Container作为窗口中其他GUI元素的容器
+		Container myWindow = new Container();
+		guiNode.attachChild(myWindow);
+
+		// 设置窗口在屏幕上的坐标
+		// 注意：Lemur的GUI元素是以控件左上角为原点，向右、向下生成的。
+		// 然而，作为一个Spatial，它在GuiNode中的坐标原点依然是屏幕的左下角。
+		myWindow.setLocalTranslation(300, 300, 0);
+
+		// 添加一个Label控件
+		myWindow.addChild(new Label("Hello, World."));
+		
+		
+		// 添加一个Button控件
+		Button clickMe = myWindow.addChild(new Button("Click Me"));
+		clickMe.addClickCommands(new Command<Button>() {
+			@Override
+			public void execute(Button source) {
+				System.out.println("The world is yours.");
+			}
+		});
+		
     }
 
     @Override
@@ -61,7 +94,7 @@ public class WelcomeInterface extends BaseAppState{
         
     }
     
-    private Geometry getpic(){
+    private void constructBG(){
         float width = app.getContext().getSettings().getWidth(); // the screen width
         float height = app.getContext().getSettings().getHeight(); // the screen height
         Quad quad = new Quad(width, height);
@@ -72,6 +105,10 @@ public class WelcomeInterface extends BaseAppState{
         geom.setMaterial(mat);
         geom.setLocalTranslation(0, 0, -2);
 //        geom.center();
-        return geom;
+        guiNode.attachChild(geom);
+    }
+    
+    private void makeButton(){
+        
     }
 }
