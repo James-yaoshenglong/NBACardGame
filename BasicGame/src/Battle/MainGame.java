@@ -33,6 +33,9 @@ public class MainGame extends BaseAppState{
     private InputManager inputManager;
     private Camera cam;
     private Node rootNode;
+    private MainController cardManager;
+    private float camZ;
+    private float ratio;
 
     @Override
     protected void initialize(Application mainApp) {
@@ -43,7 +46,15 @@ public class MainGame extends BaseAppState{
         this.inputManager = mainApp.getInputManager();
         this.cam = mainApp.getCamera();
         this.rootNode = app.getRootNode();
-       
+        //screen setting
+        float w = app.getContext().getSettings().getWidth(); // the screen width
+        float h = app.getContext().getSettings().getHeight(); // the screen width
+        ratio = w/h; //the width-height ratio of the screen
+        cam.setLocation(Vector3f.ZERO.add(new Vector3f(0.0f, 0.0f,100f)));//Move the Camera back
+        camZ = cam.getLocation().getZ()-15; //No Idea why I need to subtract 15
+        //Game initalize
+        this.cardManager = new MainController(app,camZ*ratio);
+        
     }
 
     @Override
@@ -56,7 +67,7 @@ public class MainGame extends BaseAppState{
         //initialize the background
         app.getFlyByCamera().setEnabled(false);
         constructBackground();
-       
+        
     }
 
     @Override
@@ -69,12 +80,6 @@ public class MainGame extends BaseAppState{
         Texture backgroundTex = assetManager.loadTexture("Interface/bg/bg.jpg");
         backgroundMat.setTexture("ColorMap", backgroundTex);
 
-        float w = app.getContext().getSettings().getWidth(); // the screen width
-        float h = app.getContext().getSettings().getHeight(); // the screen width
-        float ratio = w/h; //the width-height ratio of the screen
-
-        cam.setLocation(Vector3f.ZERO.add(new Vector3f(0.0f, 0.0f,100f)));//Move the Camera back
-        float camZ = cam.getLocation().getZ()-15; //No Idea why I need to subtract 15
         float width = camZ*ratio;
         float height = camZ;
 
