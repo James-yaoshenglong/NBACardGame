@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package mygame;
+package Battle;
 
 import com.jme3.app.Application;
 import com.jme3.app.SimpleApplication;
@@ -35,12 +35,14 @@ public class Card extends Node{
     float height;
     Player player;
     Application app;
+    int power;
     
     public Card(int id, float camera_width, Application anApp){
-        this.player = Player.getPlayer(id);
+        this.player = Player.getPlayer(id);//change to the constructer of the player class
         this.width = camera_width/6;
         this.height = width*7/5;
         this.app = anApp;
+        this.power = player.getPower();
     }
     
     public Geometry getPic(){
@@ -52,6 +54,10 @@ public class Card extends Node{
         
         geom.setMaterial(mat);
         return geom;
+    }
+    
+    public Player getPlayer(){
+        return player;
     }
     
     

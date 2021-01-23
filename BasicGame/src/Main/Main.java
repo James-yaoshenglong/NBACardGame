@@ -40,7 +40,7 @@ public class Main extends SimpleApplication {
     @Override
 
     public void simpleInitApp() {
-//          welcomeUI = new WelcomeInterface();
+          welcomeUI = new WelcomeInterface();
           mainGame = new MainGame();
         
           stateManager.attach(welcomeUI);

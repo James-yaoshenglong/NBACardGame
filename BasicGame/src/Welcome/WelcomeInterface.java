@@ -42,46 +42,36 @@ public class WelcomeInterface extends BaseAppState{
         this.cam = mainApp.getCamera();
         this.guiNode = app.getGuiNode();
         
-        Box b = new Box(Vector3f.ZERO, 10f, 10f, 10f); // create cube shape at the origin
-        Geometry geom = new Geometry("Box", b); // create cube geometry from the shape
-
-        Material mat = new Material(assetManager,
-
-        "Common/MatDefs/Misc/Unshaded.j3md"); // create a simple material
-
-        mat.setColor("Color", ColorRGBA.Blue); // set color of material to blue
-
-        geom.setMaterial(mat); // set the cube’s material
-
-        rootNode.attachChild(geom);
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
     }
 
     @Override
     protected void cleanup(Application app) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
     }
 
     @Override
     protected void onEnable() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Geometry bg = getpic();
+        guiNode.attachChild(bg);
     }
 
     @Override
     protected void onDisable() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
     }
-//        private Geometry getpic(){
-//        float width = settings.getWidth(); // the screen width
-//        float height = settings.getHeight(); // the screen height
-//        Quad quad = new Quad(12, 9);
-//        Geometry geom = new Geometry("bg", quad);
-//        Texture tex = assetManager.loadTexture("Interface/bg/bg.jpg");
-//        Material mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
-//        mat.setTexture("ColorMap",tex);
-//        geom.setMaterial(mat);
-//        geom.setLocalTranslation(0, 0, -2);
+    
+    private Geometry getpic(){
+        float width = app.getContext().getSettings().getWidth(); // the screen width
+        float height = app.getContext().getSettings().getHeight(); // the screen height
+        Quad quad = new Quad(width, height);
+        Geometry geom = new Geometry("bg", quad);
+        Texture tex = assetManager.loadTexture("Interface/bg/Welcome_bg.jpeg");
+        Material mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
+        mat.setTexture("ColorMap",tex);
+        geom.setMaterial(mat);
+        geom.setLocalTranslation(0, 0, -2);
 //        geom.center();
-//        return geom;
-//    }
+        return geom;
+    }
 }
