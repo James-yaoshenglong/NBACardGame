@@ -27,7 +27,11 @@ import com.simsilica.lemur.Command;
 import com.simsilica.lemur.Container;
 import com.simsilica.lemur.GuiGlobals;
 import com.simsilica.lemur.Label;
+import com.simsilica.lemur.TextField;
+import com.simsilica.lemur.component.TextComponent;
 import com.simsilica.lemur.style.BaseStyles;
+import com.jme3.font.BitmapFont;
+import com.jme3.font.BitmapText;
 /**
  *
  * @author shenglyao2
@@ -41,6 +45,8 @@ public class WelcomeInterface extends BaseAppState{
     private Node guiNode;
     private float width;
     private float height;
+    private Node rootNode;
+    private Node sceneNode;
     
     @Override
     protected void initialize(Application mainApp) {
@@ -52,6 +58,8 @@ public class WelcomeInterface extends BaseAppState{
         this.guiNode = app.getGuiNode();
         this.width = cam.getWidth();
         this.height = cam.getHeight();
+        this.rootNode = app.getRootNode();
+        sceneNode = new Node();
     }
 
     @Override
@@ -61,6 +69,7 @@ public class WelcomeInterface extends BaseAppState{
 
     @Override
     protected void onEnable() {
+        guiNode.attachChild(sceneNode);
         constructBG();
         // 初始化Lemur GUI
         
@@ -74,7 +83,7 @@ public class WelcomeInterface extends BaseAppState{
 
         // 创建一个Container作为窗口中其他GUI元素的容器
         Container myWindow = new Container();
-        guiNode.attachChild(myWindow);
+        sceneNode.attachChild(myWindow);
 
         // 设置窗口在屏幕上的坐标
         // 注意：Lemur的GUI元素是以控件左上角为原点，向右、向下生成的。
@@ -94,17 +103,24 @@ public class WelcomeInterface extends BaseAppState{
                 }
         });
 
-        Container text = new Container();
-        guiNode.attachChild(text);
+//        Container text = new Container();
+//        sceneNode.attachChild(text);
 
-        text.setLocalTranslation(width/2, (float) (height*0.7),0);
-        text.addChild(new Label("Hello, World."));       
-		
+        //text.setLocalTranslation(width/2, (float) (height*0.7),0);
+//        TextComponent t = new TextComponent("NBA Card Game",assetManager.loadFont("Interface/Fonts/Default.fnt"));       
+        BitmapFont fnt = assetManager.loadFont("Interface/Fonts/Default.fnt");
+        BitmapText txt = new BitmapText(fnt, false);
+        txt.setText("NBA Card Game");
+        txt.setLocalTranslation(width/2, (float) (height*0.7),0);
+        txt.setSize( 5f );
+        sceneNode.attachChild(txt);
+        
+        
     }
 
     @Override
     protected void onDisable() {
-        
+        rootNode.removeFromParent();
     }
     
     private void constructBG(){
@@ -116,7 +132,7 @@ public class WelcomeInterface extends BaseAppState{
         geom.setMaterial(mat);
         geom.setLocalTranslation(0, 0, -2);
 //        geom.center();
-        guiNode.attachChild(geom);
+        sceneNode.attachChild(geom);
     }
     
     private void makeButton(){
