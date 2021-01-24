@@ -36,6 +36,7 @@ public class MainGame extends BaseAppState{
     private MainController cardManager;
     private float camZ;
     private float ratio;
+    private Node battleNode;
 
     @Override
     protected void initialize(Application mainApp) {
@@ -46,14 +47,13 @@ public class MainGame extends BaseAppState{
         this.inputManager = mainApp.getInputManager();
         this.cam = mainApp.getCamera();
         this.rootNode = app.getRootNode();
-        //screen setting
-        float w = app.getContext().getSettings().getWidth(); // the screen width
-        float h = app.getContext().getSettings().getHeight(); // the screen width
-        ratio = w/h; //the width-height ratio of the screen
-        cam.setLocation(Vector3f.ZERO.add(new Vector3f(0.0f, 0.0f,100f)));//Move the Camera back
-        camZ = cam.getLocation().getZ()-15; //No Idea why I need to subtract 15
+        this.battleNode = new Node();
+        //setting the screen
+        screenSetting();
+        //construct the background
+        constructBackground();
         //Game initalize
-        this.cardManager = new MainController(app,camZ*ratio);
+        this.cardManager = new MainController(app,camZ*ratio,battleNode);
         
     }
 
@@ -65,14 +65,13 @@ public class MainGame extends BaseAppState{
     @Override
     protected void onEnable() {
         //initialize the background
-        app.getFlyByCamera().setEnabled(false);
-        constructBackground();
-        
+        rootNode.attachChild(battleNode);
+        cardManager.enterScene();
     }
 
     @Override
     protected void onDisable() {
-        rootNode.removeFromParent();
+        battleNode.removeFromParent();
     }
     
     private void constructBackground(){
@@ -89,6 +88,15 @@ public class MainGame extends BaseAppState{
         backgroundGeom.setCullHint(Spatial.CullHint.Never);
         backgroundGeom.setMaterial(backgroundMat);
         backgroundGeom.setLocalTranslation(-(width / 2), -(height/ 2), 0); //Need to Divide by two because the quad origin is bottom left
-        rootNode.attachChild(backgroundGeom);
+        battleNode.attachChild(backgroundGeom);
+    }
+    
+    private void screenSetting(){
+        //screen setting
+        float w = app.getContext().getSettings().getWidth(); // the screen width
+        float h = app.getContext().getSettings().getHeight(); // the screen width
+        ratio = w/h; //the width-height ratio of the screen
+        cam.setLocation(Vector3f.ZERO.add(new Vector3f(0.0f, 0.0f,100f)));//Move the Camera back
+        camZ = cam.getLocation().getZ()-15; //No Idea why I need to subtract 15
     }
 }

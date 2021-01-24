@@ -40,20 +40,24 @@ public class Main extends SimpleApplication {
     @Override
 
     public void simpleInitApp() {
+        //setting the fly cam disable;
+          this.getFlyByCamera().setEnabled(false);
           welcomeUI = new WelcomeInterface();
           mainGame = new MainGame();
         
           stateManager.attach(welcomeUI);
+          stateManager.attach(mainGame);
+          stateManager.getState(MainGame.class).setEnabled(false);
     }
 
     public void switchfromWeltoMain(){
-        stateManager.detach(welcomeUI);
-        stateManager.attach(mainGame);
+        stateManager.getState(WelcomeInterface.class).setEnabled(false);
+        stateManager.getState(MainGame.class).setEnabled(true);
     }
     
     public void switchfromMaintoWel(){
-        stateManager.detach(mainGame);
-        stateManager.attach(welcomeUI);
+        stateManager.getState(MainGame.class).setEnabled(false);
+        stateManager.getState(WelcomeInterface.class).setEnabled(true);
     }
     /**
     This just makes a box so I can see if the background is rendered last

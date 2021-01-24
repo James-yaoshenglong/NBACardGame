@@ -27,14 +27,16 @@ public class DisplayController {
     private InputManager inputManager;
     private Camera cam;
     private Node rootNode;
+    private Node battleNode;
     
-    public DisplayController(SimpleApplication mainApp){
+    public DisplayController(SimpleApplication mainApp, Node aBattleNode){
         this.app = (SimpleApplication)mainApp;
         this.assetManager = mainApp.getAssetManager();
         this.stateManager = mainApp.getStateManager();
         this.inputManager = mainApp.getInputManager();
         this.cam = mainApp.getCamera();
         this.rootNode = app.getRootNode();
+        this.battleNode = aBattleNode;
     }
     
     public void licensing(ArrayList<Card> cardList){
@@ -48,7 +50,7 @@ public class DisplayController {
             Quaternion rot = new Quaternion(angles);
 
             geom.rotate(rot);
-            rootNode.attachChild(geom);
+            battleNode.attachChild(geom);
         }
     }
 }
