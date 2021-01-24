@@ -17,19 +17,11 @@ public class Player {
     private int S, B, P, DB, DS, DP, power;
     private static ArrayList<Player> allplayers;
     
-    public Player(int id, String aName, int aS, int aB, int aP, int aDB, int aDS, int aDP, int apower, String image){
+    public Player(int id){
     //use the only parameter id to construct the player, other data will be accessed from the database    
         this.id = id;
-        this.name = aName;
-        this.S = aS;
-        this.B = aB;
-        this.P = aP;
-        this.DB = aDB;
-        this.DS = aDS;
-        this.DP = aDP;
-        this.power = apower;
-        this.image = image;
-        allplayers.add(this);
+        readData();
+//        allplayers.add(this);
     }
             
 //    public static Player searchPlayer(ArrayList<Player> list, int idtosearch){
@@ -39,6 +31,22 @@ public class Player {
 //        }
 //        return null;
 //    }
+    
+    private void readData(){
+        //just for test
+        this.S = 10;
+        this.B = 10;
+        this.P = 10;
+        this.DB = 10;
+        this.DS = 10;
+        this.DP = 10;
+        this.power = 10;
+        this.image = "Textures/pic/1.jpg";
+        //database file read process should in this process 
+    }
+    
+    
+    
     
     public int getID(){
         return id;

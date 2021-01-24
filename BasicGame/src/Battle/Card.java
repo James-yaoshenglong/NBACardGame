@@ -38,7 +38,7 @@ public class Card extends Node{
     int power;
     
     public Card(int id, float camera_width, Application anApp){
-        this.player = Player.getPlayer(id);//change to the constructer of the player class
+        this.player = new Player(id);
         this.width = camera_width/6;
         this.height = width*7/5;
         this.app = anApp;
