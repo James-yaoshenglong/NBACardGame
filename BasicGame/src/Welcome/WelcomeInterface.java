@@ -32,6 +32,7 @@ import com.simsilica.lemur.component.TextComponent;
 import com.simsilica.lemur.style.BaseStyles;
 import com.jme3.font.BitmapFont;
 import com.jme3.font.BitmapText;
+import com.simsilica.lemur.HAlignment;
 /**
  *
  * @author shenglyao2
@@ -86,16 +87,17 @@ public class WelcomeInterface extends BaseAppState{
         sceneNode.attachChild(myWindow);
 
         // 设置窗口在屏幕上的坐标
+       // myWindow.setPreferredSize(new Vector3f(1000f, 1000f,1000f));
         // 注意：Lemur的GUI元素是以控件左上角为原点，向右、向下生成的。
         // 然而，作为一个Spatial，它在GuiNode中的坐标原点依然是屏幕的左下角。
-        myWindow.setLocalTranslation(width/2, height/2, 0);
-
-        // 添加一个Label控件
-        myWindow.addChild(new Label("Hello, World."));
+        myWindow.setLocalTranslation(width/2-50f, height/2-15f, 0);
 
 
         // 添加一个Button控件
-        Button clickMe = myWindow.addChild(new Button("Click Me"));
+        Button clickMe = myWindow.addChild(new Button("Start"));
+        clickMe.setFontSize(20f);
+        clickMe.setTextHAlignment(HAlignment.Center);
+        clickMe.setPreferredSize(new Vector3f(100f, 30f,0));
         clickMe.addClickCommands(new Command<Button>() {
                 @Override
                 public void execute(Button source) {
@@ -111,8 +113,9 @@ public class WelcomeInterface extends BaseAppState{
         BitmapFont fnt = assetManager.loadFont("Interface/Fonts/Default.fnt");
         BitmapText txt = new BitmapText(fnt, false);
         txt.setText("NBA Card Game");
-        txt.setLocalTranslation(width/2, (float) (height*0.7),0);
-        txt.setSize( 5f );
+        txt.setLocalTranslation(width/2-150f, (float) (height*0.7),0);
+        txt.setColor(new ColorRGBA(137/255,200/255,1,1));
+        txt.setSize( 50f );
         sceneNode.attachChild(txt);
         
         
@@ -120,7 +123,7 @@ public class WelcomeInterface extends BaseAppState{
 
     @Override
     protected void onDisable() {
-        rootNode.removeFromParent();
+        sceneNode.removeFromParent();
     }
     
     private void constructBG(){
