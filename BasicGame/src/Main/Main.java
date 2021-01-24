@@ -46,6 +46,15 @@ public class Main extends SimpleApplication {
           stateManager.attach(welcomeUI);
     }
 
+    public void switchfromWeltoMain(){
+        stateManager.detach(welcomeUI);
+        stateManager.attach(mainGame);
+    }
+    
+    public void switchfromMaintoWel(){
+        stateManager.detach(mainGame);
+        stateManager.attach(welcomeUI);
+    }
     /**
     This just makes a box so I can see if the background is rendered last
 

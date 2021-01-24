@@ -5,6 +5,7 @@
  */
 package Welcome;
 
+import Main.Main;
 import com.jme3.app.Application;
 import com.jme3.app.SimpleApplication;
 import com.jme3.app.state.AppStateManager;
@@ -38,6 +39,9 @@ public class WelcomeInterface extends BaseAppState{
     private InputManager inputManager;
     private Camera cam;
     private Node guiNode;
+    private float width;
+    private float height;
+    
     @Override
     protected void initialize(Application mainApp) {
         this.app = (SimpleApplication)mainApp;
@@ -46,6 +50,8 @@ public class WelcomeInterface extends BaseAppState{
         this.inputManager = mainApp.getInputManager();
         this.cam = mainApp.getCamera();
         this.guiNode = app.getGuiNode();
+        this.width = cam.getWidth();
+        this.height = cam.getHeight();
     }
 
     @Override
@@ -57,35 +63,42 @@ public class WelcomeInterface extends BaseAppState{
     protected void onEnable() {
         constructBG();
         // 初始化Lemur GUI
-		GuiGlobals.initialize(app);
+        
+        GuiGlobals.initialize(app);
 
-		// 加载 'glass' 样式
-		BaseStyles.loadGlassStyle();
+        // 加载 'glass' 样式
+        BaseStyles.loadGlassStyle();
 
-		// 将'glass'设置为GUI默认样式
-		GuiGlobals.getInstance().getStyles().setDefaultStyle("glass");
+        // 将'glass'设置为GUI默认样式
+        GuiGlobals.getInstance().getStyles().setDefaultStyle("glass");
 
-		// 创建一个Container作为窗口中其他GUI元素的容器
-		Container myWindow = new Container();
-		guiNode.attachChild(myWindow);
+        // 创建一个Container作为窗口中其他GUI元素的容器
+        Container myWindow = new Container();
+        guiNode.attachChild(myWindow);
 
-		// 设置窗口在屏幕上的坐标
-		// 注意：Lemur的GUI元素是以控件左上角为原点，向右、向下生成的。
-		// 然而，作为一个Spatial，它在GuiNode中的坐标原点依然是屏幕的左下角。
-		myWindow.setLocalTranslation(300, 300, 0);
+        // 设置窗口在屏幕上的坐标
+        // 注意：Lemur的GUI元素是以控件左上角为原点，向右、向下生成的。
+        // 然而，作为一个Spatial，它在GuiNode中的坐标原点依然是屏幕的左下角。
+        myWindow.setLocalTranslation(width/2, height/2, 0);
 
-		// 添加一个Label控件
-		myWindow.addChild(new Label("Hello, World."));
-		
-		
-		// 添加一个Button控件
-		Button clickMe = myWindow.addChild(new Button("Click Me"));
-		clickMe.addClickCommands(new Command<Button>() {
-			@Override
-			public void execute(Button source) {
-				System.out.println("The world is yours.");
-			}
-		});
+        // 添加一个Label控件
+        myWindow.addChild(new Label("Hello, World."));
+
+
+        // 添加一个Button控件
+        Button clickMe = myWindow.addChild(new Button("Click Me"));
+        clickMe.addClickCommands(new Command<Button>() {
+                @Override
+                public void execute(Button source) {
+                        ((Main)app).switchfromWeltoMain();
+                }
+        });
+
+        Container text = new Container();
+        guiNode.attachChild(text);
+
+        text.setLocalTranslation(width/2, (float) (height*0.7),0);
+        text.addChild(new Label("Hello, World."));       
 		
     }
 
@@ -95,8 +108,6 @@ public class WelcomeInterface extends BaseAppState{
     }
     
     private void constructBG(){
-        float width = app.getContext().getSettings().getWidth(); // the screen width
-        float height = app.getContext().getSettings().getHeight(); // the screen height
         Quad quad = new Quad(width, height);
         Geometry geom = new Geometry("bg", quad);
         Texture tex = assetManager.loadTexture("Interface/bg/Welcome_bg.jpeg");
