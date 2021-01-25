@@ -41,6 +41,7 @@ public class MainGame extends BaseAppState{
     private float camZ;
     private float ratio;
     private Node battleNode;
+    private Node handCardNode;
     public final static String PAUSE = "PAUSE"; //the pause message
     private ActionListener pauseListener;
 
@@ -54,12 +55,14 @@ public class MainGame extends BaseAppState{
         this.cam = mainApp.getCamera();
         this.rootNode = app.getRootNode();
         this.battleNode = new Node();
+        this.handCardNode = new Node();
+        battleNode.attachChild(handCardNode);
         //setting the screen
         screenSetting();
         //construct the background
         constructBackground();
         //Game initalize
-        this.cardManager = new MainController(app,camZ*ratio,battleNode);
+        this.cardManager = new MainController(app,camZ*ratio,handCardNode);
         
     }
 

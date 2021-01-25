@@ -8,6 +8,7 @@ package Battle;
 import com.jme3.app.SimpleApplication;
 import com.jme3.app.state.AppStateManager;
 import com.jme3.asset.AssetManager;
+import com.jme3.bounding.BoundingBox;
 import com.jme3.input.InputManager;
 import com.jme3.math.Quaternion;
 import com.jme3.renderer.Camera;
@@ -27,30 +28,30 @@ public class DisplayController {
     private InputManager inputManager;
     private Camera cam;
     private Node rootNode;
-    private Node battleNode;
+    private Node handCardNode;
     
-    public DisplayController(SimpleApplication mainApp, Node aBattleNode){
+    public DisplayController(SimpleApplication mainApp, Node aHandCardNode){
         this.app = (SimpleApplication)mainApp;
         this.assetManager = mainApp.getAssetManager();
         this.stateManager = mainApp.getStateManager();
         this.inputManager = mainApp.getInputManager();
         this.cam = mainApp.getCamera();
         this.rootNode = app.getRootNode();
-        this.battleNode = aBattleNode;
+        this.handCardNode = aHandCardNode;
     }
     
     public void licensing(ArrayList<Card> cardList){
         for(int i =0; i<cardList.size(); i++){
-            Geometry geom = cardList.get(i).getPic();
             float[] angles = new float[3];
             angles[0] = (float) Math.toRadians(i*0f);
             angles[1] = (float) Math.toRadians(i*0f);
             angles[2] = (float) Math.toRadians(i*5f);
 
             Quaternion rot = new Quaternion(angles);
-
-            geom.rotate(rot);
-            battleNode.attachChild(geom);
+            Node card = cardList.get(i);
+            handCardNode.attachChild(card);
+            card.rotate(rot);
+            
         }
     }
 }
