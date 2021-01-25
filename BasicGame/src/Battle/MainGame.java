@@ -5,12 +5,16 @@
  */
 package Battle;
 
+import Action.PauseListener;
 import com.jme3.app.Application;
 import com.jme3.app.SimpleApplication;
 import com.jme3.app.state.AppStateManager;
 import com.jme3.app.state.BaseAppState;
 import com.jme3.asset.AssetManager;
 import com.jme3.input.InputManager;
+import com.jme3.input.KeyInput;
+import com.jme3.input.controls.ActionListener;
+import com.jme3.input.controls.KeyTrigger;
 import com.jme3.material.Material;
 import com.jme3.math.Vector3f;
 import com.jme3.renderer.Camera;
@@ -37,6 +41,8 @@ public class MainGame extends BaseAppState{
     private float camZ;
     private float ratio;
     private Node battleNode;
+    public final static String PAUSE = "PAUSE"; //the pause message
+    private ActionListener pauseListener;
 
     @Override
     protected void initialize(Application mainApp) {
@@ -59,11 +65,14 @@ public class MainGame extends BaseAppState{
 
     @Override
     protected void cleanup(Application arg0) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     protected void onEnable() {
+        //add event listener
+        inputManager.addMapping(PAUSE, new KeyTrigger(KeyInput.KEY_DELETE));
+        pauseListener = new PauseListener(app);
+        inputManager.addListener(pauseListener,PAUSE);
         //initialize the background
         rootNode.attachChild(battleNode);
         cardManager.enterScene();
@@ -72,6 +81,9 @@ public class MainGame extends BaseAppState{
     @Override
     protected void onDisable() {
         battleNode.removeFromParent();
+        //remove the listener
+        inputManager.removeListener(pauseListener);
+        inputManager.deleteMapping(PAUSE);
     }
     
     private void constructBackground(){

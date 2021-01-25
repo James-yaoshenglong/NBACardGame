@@ -59,6 +59,12 @@ public class Main extends SimpleApplication {
         stateManager.getState(MainGame.class).setEnabled(false);
         stateManager.getState(WelcomeInterface.class).setEnabled(true);
     }
+    
+    public void switchfromMaintoPause(){
+        //now just for test use the welcome state
+        stateManager.getState(MainGame.class).setEnabled(false);
+        stateManager.getState(WelcomeInterface.class).setEnabled(true);
+    }
     /**
     This just makes a box so I can see if the background is rendered last
 
