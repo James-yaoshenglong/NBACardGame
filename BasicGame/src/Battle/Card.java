@@ -7,6 +7,7 @@ package Battle;
 
 import com.jme3.app.Application;
 import com.jme3.app.SimpleApplication;
+import com.jme3.bounding.BoundingBox;
 import com.jme3.light.AmbientLight;
 import com.jme3.light.DirectionalLight;
 import com.jme3.material.Material;
@@ -36,6 +37,7 @@ public class Card extends Node{
     Player player;
     Application app;
     int power;
+    Geometry geom;
     
     public Card(int id, float camera_width, Application anApp){
         this.player = new Player(id);
@@ -43,17 +45,30 @@ public class Card extends Node{
         this.height = width*7/5;
         this.app = anApp;
         this.power = player.getPower();
+        setPicGeom();
     }
     
-    public Geometry getPic(){
+//    public Geometry getPic(){
+//        Quad quad = new Quad(width,height);
+//        Geometry geom = new Geometry("Card", quad);
+//        Texture tex = app.getAssetManager().loadTexture(player.getImage());
+//        Material mat = new Material(app.getAssetManager(),"Common/MatDefs/Misc/Unshaded.j3md");
+//        mat.setTexture("ColorMap",tex);
+//        
+//        geom.setMaterial(mat);
+//        return geom;
+//    }
+    
+    private void setPicGeom(){
         Quad quad = new Quad(width,height);
-        Geometry geom = new Geometry("Card", quad);
+        geom = new Geometry("Card", quad);
         Texture tex = app.getAssetManager().loadTexture(player.getImage());
         Material mat = new Material(app.getAssetManager(),"Common/MatDefs/Misc/Unshaded.j3md");
         mat.setTexture("ColorMap",tex);
         
         geom.setMaterial(mat);
-        return geom;
+        geom.setLocalTranslation(-((BoundingBox)geom.getWorldBound()).getXExtent(),0.0f,0.0f);
+        this.attachChild(geom);
     }
     
     public Player getPlayer(){
