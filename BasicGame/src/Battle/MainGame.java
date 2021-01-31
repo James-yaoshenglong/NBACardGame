@@ -78,7 +78,7 @@ public class MainGame extends BaseAppState{
         inputManager.addListener(pauseListener,PAUSE);
         //initialize the background
         rootNode.attachChild(battleNode);
-        cardManager.enterScene();
+//        cardManager.enterScene();
     }
 
     @Override

@@ -48,8 +48,9 @@ public class MainController {
         for(int i=0; i<teamSize; i++){
             enemyTeam.add(new Card(EnemyIdList.get(i),camera_width,app));
         }
-        
+        display.licensing(myTeam);   
     }
+    
     public void enterScene(){
         display.licensing(myTeam);
     }
