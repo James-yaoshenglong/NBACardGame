@@ -1,6 +1,7 @@
 package Main;
 
 import Battle.MainGame;
+import Pause.PauseInterface;
 import Welcome.WelcomeInterface;
 import com.jme3.app.SimpleApplication;
 import com.jme3.light.AmbientLight;
@@ -29,6 +30,7 @@ import com.jme3.ui.Picture;
 public class Main extends SimpleApplication {
     private WelcomeInterface welcomeUI;
     private MainGame mainGame;
+    private PauseInterface pauseUI;
     
     
     public static void main(String[] args) {
@@ -44,10 +46,13 @@ public class Main extends SimpleApplication {
           this.getFlyByCamera().setEnabled(false);
           welcomeUI = new WelcomeInterface();
           mainGame = new MainGame();
+          pauseUI = new PauseInterface();
         
           stateManager.attach(welcomeUI);
           stateManager.attach(mainGame);
+          stateManager.attach(pauseUI);
           stateManager.getState(MainGame.class).setEnabled(false);
+          stateManager.getState(PauseInterface.class).setEnabled(false);
     }
 
     public void switchfromWeltoMain(){
@@ -55,16 +60,22 @@ public class Main extends SimpleApplication {
         stateManager.getState(MainGame.class).setEnabled(true);
     }
     
-    public void switchfromMaintoWel(){
-        stateManager.getState(MainGame.class).setEnabled(false);
+    public void switchfromPausetoWel(){
+        stateManager.getState(PauseInterface.class).setEnabled(false);
         stateManager.getState(WelcomeInterface.class).setEnabled(true);
     }
     
     public void switchfromMaintoPause(){
         //now just for test use the welcome state
         stateManager.getState(MainGame.class).setEnabled(false);
-        stateManager.getState(WelcomeInterface.class).setEnabled(true);
+        stateManager.getState(PauseInterface.class).setEnabled(true);
     }
+    
+    public void switchfromPausetoMain(){
+        stateManager.getState(PauseInterface.class).setEnabled(false);
+        stateManager.getState(MainGame.class).setEnabled(true);
+    }
+    
     /**
     This just makes a box so I can see if the background is rendered last
 
