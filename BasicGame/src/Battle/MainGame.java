@@ -5,6 +5,7 @@
  */
 package Battle;
 
+import Action.ClickListener;
 import Action.PauseListener;
 import com.jme3.app.Application;
 import com.jme3.app.SimpleApplication;
@@ -13,9 +14,12 @@ import com.jme3.app.state.BaseAppState;
 import com.jme3.asset.AssetManager;
 import com.jme3.input.InputManager;
 import com.jme3.input.KeyInput;
+import com.jme3.input.MouseInput;
 import com.jme3.input.controls.ActionListener;
 import com.jme3.input.controls.KeyTrigger;
+import com.jme3.input.controls.MouseButtonTrigger;
 import com.jme3.material.Material;
+import com.jme3.math.Ray;
 import com.jme3.math.Vector3f;
 import com.jme3.renderer.Camera;
 import com.jme3.renderer.queue.RenderQueue;
@@ -44,7 +48,11 @@ public class MainGame extends BaseAppState{
     private Node handCardNode;
     public final static String PAUSE = "PAUSE"; //the pause message
     private ActionListener pauseListener;
-
+    
+    
+    public final static String CLICK = "CLICK"; //the CLICK message
+    private ClickListener clickListener;
+    
     @Override
     protected void initialize(Application mainApp) {
         //add a copy of reference of some common use attributes from app
@@ -76,6 +84,10 @@ public class MainGame extends BaseAppState{
         inputManager.addMapping(PAUSE, new KeyTrigger(KeyInput.KEY_DELETE));
         pauseListener = new PauseListener(app);
         inputManager.addListener(pauseListener,PAUSE);
+        
+        inputManager.addMapping(CLICK, new MouseButtonTrigger(MouseInput.BUTTON_LEFT));
+        clickListener = new ClickListener(app, handCardNode);
+        inputManager.addListener(clickListener,CLICK);
         //initialize the background
         rootNode.attachChild(battleNode);
 //        cardManager.enterScene();
@@ -87,6 +99,8 @@ public class MainGame extends BaseAppState{
         //remove the listener
         inputManager.removeListener(pauseListener);
         inputManager.deleteMapping(PAUSE);
+        inputManager.removeListener(clickListener);
+        inputManager.deleteMapping(CLICK);
     }
     
     private void constructBackground(){
