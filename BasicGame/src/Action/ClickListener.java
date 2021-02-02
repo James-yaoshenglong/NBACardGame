@@ -6,13 +6,21 @@
 package Action;
 
 import com.jme3.app.SimpleApplication;
+import com.jme3.bounding.BoundingBox;
+import com.jme3.bounding.BoundingSphere;
 import com.jme3.collision.CollisionResults;
 import com.jme3.input.controls.ActionListener;
+import com.jme3.light.Light;
+import com.jme3.material.RenderState.BlendMode;
+import com.jme3.math.ColorRGBA;
 import com.jme3.math.Ray;
 import com.jme3.math.Vector2f;
 import com.jme3.math.Vector3f;
+import com.jme3.renderer.Camera;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
+import com.jme3.scene.Spatial;
+import com.jme3.util.TempVars;
 
 /**
  *
@@ -44,7 +52,11 @@ public class ClickListener implements ActionListener{
         if(results.size() > 0){
             Geometry geom = results.getFarthestCollision().getGeometry(); //get the closest target in our eyes 
             //still have the bug do not know which one is choosed when stack together
-            geom.getParent().removeFromParent();
+//            geom.getParent().removeFromParent();
+             geom.getMaterial().setColor("Color", new ColorRGBA(0.2f,0.2f,0.2f,1f));
+//            geom.getMaterial().setTransparent(true);
+//           geom.updateGeometricState();
+//            geom.getMaterial().setFloat("AlphaDiscardThreshold", 0.01f);
         }
     }
     

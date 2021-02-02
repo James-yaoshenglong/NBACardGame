@@ -70,7 +70,7 @@ public class MainGame extends BaseAppState{
         //construct the background
         constructBackground();
         //Game initalize
-        this.cardManager = new MainController(app,camZ*ratio,handCardNode);
+        this.cardManager = new MainController(app,camZ*ratio,camZ,handCardNode);
         
     }
 

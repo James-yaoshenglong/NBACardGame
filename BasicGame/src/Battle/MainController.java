@@ -21,12 +21,12 @@ public class MainController {
     private ArrayList<Card> enemyTeam;
     private DisplayController display;
     
-    public MainController(SimpleApplication mainApp, float camWidth, Node battleNode){
+    public MainController(SimpleApplication mainApp, float camWidth, float camHeight, Node HandCardNode){
         this.app = mainApp;
         this.camera_width = camWidth;
         this.myTeam = new ArrayList<>();
         this.enemyTeam = new ArrayList<>();
-        this.display = new DisplayController(app, battleNode);
+        this.display = new DisplayController(app, HandCardNode, camWidth, camHeight);
         int teamSize = 10;
         int totalPlayerSize = 100; 
         //random assign player to player's team
