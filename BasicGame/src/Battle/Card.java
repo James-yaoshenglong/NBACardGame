@@ -38,6 +38,7 @@ public class Card extends Node{
     Application app;
     int power;
     Geometry geom;
+    boolean isClicked;
     
     public Card(int id, float camera_width, Application anApp){
         this.player = new Player(id);
@@ -45,6 +46,7 @@ public class Card extends Node{
         this.height = width*7/5;
         this.app = anApp;
         this.power = player.getPower();
+        this.isClicked = false;
         setPicGeom();
     }
     
@@ -75,7 +77,12 @@ public class Card extends Node{
         return player;
     }
     
+    public boolean getClickStatus(){
+        return isClicked;
+    }
     
-    
+    public void toggleClickStatus(){
+        isClicked = !isClicked;
+    }
     
 }

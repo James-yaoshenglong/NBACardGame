@@ -5,6 +5,7 @@
  */
 package Action;
 
+import Battle.Card;
 import com.jme3.app.SimpleApplication;
 import com.jme3.bounding.BoundingBox;
 import com.jme3.bounding.BoundingSphere;
@@ -53,10 +54,19 @@ public class ClickListener implements ActionListener{
             Geometry geom = results.getFarthestCollision().getGeometry(); //get the closest target in our eyes 
             //still have the bug do not know which one is choosed when stack together
 //            geom.getParent().removeFromParent();
-             geom.getMaterial().setColor("Color", new ColorRGBA(0.2f,0.2f,0.2f,1f));
 //            geom.getMaterial().setTransparent(true);
 //           geom.updateGeometricState();
 //            geom.getMaterial().setFloat("AlphaDiscardThreshold", 0.01f);
+
+            Card card = (Card)geom.getParent();
+            if(card.getClickStatus() == false){
+                geom.getMaterial().setColor("Color", new ColorRGBA(0.2f,0.2f,0.2f,1f));
+                
+            }
+            else{
+                geom.getMaterial().setColor("Color", new ColorRGBA(1f,1f,1f,0f));
+            }
+            card.toggleClickStatus();
         }
     }
     
