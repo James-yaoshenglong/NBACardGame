@@ -45,14 +45,14 @@ public class MainGame extends BaseAppState{
     private float camZ;
     private float ratio;
     private Node battleNode;
-    private Node handCardNode;
+    private SelfCardsNode selfCardsNode;
     private Node buttonNode;
     public final static String PAUSE = "PAUSE"; //the pause message
     private ActionListener pauseListener;
     
     
     public final static String CLICK = "CLICK"; //the CLICK message
-    private ClickListener clickListener;
+//    private ClickListener clickListener;
     
     @Override
     protected void initialize(Application mainApp) {
@@ -64,18 +64,18 @@ public class MainGame extends BaseAppState{
         this.cam = mainApp.getCamera();
         this.rootNode = app.getRootNode();
         this.battleNode = new Node();
-        this.handCardNode = new Node();
+        this.selfCardsNode = new SelfCardsNode(app);
         this.buttonNode = new Node();
-        battleNode.attachChild(handCardNode);
+        battleNode.attachChild(selfCardsNode);
         battleNode.attachChild(buttonNode);
         //setting the screen
         screenSetting();
         //construct the background
         constructBackground();
         //Game initalize
-        this.cardManager = new MainController(app,camZ*ratio,camZ,handCardNode,buttonNode);
+        this.cardManager = new MainController(app,camZ*ratio,camZ,selfCardsNode,buttonNode);
         pauseListener = new PauseListener(app);
-        clickListener = new ClickListener(app, handCardNode, cardManager);
+//        clickListener = new ClickListener(app, handCardNode, cardManager);
     }
 
     @Override
@@ -89,7 +89,7 @@ public class MainGame extends BaseAppState{
         inputManager.addListener(pauseListener,PAUSE);
         
         inputManager.addMapping(CLICK, new MouseButtonTrigger(MouseInput.BUTTON_LEFT));
-        inputManager.addListener(clickListener,CLICK);
+        inputManager.addListener(selfCardsNode,CLICK);
         //initialize the background
         rootNode.attachChild(battleNode);
 //        cardManager.enterScene();
@@ -101,7 +101,7 @@ public class MainGame extends BaseAppState{
         //remove the listener
         inputManager.removeListener(pauseListener);
         inputManager.deleteMapping(PAUSE);
-        inputManager.removeListener(clickListener);
+        inputManager.removeListener(selfCardsNode);
         inputManager.deleteMapping(CLICK);
     }
     
