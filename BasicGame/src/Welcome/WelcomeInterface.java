@@ -32,6 +32,7 @@ import com.simsilica.lemur.component.TextComponent;
 import com.simsilica.lemur.style.BaseStyles;
 import com.jme3.font.BitmapFont;
 import com.jme3.font.BitmapText;
+import com.jme3.ui.Picture;
 import com.simsilica.lemur.HAlignment;
 /**
  *
@@ -72,6 +73,7 @@ public class WelcomeInterface extends BaseAppState{
     protected void onEnable() {
         guiNode.attachChild(sceneNode);
         constructBG();
+        constructTitle();
         // 初始化Lemur GUI
         
         GuiGlobals.initialize(app);
@@ -110,13 +112,13 @@ public class WelcomeInterface extends BaseAppState{
 
         //text.setLocalTranslation(width/2, (float) (height*0.7),0);
 //        TextComponent t = new TextComponent("NBA Card Game",assetManager.loadFont("Interface/Fonts/Default.fnt"));       
-        BitmapFont fnt = assetManager.loadFont("Interface/Fonts/Default.fnt");
-        BitmapText txt = new BitmapText(fnt, false);
-        txt.setText("NBA Card Game");
-        txt.setLocalTranslation(width/2-150f, (float) (height*0.7),0);
-        txt.setColor(new ColorRGBA(137/255,200/255,1,1));
-        txt.setSize( 50f );
-        sceneNode.attachChild(txt);
+//        BitmapFont fnt = assetManager.loadFont("Interface/Fonts/Default.fnt");
+//        BitmapText txt = new BitmapText(fnt, false);
+//        txt.setText("NBA Card Game");
+//        txt.setLocalTranslation(width/2-150f, (float) (height*0.7),0);
+//        txt.setColor(new ColorRGBA(137/255,200/255,1,1));
+//        txt.setSize( 50f );
+//        sceneNode.attachChild(txt);
         
         
     }
@@ -136,6 +138,25 @@ public class WelcomeInterface extends BaseAppState{
         geom.setLocalTranslation(0, 0, -2);
 //        geom.center();
         sceneNode.attachChild(geom);
+    }
+    
+    private void constructTitle(){
+//        Quad quad = new Quad(width/2, height/2);
+//        Geometry geom = new Geometry("bg", quad);
+//        Texture tex = assetManager.loadTexture("Textures/pic/welcome_title.png");
+//        
+//        Material mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
+//        mat.setTexture("ColorMap",tex);
+//        geom.setMaterial(mat);
+//        geom.setLocalTranslation(0, 0, 2);
+////        geom.center();
+//        sceneNode.attachChild(geom);
+          Picture pic = new Picture("Title");
+          pic.setImage(assetManager, "Textures/pic/welcome_title.png", true);
+          pic.setWidth(width*0.75f);
+          pic.setHeight(height*0.75f);
+          pic.setLocalTranslation(width*0.125f, height*0.3f, 1);
+          sceneNode.attachChild(pic);
     }
     
     private void makeButton(){

@@ -45,7 +45,7 @@ public class Card extends Node{
     Application app;
     int power;
     Geometry geom;
-    boolean isClicked;
+    boolean isInLineup;
     
     public final static int PLAIN = 0;// 普通
     public final static int BOLD = 1;// 粗体
@@ -62,7 +62,7 @@ public class Card extends Node{
         this.height = width*7/5;
         this.app = anApp;
         this.power = player.getPower();
-        this.isClicked = false;
+        this.isInLineup = false;
         setPicGeom();
         setPicBattleValue();
     }
@@ -94,12 +94,12 @@ public class Card extends Node{
         return player;
     }
     
-    public boolean getClickStatus(){
-        return isClicked;
+    public boolean getStatus(){
+        return isInLineup;
     }
     
-    public void toggleClickStatus(){
-        isClicked = !isClicked;
+    public void toggleStatus(){
+        isInLineup = !isInLineup;
     }
     
     private void setPicBattleValue(){

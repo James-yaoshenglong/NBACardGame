@@ -46,6 +46,7 @@ public class MainGame extends BaseAppState{
     private float ratio;
     private Node battleNode;
     private Node handCardNode;
+    private Node buttonNode;
     public final static String PAUSE = "PAUSE"; //the pause message
     private ActionListener pauseListener;
     
@@ -64,14 +65,17 @@ public class MainGame extends BaseAppState{
         this.rootNode = app.getRootNode();
         this.battleNode = new Node();
         this.handCardNode = new Node();
+        this.buttonNode = new Node();
         battleNode.attachChild(handCardNode);
+        battleNode.attachChild(buttonNode);
         //setting the screen
         screenSetting();
         //construct the background
         constructBackground();
         //Game initalize
-        this.cardManager = new MainController(app,camZ*ratio,camZ,handCardNode);
-        
+        this.cardManager = new MainController(app,camZ*ratio,camZ,handCardNode,buttonNode);
+        pauseListener = new PauseListener(app);
+        clickListener = new ClickListener(app, handCardNode, cardManager);
     }
 
     @Override
@@ -82,11 +86,9 @@ public class MainGame extends BaseAppState{
     protected void onEnable() {
         //add event listener
         inputManager.addMapping(PAUSE, new KeyTrigger(KeyInput.KEY_DELETE));
-        pauseListener = new PauseListener(app);
         inputManager.addListener(pauseListener,PAUSE);
         
         inputManager.addMapping(CLICK, new MouseButtonTrigger(MouseInput.BUTTON_LEFT));
-        clickListener = new ClickListener(app, handCardNode);
         inputManager.addListener(clickListener,CLICK);
         //initialize the background
         rootNode.attachChild(battleNode);

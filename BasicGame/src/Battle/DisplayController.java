@@ -10,10 +10,13 @@ import com.jme3.app.state.AppStateManager;
 import com.jme3.asset.AssetManager;
 import com.jme3.bounding.BoundingBox;
 import com.jme3.input.InputManager;
+import com.jme3.material.Material;
 import com.jme3.math.Quaternion;
 import com.jme3.renderer.Camera;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
+import com.jme3.scene.shape.Quad;
+import com.jme3.texture.Texture;
 import java.util.ArrayList;
 
 /**
@@ -29,11 +32,12 @@ public class DisplayController {
     private Camera cam;
     private Node rootNode;
     private Node handCardNode;
+    private Node buttonNode;
     private Node battleNode;
     private float width;
     private float height;
     
-    public DisplayController(SimpleApplication mainApp, Node aHandCardNode, float aCamWidth, float aCamHeight){
+    public DisplayController(SimpleApplication mainApp, Node aHandCardNode, Node abuttonNode, float aCamWidth, float aCamHeight){
         this.app = (SimpleApplication)mainApp;
         this.assetManager = mainApp.getAssetManager();
         this.stateManager = mainApp.getStateManager();
@@ -41,6 +45,7 @@ public class DisplayController {
         this.cam = mainApp.getCamera();
         this.rootNode = app.getRootNode();
         this.handCardNode = aHandCardNode;
+        this.buttonNode = abuttonNode;
         this.battleNode = handCardNode.getParent();
         this.width = aCamWidth;
         this.height = aCamHeight;
@@ -69,5 +74,15 @@ public class DisplayController {
         }
     }
     
+    public void confirmlineup(){
+        Quad quad = new Quad(width/16,height/16);
+        Geometry geom = new Geometry("confirm_button",quad);
+        Texture tex = app.getAssetManager().loadTexture("Textures/pic/confirm_button.jpg");
+        Material mat = new Material(app.getAssetManager(),"Common/MatDefs/Misc/Unshaded.j3md");
+        mat.setTexture("ColorMap", tex);
+        geom.setMaterial(mat);
+        geom.setLocalTranslation(-width/32, (float)(height*(-0.48)), 0);
+        buttonNode.attachChild(geom);
+    }
  
 }

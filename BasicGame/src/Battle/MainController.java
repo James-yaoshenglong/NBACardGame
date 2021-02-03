@@ -18,15 +18,17 @@ public class MainController {
     private SimpleApplication app;
     private float camera_width;
     private ArrayList<Card> myTeam;
+    private ArrayList<Card> lineup;
     private ArrayList<Card> enemyTeam;
     private DisplayController display;
     
-    public MainController(SimpleApplication mainApp, float camWidth, float camHeight, Node HandCardNode){
+    public MainController(SimpleApplication mainApp, float camWidth, float camHeight, Node HandCardNode, Node ButtonNode){
         this.app = mainApp;
         this.camera_width = camWidth;
         this.myTeam = new ArrayList<>();
         this.enemyTeam = new ArrayList<>();
-        this.display = new DisplayController(app, HandCardNode, camWidth, camHeight);
+        this.lineup = new ArrayList<>();
+        this.display = new DisplayController(app, HandCardNode, ButtonNode, camWidth, camHeight);
         int teamSize = 10;
         int totalPlayerSize = 100; 
         //random assign player to player's team
@@ -49,9 +51,26 @@ public class MainController {
             enemyTeam.add(new Card(EnemyIdList.get(i),camera_width,app));
         }
         display.licensing(myTeam);   
+        display.confirmlineup();
     }
     
     public void enterScene(){
         display.licensing(myTeam);
     }
+    
+    public void playin(Card c){
+        lineup.add(c);
+        myTeam.remove(c);
+    }
+    
+    public void exitlineup(Card c){
+        lineup.remove(c);
+        myTeam.add(c);
+    }
+    
+    public int chosenplayer(){
+        return lineup.size();
+    }
+    
+    
 }

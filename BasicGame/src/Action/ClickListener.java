@@ -6,6 +6,7 @@
 package Action;
 
 import Battle.Card;
+import Battle.MainController;
 import com.jme3.app.SimpleApplication;
 import com.jme3.bounding.BoundingBox;
 import com.jme3.bounding.BoundingSphere;
@@ -30,10 +31,12 @@ import com.jme3.util.TempVars;
 public class ClickListener implements ActionListener{
     private SimpleApplication app;
     private Node targetNode;
+    private MainController maincontrol;
     
-    public ClickListener(SimpleApplication mainApp, Node aTargetNode){
+    public ClickListener(SimpleApplication mainApp, Node aTargetNode, MainController controller){
         this.app = mainApp;
         this.targetNode = aTargetNode;
+        this.maincontrol = controller;
     }
     
     @Override
@@ -59,14 +62,18 @@ public class ClickListener implements ActionListener{
 //            geom.getMaterial().setFloat("AlphaDiscardThreshold", 0.01f);
 
             Card card = (Card)geom.getParent();
-            if(card.getClickStatus() == false){
-                geom.getMaterial().setColor("Color", new ColorRGBA(0.2f,0.2f,0.2f,1f));
-                
+            if(card.getStatus() == false){
+                if(maincontrol.chosenplayer()<5){
+                   geom.getMaterial().setColor("Color", new ColorRGBA(0.2f,0.2f,0.2f,1f));
+                   maincontrol.playin(card);
+                   card.toggleStatus();
+                }
             }
             else{
                 geom.getMaterial().setColor("Color", new ColorRGBA(1f,1f,1f,0f));
-            }
-            card.toggleClickStatus();
+                maincontrol.exitlineup(card);
+                card.toggleStatus();
+            }   
         }
     }
     
