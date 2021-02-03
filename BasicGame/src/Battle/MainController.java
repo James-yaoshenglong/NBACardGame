@@ -22,7 +22,7 @@ public class MainController {
     private ArrayList<Card> enemyTeam;
     private DisplayController display;
     
-    public MainController(SimpleApplication mainApp, float camWidth, float camHeight, Node HandCardNode, Node ButtonNode){
+    public MainController(SimpleApplication mainApp, float camWidth, float camHeight, SelfCardsNode HandCardNode, Node ButtonNode){
         this.app = mainApp;
         this.camera_width = camWidth;
         this.myTeam = new ArrayList<>();
@@ -50,13 +50,13 @@ public class MainController {
         for(int i=0; i<teamSize; i++){
             enemyTeam.add(new Card(EnemyIdList.get(i),camera_width,app));
         }
-        display.licensing(myTeam);   
+        HandCardNode.licensing(myTeam);   
         display.confirmlineup();
     }
     
-    public void enterScene(){
-        display.licensing(myTeam);
-    }
+//    public void enterScene(){
+//        display.licensing(myTeam);
+//    }
     
     public void playin(Card c){
         lineup.add(c);

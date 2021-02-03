@@ -23,10 +23,14 @@ import java.util.ArrayList;
 public class SelfCardsNode extends Node implements ActionListener{
     private ArrayList<Card> lineup;
     private SimpleApplication app;
+    private float width; //screen width and height
+    private float height;
     
-    public SelfCardsNode(SimpleApplication mainApp){
+    public SelfCardsNode(SimpleApplication mainApp, float aCamWidth, float aCamHeight){
         this.lineup = new ArrayList<>();
         this.app = mainApp;
+        this.width = aCamWidth;
+        this.height = aCamHeight;
     }
     
     private void playin(Card c){
@@ -84,4 +88,30 @@ public class SelfCardsNode extends Node implements ActionListener{
         ray.setDirection(dir);
         return ray;
     }
+    
+    
+    public void licensing(ArrayList<Card> cardList){
+        for(int i =0; i<cardList.size(); i++){
+//            float[] angles = new float[3];
+//            angles[0] = (float) Math.toRadians(i*0f);
+//            angles[1] = (float) Math.toRadians(i*0f);
+//            angles[2] = (float) Math.toRadians(i*5f);
+//
+//            Quaternion rot = new Quaternion(angles);
+            
+            Node card = cardList.get(i);
+//            this.attachChild(card);
+            if(i<5){
+                card.setLocalTranslation((i%5-2)*(width/5),height/20,0);
+            }
+            else{
+                card.setLocalTranslation((i%5-2)*(width/5), (float)(height*(-0.4)), 0);
+            }
+            
+            this.attachChild(card);
+//            card.rotate(rot);
+            
+        }
+    }
+    
 }

@@ -63,16 +63,19 @@ public class MainGame extends BaseAppState{
         this.inputManager = mainApp.getInputManager();
         this.cam = mainApp.getCamera();
         this.rootNode = app.getRootNode();
-        this.battleNode = new Node();
-        this.selfCardsNode = new SelfCardsNode(app);
-        this.buttonNode = new Node();
-        battleNode.attachChild(selfCardsNode);
-        battleNode.attachChild(buttonNode);
-        //setting the screen
+        //setting the screen, this should be first
         screenSetting();
+        
+        
+        
+        this.battleNode = new Node();
+        this.buttonNode = new Node();
+        battleNode.attachChild(buttonNode);
         //construct the background
         constructBackground();
         //Game initalize
+        this.selfCardsNode = new SelfCardsNode(app, camZ*ratio, camZ); // here pay attention
+        battleNode.attachChild(selfCardsNode);
         this.cardManager = new MainController(app,camZ*ratio,camZ,selfCardsNode,buttonNode);
         pauseListener = new PauseListener(app);
 //        clickListener = new ClickListener(app, handCardNode, cardManager);
