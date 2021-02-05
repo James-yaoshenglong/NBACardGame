@@ -146,4 +146,11 @@ public class SelfCardsNode extends Node implements ActionListener{
         return lineup;
     }
     
+    public boolean checkLineup(){
+        if(lineup.size() == 5){
+            return true;
+        }
+        return false;
+    }
+    
 }

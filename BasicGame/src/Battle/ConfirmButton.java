@@ -27,11 +27,13 @@ public class ConfirmButton extends Node implements ActionListener{
     private SimpleApplication app;
     private float width; //screen width and height
     private float height;
+    SelfCardsNode selfCardsNode;
     
-    public ConfirmButton(SimpleApplication mainApp, float aCamWidth, float aCamHeight){
+    public ConfirmButton(SimpleApplication mainApp, float aCamWidth, float aCamHeight, SelfCardsNode aSelfCardsNode){
         this.app = mainApp;
         this.width = aCamWidth;
         this.height = aCamHeight;
+        this.selfCardsNode = aSelfCardsNode;
         initialize();
     }
     
@@ -51,11 +53,13 @@ public class ConfirmButton extends Node implements ActionListener{
     @Override
     public void onAction(String name, boolean isClicked, float tpf) {
         if(isClicked && name.equals("CLICK")){
-            Ray ray = createRay();
-            CollisionResults results = new CollisionResults();
-            this.collideWith(ray, results);
-            if(results.size() > 0){
-                ((Main)app).switchfromMaintoPrepare();
+            if(selfCardsNode.checkLineup()){
+                Ray ray = createRay();
+                CollisionResults results = new CollisionResults();
+                this.collideWith(ray, results);
+                if(results.size() > 0){
+                    ((Main)app).switchfromMaintoPrepare();
+                }
             }
         }
     }

@@ -78,7 +78,7 @@ public class MainGame extends BaseAppState{
         //Game initalize
         this.selfCardsNode = new SelfCardsNode(app, camZ*ratio, camZ); // here pay attention
         battleNode.attachChild(selfCardsNode);
-        this.confirmButton = new ConfirmButton(app, camZ*ratio, camZ);
+        this.confirmButton = new ConfirmButton(app, camZ*ratio, camZ, selfCardsNode);
         battleNode.attachChild(confirmButton);
         
 //        this.cardManager = new MainController(app,camZ*ratio,camZ,selfCardsNode,confirmButton);
