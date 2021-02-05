@@ -7,6 +7,7 @@ package Battle;
 
 import Action.ClickListener;
 import Action.PauseListener;
+import Pause.PauseButton;
 import com.jme3.app.Application;
 import com.jme3.app.SimpleApplication;
 import com.jme3.app.state.AppStateManager;
@@ -50,7 +51,9 @@ public class MainGame extends BaseAppState{
 //    private Node buttonNode;
     private ConfirmButton confirmButton;
     public final static String PAUSE = "PAUSE"; //the pause message
-    private ActionListener pauseListener;
+//    private ActionListener pauseListener;
+    
+    private PauseButton pauseButton;
     
     
     public final static String CLICK = "CLICK"; //the CLICK message
@@ -80,9 +83,11 @@ public class MainGame extends BaseAppState{
         battleNode.attachChild(selfCardsNode);
         this.confirmButton = new ConfirmButton(app, camZ*ratio, camZ, selfCardsNode);
         battleNode.attachChild(confirmButton);
+        this.pauseButton = new PauseButton(app, camZ*ratio, camZ);
+        battleNode.attachChild(pauseButton);
         
 //        this.cardManager = new MainController(app,camZ*ratio,camZ,selfCardsNode,confirmButton);
-        pauseListener = new PauseListener(app);
+//        pauseListener = new PauseListener(app);
 //        clickListener = new ClickListener(app, handCardNode, cardManager);
     }
 
@@ -94,7 +99,7 @@ public class MainGame extends BaseAppState{
     protected void onEnable() {
         //add event listener
         inputManager.addMapping(PAUSE, new KeyTrigger(KeyInput.KEY_DELETE));
-        inputManager.addListener(pauseListener,PAUSE);
+//        inputManager.addListener(pauseListener,PAUSE);
         
         //one trigger can only band to one message , now can see many listener can listen one messsage
         //if later there is some problem can use raw input manager
@@ -104,6 +109,8 @@ public class MainGame extends BaseAppState{
         inputManager.addListener(confirmButton, CLICK);
         //initialize the background
         rootNode.attachChild(battleNode);
+        
+        inputManager.addListener(pauseButton, CLICK, PAUSE);
 //        cardManager.enterScene();
     }
 
@@ -111,11 +118,12 @@ public class MainGame extends BaseAppState{
     protected void onDisable() {
         battleNode.removeFromParent();
         //remove the listener
-        inputManager.removeListener(pauseListener);
+//        inputManager.removeListener(pauseListener);
         inputManager.deleteMapping(PAUSE);
         inputManager.removeListener(selfCardsNode);
         inputManager.deleteMapping(CLICK);
         inputManager.removeListener(confirmButton);
+        inputManager.removeListener(pauseButton);
     }
     
     private void constructBackground(){
