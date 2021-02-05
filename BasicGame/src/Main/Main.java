@@ -2,6 +2,7 @@ package Main;
 
 import Battle.MainGame;
 import Pause.PauseInterface;
+import Prepare.MainPrepare;
 import Welcome.WelcomeInterface;
 import com.jme3.app.SimpleApplication;
 import com.jme3.light.AmbientLight;
@@ -31,6 +32,7 @@ public class Main extends SimpleApplication {
     private WelcomeInterface welcomeUI;
     private MainGame mainGame;
     private PauseInterface pauseUI;
+    private MainPrepare mainPrepare;
     
     
     public static void main(String[] args) {
@@ -47,12 +49,15 @@ public class Main extends SimpleApplication {
           welcomeUI = new WelcomeInterface();
           mainGame = new MainGame();
           pauseUI = new PauseInterface();
+          mainPrepare = new MainPrepare();
         
           stateManager.attach(welcomeUI);
           stateManager.attach(mainGame);
           stateManager.attach(pauseUI);
+          stateManager.attach(mainPrepare);
           stateManager.getState(MainGame.class).setEnabled(false);
           stateManager.getState(PauseInterface.class).setEnabled(false);
+          stateManager.getState(MainPrepare.class).setEnabled(false);
     }
 
     public void switchfromWeltoMain(){
@@ -74,6 +79,11 @@ public class Main extends SimpleApplication {
     public void switchfromPausetoMain(){
         stateManager.getState(PauseInterface.class).setEnabled(false);
         stateManager.getState(MainGame.class).setEnabled(true);
+    }
+    
+    public void switchfromMaintoPrepare(){
+        stateManager.getState(MainGame.class).setEnabled(false);
+        stateManager.getState(MainPrepare.class).setEnabled(true);
     }
     
     /**

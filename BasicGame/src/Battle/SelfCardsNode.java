@@ -142,4 +142,8 @@ public class SelfCardsNode extends Node implements ActionListener{
         }
     }
     
+    public ArrayList<Card> getLineup(){
+        return lineup;
+    }
+    
 }

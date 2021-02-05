@@ -28,6 +28,7 @@ import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
 import com.jme3.scene.shape.Quad;
 import com.jme3.texture.Texture;
+import java.util.ArrayList;
 
 /**
  *
@@ -95,8 +96,12 @@ public class MainGame extends BaseAppState{
         inputManager.addMapping(PAUSE, new KeyTrigger(KeyInput.KEY_DELETE));
         inputManager.addListener(pauseListener,PAUSE);
         
+        //one trigger can only band to one message , now can see many listener can listen one messsage
+        //if later there is some problem can use raw input manager
         inputManager.addMapping(CLICK, new MouseButtonTrigger(MouseInput.BUTTON_LEFT));
         inputManager.addListener(selfCardsNode,CLICK);
+        
+        inputManager.addListener(confirmButton, CLICK);
         //initialize the background
         rootNode.attachChild(battleNode);
 //        cardManager.enterScene();
@@ -110,6 +115,7 @@ public class MainGame extends BaseAppState{
         inputManager.deleteMapping(PAUSE);
         inputManager.removeListener(selfCardsNode);
         inputManager.deleteMapping(CLICK);
+        inputManager.removeListener(confirmButton);
     }
     
     private void constructBackground(){
@@ -136,5 +142,9 @@ public class MainGame extends BaseAppState{
         ratio = w/h; //the width-height ratio of the screen
         cam.setLocation(Vector3f.ZERO.add(new Vector3f(0.0f, 0.0f,100f)));//Move the Camera back
         camZ = cam.getLocation().getZ()-15; //No Idea why I need to subtract 15
+    }
+    
+    public ArrayList<Card> getLineupCards(){
+        return selfCardsNode.getLineup();
     }
 }
