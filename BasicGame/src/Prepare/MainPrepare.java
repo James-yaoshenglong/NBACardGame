@@ -8,10 +8,9 @@ package Prepare;
 import Action.ClickListener;
 import Action.PauseListener;
 import Battle.ConfirmButton;
-import Battle.MainController;
+//import Battle.MainController;
 import static Battle.MainGame.CLICK;
 import static Battle.MainGame.PAUSE;
-import Battle.SelfCardsNode;
 import com.jme3.app.Application;
 import com.jme3.app.SimpleApplication;
 import com.jme3.app.state.AppStateManager;
@@ -46,7 +45,9 @@ public class MainPrepare extends BaseAppState{
     private Node rootNode;
     private Node prepareNode;
     private SelfCardsNode selfCardsNode;
-    private MainController cardManager;
+    private PassButton passButton;
+    private ShootButton shootButton;
+    private BreakthroughButton breakthroughButton;
     private float camZ;
     private float ratio;
     public final static String PAUSE = "PAUSE"; //the pause message
@@ -75,6 +76,12 @@ public class MainPrepare extends BaseAppState{
         //Game initalize
         this.selfCardsNode = new SelfCardsNode(app, camZ*ratio, camZ); // here pay attention
         prepareNode.attachChild(selfCardsNode);
+        this.shootButton = new ShootButton(app, camZ*ratio, camZ);
+        prepareNode.attachChild(shootButton);
+        this.breakthroughButton = new BreakthroughButton(app, camZ*ratio, camZ);
+        prepareNode.attachChild(breakthroughButton);
+        this.passButton = new PassButton(app, camZ*ratio, camZ);
+        prepareNode.attachChild(passButton);
         
         pauseListener = new PauseListener(app);
 //        clickListener = new ClickListener(app, handCardNode, cardManager);
@@ -94,6 +101,7 @@ public class MainPrepare extends BaseAppState{
         inputManager.addListener(selfCardsNode,CLICK);
         //initialize the background
         rootNode.attachChild(prepareNode);
+        selfCardsNode.licensing();
 //        cardManager.enterScene();
     }
     
