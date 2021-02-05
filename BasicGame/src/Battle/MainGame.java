@@ -41,7 +41,7 @@ public class MainGame extends BaseAppState{
     private InputManager inputManager;
     private Camera cam;
     private Node rootNode;
-    private MainController cardManager;
+//    private MainController cardManager;
     private float camZ;
     private float ratio;
     private Node battleNode;
@@ -80,7 +80,7 @@ public class MainGame extends BaseAppState{
         this.confirmButton = new ConfirmButton(app, camZ*ratio, camZ);
         battleNode.attachChild(confirmButton);
         
-        this.cardManager = new MainController(app,camZ*ratio,camZ,selfCardsNode,confirmButton);
+//        this.cardManager = new MainController(app,camZ*ratio,camZ,selfCardsNode,confirmButton);
         pauseListener = new PauseListener(app);
 //        clickListener = new ClickListener(app, handCardNode, cardManager);
     }

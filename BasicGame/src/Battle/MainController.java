@@ -28,7 +28,7 @@ public class MainController {
         this.myTeam = new ArrayList<>();
         this.enemyTeam = new ArrayList<>();
         this.lineup = new ArrayList<>();
-        this.display = new DisplayController(app, HandCardNode, ButtonNode, camWidth, camHeight);
+//        this.display = new DisplayController(app, HandCardNode, ButtonNode, camWidth, camHeight);
         int teamSize = 10;
         int totalPlayerSize = 100; 
         //random assign player to player's team

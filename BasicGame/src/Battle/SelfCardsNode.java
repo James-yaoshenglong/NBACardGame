@@ -15,22 +15,27 @@ import com.jme3.math.Vector3f;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  *
  * @author 影音娱乐剪辑
  */
 public class SelfCardsNode extends Node implements ActionListener{
+    private ArrayList<Card> myTeam;
     private ArrayList<Card> lineup;
     private SimpleApplication app;
     private float width; //screen width and height
     private float height;
     
     public SelfCardsNode(SimpleApplication mainApp, float aCamWidth, float aCamHeight){
+        this.myTeam = new ArrayList<>();
         this.lineup = new ArrayList<>();
         this.app = mainApp;
         this.width = aCamWidth;
         this.height = aCamHeight;
+        deal();
+        licensing(myTeam);
     }
     
     private void playin(Card c){
@@ -111,6 +116,29 @@ public class SelfCardsNode extends Node implements ActionListener{
             this.attachChild(card);
 //            card.rotate(rot);
             
+        }
+    }
+    
+    
+    private void deal(){
+        int teamSize = 10;
+        int totalPlayerSize = 100; 
+        //random assign player to player's team
+        Random r = new Random();
+        ArrayList<Integer> arr = new ArrayList<>();
+        int count = 0;
+        while(count < teamSize){
+            int number = r.nextInt(totalPlayerSize);  
+            if(!arr.contains(number)){
+                arr.add(number);
+                count++;
+            }
+        }
+        
+        //later need to send this id list to the server
+        ArrayList<Integer> EnemyIdList = arr;
+        for(int i=0; i<teamSize; i++){
+            myTeam.add(new Card(arr.get(i),width,app));
         }
     }
     
