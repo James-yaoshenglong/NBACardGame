@@ -51,7 +51,7 @@ public class MainController {
             enemyTeam.add(new Card(EnemyIdList.get(i),camera_width,app));
         }
         HandCardNode.licensing(myTeam);   
-        display.confirmlineup();
+//        display.confirmlineup();
     }
     
 //    public void enterScene(){

@@ -46,7 +46,8 @@ public class MainGame extends BaseAppState{
     private float ratio;
     private Node battleNode;
     private SelfCardsNode selfCardsNode;
-    private Node buttonNode;
+//    private Node buttonNode;
+    private ConfirmButton confirmButton;
     public final static String PAUSE = "PAUSE"; //the pause message
     private ActionListener pauseListener;
     
@@ -69,14 +70,17 @@ public class MainGame extends BaseAppState{
         
         
         this.battleNode = new Node();
-        this.buttonNode = new Node();
-        battleNode.attachChild(buttonNode);
+//        this.buttonNode = new Node();
+//        battleNode.attachChild(buttonNode);
         //construct the background
         constructBackground();
         //Game initalize
         this.selfCardsNode = new SelfCardsNode(app, camZ*ratio, camZ); // here pay attention
         battleNode.attachChild(selfCardsNode);
-        this.cardManager = new MainController(app,camZ*ratio,camZ,selfCardsNode,buttonNode);
+        this.confirmButton = new ConfirmButton(app, camZ*ratio, camZ);
+        battleNode.attachChild(confirmButton);
+        
+        this.cardManager = new MainController(app,camZ*ratio,camZ,selfCardsNode,confirmButton);
         pauseListener = new PauseListener(app);
 //        clickListener = new ClickListener(app, handCardNode, cardManager);
     }
