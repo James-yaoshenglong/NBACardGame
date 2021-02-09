@@ -51,8 +51,9 @@ public class MainPrepare extends BaseAppState{
     private float camZ;
     private float ratio;
     public final static String PAUSE = "PAUSE"; //the pause message
-    private ActionListener pauseListener;
     public final static String CLICK = "CLICK"; //the CLICK message
+    
+    private boolean buttonShown = false;
     
     @Override
     protected void initialize(Application mainApp) {
@@ -77,13 +78,9 @@ public class MainPrepare extends BaseAppState{
         this.selfCardsNode = new SelfCardsNode(app, camZ*ratio, camZ); // here pay attention
         prepareNode.attachChild(selfCardsNode);
         this.shootButton = new ShootButton(app, camZ*ratio, camZ);
-        prepareNode.attachChild(shootButton);
         this.breakthroughButton = new BreakthroughButton(app, camZ*ratio, camZ);
-        prepareNode.attachChild(breakthroughButton);
         this.passButton = new PassButton(app, camZ*ratio, camZ);
-        prepareNode.attachChild(passButton);
         
-        pauseListener = new PauseListener(app);
 //        clickListener = new ClickListener(app, handCardNode, cardManager);
     }
     
@@ -95,7 +92,6 @@ public class MainPrepare extends BaseAppState{
     protected void onEnable() {
         //add event listener
         inputManager.addMapping(PAUSE, new KeyTrigger(KeyInput.KEY_DELETE));
-        inputManager.addListener(pauseListener,PAUSE);
         
         inputManager.addMapping(CLICK, new MouseButtonTrigger(MouseInput.BUTTON_LEFT));
         inputManager.addListener(selfCardsNode,CLICK);
@@ -109,7 +105,6 @@ public class MainPrepare extends BaseAppState{
     protected void onDisable() {
         prepareNode.removeFromParent();
         //remove the listener
-        inputManager.removeListener(pauseListener);
         inputManager.deleteMapping(PAUSE);
         inputManager.removeListener(selfCardsNode);
         inputManager.deleteMapping(CLICK);
@@ -139,5 +134,19 @@ public class MainPrepare extends BaseAppState{
         ratio = w/h; //the width-height ratio of the screen
         cam.setLocation(Vector3f.ZERO.add(new Vector3f(0.0f, 0.0f,100f)));//Move the Camera back
         camZ = cam.getLocation().getZ()-15; //No Idea why I need to subtract 15
+    }
+    
+    public void showButton(){
+        if(buttonShown){
+            shootButton.removeFromParent();
+            breakthroughButton.removeFromParent();
+            passButton.removeFromParent();
+        }
+        else{
+            prepareNode.attachChild(shootButton);
+            prepareNode.attachChild(breakthroughButton);
+            prepareNode.attachChild(passButton);
+        }
+        buttonShown = !buttonShown;
     }
 }
