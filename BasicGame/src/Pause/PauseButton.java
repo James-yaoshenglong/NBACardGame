@@ -36,13 +36,13 @@ public class PauseButton extends Node implements ActionListener{
     }
     
     private void initialize(){
-        Quad quad = new Quad(width/24,height/24);
+        Quad quad = new Quad(width/24f,height/24f);
         buttonGeom = new Geometry("confirm_button",quad);
-        Texture tex = app.getAssetManager().loadTexture("Textures/pic/confirm_button.jpg");
+        Texture tex = app.getAssetManager().loadTexture("Textures/pic/pause_button.png");
         Material mat = new Material(app.getAssetManager(),"Common/MatDefs/Misc/Unshaded.j3md");
         mat.setTexture("ColorMap", tex);
         buttonGeom.setMaterial(mat);
-        buttonGeom.setLocalTranslation(width/24*11, height/24*11, 0);
+        this.setLocalTranslation(width/24f*10.5f, height/24f*10.5f, 0);
         this.attachChild(buttonGeom);
     }
     
