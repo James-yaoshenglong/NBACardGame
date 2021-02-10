@@ -11,6 +11,7 @@ import Battle.ConfirmButton;
 //import Battle.MainController;
 import static Battle.MainGame.CLICK;
 import static Battle.MainGame.PAUSE;
+import Pause.PauseButton;
 import com.jme3.app.Application;
 import com.jme3.app.SimpleApplication;
 import com.jme3.app.state.AppStateManager;
@@ -54,6 +55,8 @@ public class MainPrepare extends BaseAppState{
     public final static String PAUSE = "PAUSE"; //the pause message
     public final static String CLICK = "CLICK"; //the CLICK message
     
+    private PauseButton pauseButton;
+    
     private boolean buttonShown = false;
     
     @Override
@@ -83,6 +86,9 @@ public class MainPrepare extends BaseAppState{
         this.opBox = new OperationBox(app, camZ*ratio, camZ);
         prepareNode.attachChild(opBox);
         
+        this.pauseButton = new PauseButton(app, camZ*ratio, camZ);
+        prepareNode.attachChild(pauseButton);
+        
 //        clickListener = new ClickListener(app, handCardNode, cardManager);
     }
     
@@ -97,6 +103,9 @@ public class MainPrepare extends BaseAppState{
         
         inputManager.addMapping(CLICK, new MouseButtonTrigger(MouseInput.BUTTON_LEFT));
         inputManager.addListener(selfCardsNode,CLICK);
+        inputManager.addListener(pauseButton, CLICK, PAUSE);
+        
+        
         //initialize the background
         this.selfCardsNode = new SelfCardsNode(app, camZ*ratio, camZ); // here pay attention
         prepareNode.attachChild(selfCardsNode);
@@ -112,6 +121,7 @@ public class MainPrepare extends BaseAppState{
         inputManager.deleteMapping(PAUSE);
         inputManager.removeListener(selfCardsNode);
         inputManager.deleteMapping(CLICK);
+        inputManager.removeListener(pauseButton);
     }
     
     private void constructBackground(){
