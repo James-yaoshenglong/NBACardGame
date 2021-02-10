@@ -47,6 +47,7 @@ public class MainPrepare extends BaseAppState{
     private SelfCardsNode selfCardsNode;
     private PassButton passButton;
     private ShootButton shootButton;
+    private OperationBox opBox;
     private BreakthroughButton breakthroughButton;
     private float camZ;
     private float ratio;
@@ -75,11 +76,12 @@ public class MainPrepare extends BaseAppState{
         //construct the background
         constructBackground();
         //Game initalize
-        this.selfCardsNode = new SelfCardsNode(app, camZ*ratio, camZ); // here pay attention
-        prepareNode.attachChild(selfCardsNode);
+        
         this.shootButton = new ShootButton(app, camZ*ratio, camZ);
         this.breakthroughButton = new BreakthroughButton(app, camZ*ratio, camZ);
         this.passButton = new PassButton(app, camZ*ratio, camZ);
+        this.opBox = new OperationBox(app, camZ*ratio, camZ);
+        prepareNode.attachChild(opBox);
         
 //        clickListener = new ClickListener(app, handCardNode, cardManager);
     }
@@ -96,6 +98,8 @@ public class MainPrepare extends BaseAppState{
         inputManager.addMapping(CLICK, new MouseButtonTrigger(MouseInput.BUTTON_LEFT));
         inputManager.addListener(selfCardsNode,CLICK);
         //initialize the background
+        this.selfCardsNode = new SelfCardsNode(app, camZ*ratio, camZ); // here pay attention
+        prepareNode.attachChild(selfCardsNode);
         rootNode.attachChild(prepareNode);
         selfCardsNode.licensing();
 //        cardManager.enterScene();

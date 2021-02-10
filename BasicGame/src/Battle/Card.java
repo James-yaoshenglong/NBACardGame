@@ -84,10 +84,13 @@ public class Card extends Node{
         Texture tex = app.getAssetManager().loadTexture(player.getImage());
         Material mat = new Material(app.getAssetManager(),"Common/MatDefs/Misc/Unshaded.j3md");
         mat.setTexture("ColorMap",tex);
-        
         geom.setMaterial(mat);
         geom.setLocalTranslation(-((BoundingBox)geom.getWorldBound()).getXExtent(),0.0f,0.0f);
         this.attachChild(geom);
+    }
+    
+    public int getID(){
+        return player.getID();
     }
     
     public Player getPlayer(){
@@ -116,5 +119,13 @@ public class Card extends Node{
         trueNode.setLocalTranslation(0f, 10f, 1f);
         this.attachChild(trueNode);
     }
+    
+    public void setPicNormalColor(){
+        geom.getMaterial().setColor("Color", new ColorRGBA(1f,1f,1f,0f));
+        geom.setMaterial(geom.getMaterial());
+        System.out.println(geom.getMaterial().getParam("Color").toString());
+    }
+    
+   
             
 }

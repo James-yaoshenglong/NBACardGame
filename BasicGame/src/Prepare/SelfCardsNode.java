@@ -30,18 +30,20 @@ public class SelfCardsNode extends Node implements ActionListener{
     
     public SelfCardsNode(SimpleApplication mainApp, float aCamWidth, float aCamHeight){
         this.app = mainApp;
-        lineup = app.getStateManager().getState(MainGame.class).getLineupCards();
+        lineup = new ArrayList<>();
         this.width = aCamWidth;
         this.height = aCamHeight;
+        for(Card c : app.getStateManager().getState(MainGame.class).getLineupCards()){
+            Card card = new Card(c.getID(),width,app);
+            lineup.add(card);
+        }
     }
     
     public void licensing(){
         for(int i =0; i<lineup.size(); i++){
-            
-            Node card = lineup.get(i);
-            
-            card.setLocalTranslation((i%5-2)*(width/5),height*(-0.3f),0);
-            
+
+            Card card = lineup.get(i);
+            card.setLocalTranslation((i%5-2)*(width/5),height*(-0.45f),0);
             this.attachChild(card);
             
         }
@@ -61,10 +63,11 @@ public class SelfCardsNode extends Node implements ActionListener{
         CollisionResults results = new CollisionResults();
         this.collideWith(ray, results);
         if(results.size() > 0){
-//            Geometry targetCardGeom = results.getFarthestCollision().getGeometry(); //get the closest target in our eyes
-//            Card targetCardNode = (Card)targetCardGeom.getParent();
-//            targetCardGeom.getMaterial().setColor("Color", new ColorRGBA(0.2f,0.2f,0.2f,1f));
-            app.getStateManager().getState(MainPrepare.class).showButton();
+            Geometry targetCardGeom = results.getFarthestCollision().getGeometry(); //get the closest target in our eyes
+            Card targetCardNode = (Card)targetCardGeom.getParent();
+            targetCardGeom.getMaterial().setColor("Color", new ColorRGBA(0.2f,0.2f,0.2f,1f));
+//            app.getStateManager().getState(MainPrepare.class).showButton();
+              
         }
     }
     

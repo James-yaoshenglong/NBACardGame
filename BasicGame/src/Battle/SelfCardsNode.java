@@ -104,7 +104,7 @@ public class SelfCardsNode extends Node implements ActionListener{
 //
 //            Quaternion rot = new Quaternion(angles);
             
-            Node card = cardList.get(i);
+            Card card = cardList.get(i);
 //            this.attachChild(card);
             if(i<5){
                 card.setLocalTranslation((i%5-2)*(width/5),height/20,0);
