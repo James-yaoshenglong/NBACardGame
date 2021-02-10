@@ -120,6 +120,11 @@ public class Card extends Node{
         this.attachChild(trueNode);
     }
     
+    public void setSize(float f){
+        geom.setLocalScale(f);
+        geom.setLocalTranslation(-((BoundingBox)geom.getWorldBound()).getXExtent(),0.0f,0.0f);
+    }
+    
     public void setPicNormalColor(){
         geom.getMaterial().setColor("Color", new ColorRGBA(1f,1f,1f,0f));
         geom.setMaterial(geom.getMaterial());

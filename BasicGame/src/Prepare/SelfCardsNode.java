@@ -27,12 +27,14 @@ public class SelfCardsNode extends Node implements ActionListener{
     private SimpleApplication app;
     private float width; //screen width and height
     private float height;
+    private OperationBox opBox;
     
-    public SelfCardsNode(SimpleApplication mainApp, float aCamWidth, float aCamHeight){
+    public SelfCardsNode(SimpleApplication mainApp, float aCamWidth, float aCamHeight, OperationBox opBox){
         this.app = mainApp;
         lineup = new ArrayList<>();
         this.width = aCamWidth;
         this.height = aCamHeight;
+        this.opBox = opBox;
         for(Card c : app.getStateManager().getState(MainGame.class).getLineupCards()){
             Card card = new Card(c.getID(),width,app);
             lineup.add(card);
@@ -66,6 +68,7 @@ public class SelfCardsNode extends Node implements ActionListener{
             Geometry targetCardGeom = results.getFarthestCollision().getGeometry(); //get the closest target in our eyes
             Card targetCardNode = (Card)targetCardGeom.getParent();
             targetCardGeom.getMaterial().setColor("Color", new ColorRGBA(0.2f,0.2f,0.2f,1f));
+            opBox.choosePlayer1(targetCardNode.getID());
 //            app.getStateManager().getState(MainPrepare.class).showButton();
               
         }

@@ -98,19 +98,19 @@ public class MainPrepare extends BaseAppState{
     
     @Override
     protected void onEnable() {
+        
+        //initialize the background
+        this.selfCardsNode = new SelfCardsNode(app, camZ*ratio, camZ, opBox); // here pay attention
+        prepareNode.attachChild(selfCardsNode);
+        rootNode.attachChild(prepareNode);
+        selfCardsNode.licensing();
+        
         //add event listener
         inputManager.addMapping(PAUSE, new KeyTrigger(KeyInput.KEY_DELETE));
         
         inputManager.addMapping(CLICK, new MouseButtonTrigger(MouseInput.BUTTON_LEFT));
         inputManager.addListener(selfCardsNode,CLICK);
         inputManager.addListener(pauseButton, CLICK, PAUSE);
-        
-        
-        //initialize the background
-        this.selfCardsNode = new SelfCardsNode(app, camZ*ratio, camZ); // here pay attention
-        prepareNode.attachChild(selfCardsNode);
-        rootNode.attachChild(prepareNode);
-        selfCardsNode.licensing();
 //        cardManager.enterScene();
     }
     

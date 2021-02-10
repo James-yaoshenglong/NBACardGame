@@ -5,6 +5,7 @@
  */
 package Prepare;
 
+import Battle.Card;
 import com.jme3.app.SimpleApplication;
 import com.jme3.material.Material;
 import com.jme3.scene.Geometry;
@@ -39,5 +40,12 @@ public class OperationBox extends Node{
         BgGeom.setMaterial(mat);
         BgGeom.setLocalTranslation(width*(-0.16f),0,0);
         this.attachChild(BgGeom);
+    }
+    
+    public void choosePlayer1(int id){
+        Card player1 = new Card(id,width,app);
+        player1.setSize(0.8f);
+        player1.setLocalTranslation((float)(-1f/15f)*width, width*(0.24f/9), 1);
+        this.attachChild(player1);
     }
 }
