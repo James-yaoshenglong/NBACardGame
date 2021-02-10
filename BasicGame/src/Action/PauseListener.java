@@ -22,7 +22,7 @@ public class PauseListener implements ActionListener{
     @Override
     public void onAction(String name, boolean isPressed, float tpf) {
         if(name.equals("PAUSE") && isPressed){
-            ((Main)app).switchfromMaintoPause();
+//            ((Main)app).switchfromMaintoPause();
         }
     }
     

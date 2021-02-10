@@ -101,7 +101,7 @@ public class PauseInterface extends BaseAppState{
         Back.addClickCommands(new Command<Button>() {
                 @Override
                 public void execute(Button source) {
-                        ((Main)app).switchfromPausetoMain();
+                        ((Main)app).returnBackFromPause();
                 }
         });
         

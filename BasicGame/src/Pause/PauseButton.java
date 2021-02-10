@@ -49,14 +49,14 @@ public class PauseButton extends Node implements ActionListener{
    @Override
     public void onAction(String name, boolean isClicked, float tpf) {
         if(name.equals("PAUSE") && isClicked){
-            ((Main)app).switchfromMaintoPause();
+            ((Main)app).switchToPause();
         }
         if(isClicked && name.equals("CLICK")){
             Ray ray = createRay();
             CollisionResults results = new CollisionResults();
             this.collideWith(ray, results);
             if(results.size() > 0){
-                ((Main)app).switchfromMaintoPause();
+                ((Main)app).switchToPause();
             }
         }
     }

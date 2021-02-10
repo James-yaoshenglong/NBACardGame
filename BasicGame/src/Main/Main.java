@@ -5,6 +5,7 @@ import Pause.PauseInterface;
 import Prepare.MainPrepare;
 import Welcome.WelcomeInterface;
 import com.jme3.app.SimpleApplication;
+import com.jme3.app.state.BaseAppState;
 import com.jme3.light.AmbientLight;
 import com.jme3.light.DirectionalLight;
 import com.jme3.material.Material;
@@ -33,6 +34,7 @@ public class Main extends SimpleApplication {
     private MainGame mainGame;
     private PauseInterface pauseUI;
     private MainPrepare mainPrepare;
+    private BaseAppState currentState; //do not count pause
     
     
     public static void main(String[] args) {
@@ -50,6 +52,7 @@ public class Main extends SimpleApplication {
           mainGame = new MainGame();
           pauseUI = new PauseInterface();
           mainPrepare = new MainPrepare();
+          currentState = welcomeUI;
         
           stateManager.attach(welcomeUI);
           stateManager.attach(mainGame);
@@ -63,6 +66,7 @@ public class Main extends SimpleApplication {
     public void switchfromWeltoMain(){
         stateManager.getState(WelcomeInterface.class).setEnabled(false);
         stateManager.getState(MainGame.class).setEnabled(true);
+        currentState = mainGame;
     }
     
     public void switchfromPausetoWel(){
@@ -70,20 +74,32 @@ public class Main extends SimpleApplication {
         stateManager.getState(WelcomeInterface.class).setEnabled(true);
     }
     
-    public void switchfromMaintoPause(){
-        //now just for test use the welcome state
-        stateManager.getState(MainGame.class).setEnabled(false);
-        stateManager.getState(PauseInterface.class).setEnabled(true);
-    }
+//    public void switchfromMaintoPause(){
+//        //now just for test use the welcome state
+//        stateManager.getState(MainGame.class).setEnabled(false);
+//        stateManager.getState(PauseInterface.class).setEnabled(true);
+//    }
     
-    public void switchfromPausetoMain(){
-        stateManager.getState(PauseInterface.class).setEnabled(false);
-        stateManager.getState(MainGame.class).setEnabled(true);
-    }
+//    public void switchfromPausetoMain(){
+//        stateManager.getState(PauseInterface.class).setEnabled(false);
+//        stateManager.getState(MainGame.class).setEnabled(true);
+//    }
     
     public void switchfromMaintoPrepare(){
         stateManager.getState(MainGame.class).setEnabled(false);
         stateManager.getState(MainPrepare.class).setEnabled(true);
+        currentState = mainPrepare;
+    }
+    
+    public void returnBackFromPause(){
+        stateManager.getState(PauseInterface.class).setEnabled(false);
+        stateManager.getState(currentState.getClass()).setEnabled(true);
+    }
+    
+    public void switchToPause(){
+        stateManager.getState(MainGame.class).setEnabled(false);
+        stateManager.getState(MainPrepare.class).setEnabled(false);
+        stateManager.getState(PauseInterface.class).setEnabled(true);
     }
     
     /**
