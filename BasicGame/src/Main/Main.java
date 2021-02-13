@@ -47,31 +47,31 @@ public class Main extends SimpleApplication {
 
     public void simpleInitApp() {
         //setting the fly cam disable;
-          this.getFlyByCamera().setEnabled(false);
-          welcomeUI = new WelcomeInterface();
-          mainGame = new MainGame();
-          pauseUI = new PauseInterface();
-          mainPrepare = new MainPrepare();
-          currentState = welcomeUI;
-        
-          stateManager.attach(welcomeUI);
-          stateManager.attach(mainGame);
-          stateManager.attach(pauseUI);
-          stateManager.attach(mainPrepare);
-          stateManager.getState(MainGame.class).setEnabled(false);
-          stateManager.getState(PauseInterface.class).setEnabled(false);
-          stateManager.getState(MainPrepare.class).setEnabled(false);
+        this.getFlyByCamera().setEnabled(false);
+        welcomeUI = new WelcomeInterface();
+        pauseUI = new PauseInterface();
+        currentState = welcomeUI;
+
+        stateManager.attach(welcomeUI);
+        stateManager.attach(pauseUI);
+        stateManager.getState(PauseInterface.class).setEnabled(false);
     }
 
     public void switchfromWeltoMain(){
         stateManager.getState(WelcomeInterface.class).setEnabled(false);
-        stateManager.getState(MainGame.class).setEnabled(true);
+        mainGame = new MainGame();
+        mainPrepare = new MainPrepare();
+        stateManager.attach(mainGame);
+        stateManager.attach(mainPrepare);
+        stateManager.getState(MainPrepare.class).setEnabled(false);
         currentState = mainGame;
     }
     
     public void switchfromPausetoWel(){
         stateManager.getState(PauseInterface.class).setEnabled(false);
         stateManager.getState(WelcomeInterface.class).setEnabled(true);
+        stateManager.detach(mainGame);
+        stateManager.detach(mainPrepare);
     }
     
 //    public void switchfromMaintoPause(){
