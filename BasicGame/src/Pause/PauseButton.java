@@ -6,6 +6,7 @@
 package Pause;
 
 import Main.Main;
+import Widgets.MyRay;
 import com.jme3.app.SimpleApplication;
 import com.jme3.collision.CollisionResults;
 import com.jme3.input.controls.ActionListener;
@@ -52,7 +53,7 @@ public class PauseButton extends Node implements ActionListener{
             ((Main)app).switchToPause();
         }
         if(isClicked && name.equals("CLICK")){
-            Ray ray = createRay();
+            Ray ray = MyRay.createRay(app);
             CollisionResults results = new CollisionResults();
             this.collideWith(ray, results);
             if(results.size() > 0){
@@ -62,16 +63,4 @@ public class PauseButton extends Node implements ActionListener{
     }
     
     
-        private Ray createRay(){
-        Ray ray = new Ray();
-        //set the origin of the ray
-        ray.setOrigin(app.getCamera().getLocation());
-        //compute the direction of the ray
-        Vector2f screenCoord = app.getInputManager().getCursorPosition();
-        Vector3f worldCoord = app.getCamera().getWorldCoordinates(screenCoord, 1f);
-        Vector3f dir = worldCoord.subtract(app.getCamera().getLocation());
-        dir.normalizeLocal();
-        ray.setDirection(dir);
-        return ray;
-    }
 }
