@@ -22,6 +22,7 @@ public class OperationBox extends Node{
     private SimpleApplication app;
     private float width; //screen width and height
     private float height;
+    private Card player1;
     
     
     public OperationBox(SimpleApplication mainApp, float aCamWidth, float aCamHeight){
@@ -43,9 +44,18 @@ public class OperationBox extends Node{
     }
     
     public void choosePlayer1(int id){
-        Card player1 = new Card(id,width,app);
-        player1.setSize(0.8f);
-        player1.setLocalTranslation((float)(-1f/15f)*width, width*(0.24f/9), 1);
-        this.attachChild(player1);
+        if(player1 == null){
+            player1 = new Card(id,width,app); 
+            player1.setSize(0.8f);
+            player1.setLocalTranslation((float)(-1f/15f)*width, width*(0.24f/9), 1);
+            this.attachChild(player1);
+        }
+        else if(player1.getID() != id){
+            player1.removeFromParent();
+            player1 = new Card(id,width,app);
+            player1.setSize(0.8f);
+            player1.setLocalTranslation((float)(-1f/15f)*width, width*(0.24f/9), 1);
+            this.attachChild(player1);
+        }
     }
 }
