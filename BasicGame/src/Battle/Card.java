@@ -42,7 +42,7 @@ public class Card extends Node{
     float width;
     float height;
     Player player;
-    Application app;
+    SimpleApplication app;
     int power;
     Geometry geom;
     boolean isInLineup;
@@ -56,7 +56,7 @@ public class Card extends Node{
     
     
     
-    public Card(int id, float camera_width, Application anApp){
+    public Card(int id, float camera_width, SimpleApplication anApp){
         this.player = new Player(id);
         this.width = camera_width/6;
         this.height = width*7/5;
@@ -108,16 +108,19 @@ public class Card extends Node{
     private void setPicBattleValue(){
 	
         // 注册ttf字体资源加载器
-        app.getAssetManager().registerLoader(TrueTypeLoader.class, "ttf");
+//        app.getAssetManager().registerLoader(TrueTypeLoader.class, "ttf");
+//
+//        // 创建字体 (例如：楷书)
+//        TrueTypeKeyMesh ttk = new TrueTypeKeyMesh("Fonts/arial.ttf", Style.Plain,10);
+//
+//        TrueTypeFont font = (TrueTypeMesh)(app.getAssetManager()).loadAsset(ttk);
+//        
+//        TrueTypeNode trueNode = font.getText("HHH", 0, ColorRGBA.Black);
+//        trueNode.setLocalTranslation(0f, 10f, 1f);
+//        this.attachChild(trueNode);
 
-        // 创建字体 (例如：楷书)
-        TrueTypeKeyMesh ttk = new TrueTypeKeyMesh("Fonts/arial.ttf", Style.Plain,10);
-
-        TrueTypeFont font = (TrueTypeMesh)(app.getAssetManager()).loadAsset(ttk);
-        
-        TrueTypeNode trueNode = font.getText("HHH", 0, ColorRGBA.Black);
-        trueNode.setLocalTranslation(0f, 10f, 1f);
-        this.attachChild(trueNode);
+          BattleValueSphere valueSphere = new BattleValueSphere(app, width, height, power);
+          this.attachChild(valueSphere);
     }
     
     public void setSize(float f){
