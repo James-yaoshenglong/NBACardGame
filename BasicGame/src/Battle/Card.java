@@ -46,6 +46,7 @@ public class Card extends Node{
     int power;
     Geometry geom;
     boolean isInLineup;
+    BattleValueSphere valueSphere;
     
     public final static int PLAIN = 0;// 普通
     public final static int BOLD = 1;// 粗体
@@ -119,8 +120,7 @@ public class Card extends Node{
 //        trueNode.setLocalTranslation(0f, 10f, 1f);
 //        this.attachChild(trueNode);
 
-          BattleValueSphere valueSphere = new BattleValueSphere(app, width, height, power);
-          this.attachChild(valueSphere);
+          valueSphere= new BattleValueSphere(app, width, height, power);
     }
     
     public void setSize(float f){
@@ -134,6 +134,13 @@ public class Card extends Node{
         System.out.println(geom.getMaterial().getParam("Color").toString());
     }
     
+    public void showBattleValue(){
+        this.attachChild(valueSphere);
+    }
+    
+    public void hideBattleValue(){
+        valueSphere.removeFromParent();
+    }
    
             
 }

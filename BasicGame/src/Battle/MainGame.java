@@ -112,6 +112,8 @@ public class MainGame extends BaseAppState{
         
         inputManager.addListener(pauseButton, CLICK, PAUSE);
 //        cardManager.enterScene();
+
+        inputManager.addRawInputListener(selfCardsNode);
     }
 
     @Override
@@ -124,6 +126,7 @@ public class MainGame extends BaseAppState{
         inputManager.deleteMapping(CLICK);
         inputManager.removeListener(confirmButton);
         inputManager.removeListener(pauseButton);
+        inputManager.removeRawInputListener(selfCardsNode);
     }
     
     private void constructBackground(){

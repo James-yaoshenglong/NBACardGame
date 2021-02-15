@@ -8,7 +8,14 @@ package Battle;
 import Widgets.MyRay;
 import com.jme3.app.SimpleApplication;
 import com.jme3.collision.CollisionResults;
+import com.jme3.input.RawInputListener;
 import com.jme3.input.controls.ActionListener;
+import com.jme3.input.event.JoyAxisEvent;
+import com.jme3.input.event.JoyButtonEvent;
+import com.jme3.input.event.KeyInputEvent;
+import com.jme3.input.event.MouseButtonEvent;
+import com.jme3.input.event.MouseMotionEvent;
+import com.jme3.input.event.TouchEvent;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.Ray;
 import com.jme3.math.Vector2f;
@@ -22,7 +29,7 @@ import java.util.Random;
  *
  * @author 影音娱乐剪辑
  */
-public class SelfCardsNode extends Node implements ActionListener{
+public class SelfCardsNode extends Node implements ActionListener, RawInputListener{
     private ArrayList<Card> myTeam;
     private ArrayList<Card> lineup;
     private SimpleApplication app;
@@ -140,6 +147,52 @@ public class SelfCardsNode extends Node implements ActionListener{
             return true;
         }
         return false;
+    }
+
+    @Override
+    public void beginInput() {
+    }
+
+    @Override
+    public void endInput() {
+    }
+
+    @Override
+    public void onJoyAxisEvent(JoyAxisEvent evt) {
+    }
+
+    @Override
+    public void onJoyButtonEvent(JoyButtonEvent evt) {
+    }
+
+    @Override
+    public void onMouseMotionEvent(MouseMotionEvent evt) {
+        Ray ray = MyRay.createRay(app);
+        CollisionResults results = new CollisionResults();
+        this.collideWith(ray, results);
+        if(results.size() > 0){
+            //may be can use Z value test to solve the stack pic problem 
+            Geometry targetCardGeom = results.getFarthestCollision().getGeometry(); //get the closest target in our eyes
+            Card targetCardNode = (Card)targetCardGeom.getParent();
+            targetCardNode.showBattleValue();
+        }
+        else{
+            for(Card c : myTeam){
+                c.hideBattleValue();
+            }
+        }
+    }
+
+    @Override
+    public void onMouseButtonEvent(MouseButtonEvent evt) {
+    }
+
+    @Override
+    public void onKeyEvent(KeyInputEvent evt) {
+    }
+
+    @Override
+    public void onTouchEvent(TouchEvent evt) {
     }
     
 }
