@@ -73,19 +73,21 @@ public class SelfCardsNode extends Node implements ActionListener, RawInputListe
         this.collideWith(ray, results);
         if(results.size() > 0){
             Geometry targetCardGeom = results.getFarthestCollision().getGeometry(); //get the closest target in our eyes
-            Card targetCardNode = (Card)targetCardGeom.getParent();
-            if(targetCardNode.getStatus() == false){
-                if(chosenplayer()<5){
-                   targetCardGeom.getMaterial().setColor("Color", new ColorRGBA(0.2f,0.2f,0.2f,1f));
-                   playin(targetCardNode);
-                   targetCardNode.toggleStatus();
+            if(targetCardGeom.getParent().getClass() == Card.class){
+                Card targetCardNode = (Card)targetCardGeom.getParent();
+                if(targetCardNode.getStatus() == false){
+                    if(chosenplayer()<5){
+                       targetCardGeom.getMaterial().setColor("Color", new ColorRGBA(0.2f,0.2f,0.2f,1f));
+                       playin(targetCardNode);
+                       targetCardNode.toggleStatus();
+                    }
                 }
+                else{
+                    targetCardGeom.getMaterial().setColor("Color", new ColorRGBA(1f,1f,1f,0f));
+                    exitlineup(targetCardNode);
+                    targetCardNode.toggleStatus();
+                }  
             }
-            else{
-                targetCardGeom.getMaterial().setColor("Color", new ColorRGBA(1f,1f,1f,0f));
-                exitlineup(targetCardNode);
-                targetCardNode.toggleStatus();
-            }  
         }
     }
         
@@ -173,8 +175,10 @@ public class SelfCardsNode extends Node implements ActionListener, RawInputListe
         if(results.size() > 0){
             //may be can use Z value test to solve the stack pic problem 
             Geometry targetCardGeom = results.getFarthestCollision().getGeometry(); //get the closest target in our eyes
-            Card targetCardNode = (Card)targetCardGeom.getParent();
-            targetCardNode.showBattleValue();
+            if(targetCardGeom.getParent().getClass() == Card.class){
+                Card targetCardNode = (Card)targetCardGeom.getParent();
+                targetCardNode.showBattleValue();
+            }
         }
         else{
             for(Card c : myTeam){

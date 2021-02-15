@@ -67,11 +67,12 @@ public class SelfCardsNode extends Node implements ActionListener{
         this.collideWith(ray, results);
         if(results.size() > 0){
             Geometry targetCardGeom = results.getFarthestCollision().getGeometry(); //get the closest target in our eyes
-            Card targetCardNode = (Card)targetCardGeom.getParent();
-            targetCardGeom.getMaterial().setColor("Color", new ColorRGBA(0.2f,0.2f,0.2f,1f));
-            opBox.choosePlayer1(targetCardNode.getID());
-//            app.getStateManager().getState(MainPrepare.class).showButton();
-              
+            if(targetCardGeom.getParent().getClass() == Card.class){
+                Card targetCardNode = (Card)targetCardGeom.getParent();
+                targetCardGeom.getMaterial().setColor("Color", new ColorRGBA(0.2f,0.2f,0.2f,1f));
+                opBox.choosePlayer1(targetCardNode.getID());
+    //            app.getStateManager().getState(MainPrepare.class).showButton();
+            }
         }
     }
     
