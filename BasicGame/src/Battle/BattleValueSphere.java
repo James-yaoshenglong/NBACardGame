@@ -14,8 +14,10 @@ import com.atr.jme.font.util.Style;
 import com.jme3.app.SimpleApplication;
 import com.jme3.material.Material;
 import com.jme3.math.ColorRGBA;
+import com.jme3.math.Vector3f;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
+import com.jme3.scene.shape.Dome;
 import com.jme3.scene.shape.Sphere;
 
 /**
@@ -39,8 +41,10 @@ public class BattleValueSphere extends Node{
     }
     
     private void initialize(){
-        sphereGeom = new Geometry("hhh", new Sphere(10, 10, width/10));
+        sphereGeom = new Geometry("hhh", new Sphere(20,20,width/3));
         Material mat = new Material(app.getAssetManager(), "Common/MatDefs/Misc/Unshaded.j3md");
+        mat.setColor("Color", ColorRGBA.Blue);
+        mat.getAdditionalRenderState().setWireframe(true);
         sphereGeom.setMaterial(mat);
         
         app.getAssetManager().registerLoader(TrueTypeLoader.class, "ttf");
