@@ -50,6 +50,7 @@ public class MainPrepare extends BaseAppState{
     private ShootButton shootButton;
     private OperationBox opBox;
     private BreakthroughButton breakthroughButton;
+    private OperationButton opButtonNode;
     private float camZ;
     private float ratio;
     public final static String PAUSE = "PAUSE"; //the pause message
@@ -83,7 +84,8 @@ public class MainPrepare extends BaseAppState{
         this.shootButton = new ShootButton(app, camZ*ratio, camZ);
         this.breakthroughButton = new BreakthroughButton(app, camZ*ratio, camZ);
         this.passButton = new PassButton(app, camZ*ratio, camZ);
-        this.opBox = new OperationBox(app, camZ*ratio, camZ);
+        this.opButtonNode = new OperationButton(app, camZ*ratio, camZ);
+        this.opBox = new OperationBox(app, camZ*ratio, camZ, opButtonNode);
         prepareNode.attachChild(opBox);
         
         this.pauseButton = new PauseButton(app, camZ*ratio, camZ);
@@ -111,6 +113,7 @@ public class MainPrepare extends BaseAppState{
         inputManager.addMapping(CLICK, new MouseButtonTrigger(MouseInput.BUTTON_LEFT));
         inputManager.addListener(selfCardsNode,CLICK);
         inputManager.addListener(pauseButton, CLICK, PAUSE);
+        inputManager.addListener(opButtonNode, CLICK);
 //        cardManager.enterScene();
     }
     
@@ -122,6 +125,7 @@ public class MainPrepare extends BaseAppState{
         inputManager.removeListener(selfCardsNode);
         inputManager.deleteMapping(CLICK);
         inputManager.removeListener(pauseButton);
+        inputManager.removeListener(opButtonNode);
     }
     
     private void constructBackground(){

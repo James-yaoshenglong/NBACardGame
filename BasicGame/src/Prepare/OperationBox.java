@@ -19,16 +19,18 @@ import com.jme3.texture.Texture;
  */
 public class OperationBox extends Node{
     private Geometry BgGeom;
+    private OperationButton opButtonNode;
     private SimpleApplication app;
     private float width; //screen width and height
     private float height;
     private Card player1;
     
     
-    public OperationBox(SimpleApplication mainApp, float aCamWidth, float aCamHeight){
+    public OperationBox(SimpleApplication mainApp, float aCamWidth, float aCamHeight, OperationButton anOpButtonNode){
         this.app = mainApp;
         this.width = aCamWidth;
         this.height = aCamHeight;
+        this.opButtonNode = anOpButtonNode;
         initialize();
     }
     
@@ -41,6 +43,7 @@ public class OperationBox extends Node{
         BgGeom.setMaterial(mat);
         BgGeom.setLocalTranslation(width*(-0.16f),0,0);
         this.attachChild(BgGeom);
+        this.attachChild(opButtonNode);
     }
     
     public void choosePlayer1(int id){
