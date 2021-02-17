@@ -17,6 +17,7 @@ import com.jme3.math.Vector2f;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
+import com.jme3.scene.Spatial;
 import java.util.ArrayList;
 
 /**
@@ -69,6 +70,10 @@ public class SelfCardsNode extends Node implements ActionListener{
             Geometry targetCardGeom = results.getFarthestCollision().getGeometry(); //get the closest target in our eyes
             if(targetCardGeom.getParent().getClass() == Card.class){
                 Card targetCardNode = (Card)targetCardGeom.getParent();
+                for(Spatial c : this.getChildren()){
+                    Card ca = (Card)c;
+                    ca.setPicNormalColor();
+                }
                 targetCardGeom.getMaterial().setColor("Color", new ColorRGBA(0.2f,0.2f,0.2f,1f));
                 opBox.choosePlayer1(targetCardNode.getID());
     //            app.getStateManager().getState(MainPrepare.class).showButton();
