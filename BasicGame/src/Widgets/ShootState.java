@@ -15,7 +15,7 @@ public class ShootState implements AttackActionState{
 
     @Override
     public void showIcon(OperationButton opButton) {
-        opButton.pass_chosen();
+        opButton.shoot_chosen();
     }
 
     @Override

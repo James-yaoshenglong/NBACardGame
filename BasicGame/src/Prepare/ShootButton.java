@@ -48,7 +48,7 @@ public class ShootButton extends Node implements ActionListener{
         buttonGeom.setMaterial(mat);
         mat.getAdditionalRenderState().setBlendMode(RenderState.BlendMode.Alpha);
         buttonGeom.setQueueBucket(RenderQueue.Bucket.Transparent); 
-        buttonGeom.setLocalTranslation(-width/14, height*0.2f, 0);
+        buttonGeom.setLocalTranslation(-width/14, height*0.2f, 3);
         this.attachChild(buttonGeom);
     }
     

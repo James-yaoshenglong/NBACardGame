@@ -55,7 +55,7 @@ public class BreakthroughButton extends Node implements ActionListener{
         buttonGeom.setMaterial(mat);
         mat.getAdditionalRenderState().setBlendMode(BlendMode.Alpha);
         buttonGeom.setQueueBucket(Bucket.Transparent); 
-        buttonGeom.setLocalTranslation(width*(-17f/42f), height*0.2f, 0);
+        buttonGeom.setLocalTranslation(width*(-17f/42f), height*0.2f, 3);
         this.attachChild(buttonGeom);
     }
     
