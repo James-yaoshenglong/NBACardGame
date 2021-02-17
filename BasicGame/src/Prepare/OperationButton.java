@@ -22,6 +22,9 @@ import com.jme3.texture.Texture;
  */
 public class OperationButton extends Node implements ActionListener{
     private Geometry buttonGeom;
+    private Geometry shootGeom;
+    private Geometry passGeom;
+    private Geometry breakthroughGeom;
     private SimpleApplication app;
     private float width; //screen width and height
     private float height;
@@ -36,7 +39,7 @@ public class OperationButton extends Node implements ActionListener{
     
     private void initialize(){
         Quad quad = new Quad(width*(0.32f/3f-0.002f),width*(0.24f*7f/9f-0.003f));
-        buttonGeom = new Geometry("confirm_button",quad);
+        buttonGeom = new Geometry("operation_button",quad);
         Texture tex = app.getAssetManager().loadTexture("Textures/pic/action_button.jpg");
         Material mat = new Material(app.getAssetManager(),"Common/MatDefs/Misc/Unshaded.j3md");
         mat.setTexture("ColorMap", tex);
@@ -58,6 +61,41 @@ public class OperationButton extends Node implements ActionListener{
         }
     }
     
+    public void shoot_chosen(){
+        Quad quad = new Quad(width*(0.32f/3f-0.002f),width*(0.24f*7f/9f-0.003f));
+        shootGeom = new Geometry("shoot_chosen",quad);
+        Texture tex = app.getAssetManager().loadTexture("Textures/pic/shoot_chosen.jpg");
+        Material mat = new Material(app.getAssetManager(),"Common/MatDefs/Misc/Unshaded.j3md");
+        mat.setTexture("ColorMap", tex);
+        buttonGeom.setMaterial(mat);
+        buttonGeom.setLocalTranslation(width*(0.32f/12f), width*(0.24f/9f), 2);
+        this.detachChild(buttonGeom);
+        this.attachChild(shootGeom);
+    }
+    
+    public void breakthrough_chosen(){
+        Quad quad = new Quad(width*(0.32f/3f-0.002f),width*(0.24f*7f/9f-0.003f));
+        breakthroughGeom = new Geometry("breakthrough_chosen",quad);
+        Texture tex = app.getAssetManager().loadTexture("Textures/pic/breakthrough_chosen.jpg");
+        Material mat = new Material(app.getAssetManager(),"Common/MatDefs/Misc/Unshaded.j3md");
+        mat.setTexture("ColorMap", tex);
+        buttonGeom.setMaterial(mat);
+        buttonGeom.setLocalTranslation(width*(0.32f/12f), width*(0.24f/9f), 2);
+        this.detachChild(buttonGeom);
+        this.attachChild(breakthroughGeom);
+    }
+    
+    public void pass_chosen(){
+        Quad quad = new Quad(width*(0.32f/3f-0.002f),width*(0.24f*7f/9f-0.003f));
+        passGeom = new Geometry("pass_chosen",quad);
+        Texture tex = app.getAssetManager().loadTexture("Textures/pic/pass_chosen.jpg");
+        Material mat = new Material(app.getAssetManager(),"Common/MatDefs/Misc/Unshaded.j3md");
+        mat.setTexture("ColorMap", tex);
+        buttonGeom.setMaterial(mat);
+        buttonGeom.setLocalTranslation(width*(0.32f/12f), width*(0.24f/9f), 2);
+        this.detachChild(buttonGeom);
+        this.attachChild(passGeom);
+    }
     
 }
     
