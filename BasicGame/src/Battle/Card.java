@@ -131,7 +131,6 @@ public class Card extends Node{
     public void setPicNormalColor(){
         geom.getMaterial().setColor("Color", new ColorRGBA(1f,1f,1f,0f));
         geom.setMaterial(geom.getMaterial());
-        System.out.println(geom.getMaterial().getParam("Color").toString());
     }
     
     public void showBattleValue(){
