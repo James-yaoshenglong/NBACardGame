@@ -35,13 +35,13 @@ public class OperationButton extends Node implements ActionListener{
     
     
     private void initialize(){
-        Quad quad = new Quad(width/16,height/16);
+        Quad quad = new Quad(width*(0.32f/3f-0.002f),width*(0.24f*7f/9f-0.003f));
         buttonGeom = new Geometry("confirm_button",quad);
-        Texture tex = app.getAssetManager().loadTexture("Textures/pic/confirm_button.jpg");
+        Texture tex = app.getAssetManager().loadTexture("Textures/pic/action_button.jpg");
         Material mat = new Material(app.getAssetManager(),"Common/MatDefs/Misc/Unshaded.j3md");
         mat.setTexture("ColorMap", tex);
         buttonGeom.setMaterial(mat);
-        buttonGeom.setLocalTranslation(-width/32, (float)(height*(-0.48)), 2);
+        buttonGeom.setLocalTranslation(width*(0.32f/12f), width*(0.24f/9f), 2);
         this.attachChild(buttonGeom);
     }
     
