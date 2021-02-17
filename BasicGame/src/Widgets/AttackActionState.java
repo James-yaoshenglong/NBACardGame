@@ -5,11 +5,13 @@
  */
 package Widgets;
 
+import Prepare.OperationButton;
+
 /**
  *
  * @author shenglyao2
  */
 public interface AttackActionState {
-    void showIcon();
+    void showIcon(OperationButton opButton);
     void sendMessage(); 
 }

@@ -5,6 +5,8 @@
  */
 package Widgets;
 
+import Prepare.OperationButton;
+
 /**
  *
  * @author shenglyao2
@@ -12,7 +14,8 @@ package Widgets;
 public class BreakState implements AttackActionState{
 
     @Override
-    public void showIcon() {
+    public void showIcon(OperationButton opButton) {
+        opButton.breakthrough_chosen();
     }
 
     @Override
