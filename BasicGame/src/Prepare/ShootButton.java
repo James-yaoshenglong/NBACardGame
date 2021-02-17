@@ -5,10 +5,14 @@
  */
 package Prepare;
 
+import Widgets.MyRay;
+import Widgets.ShootState;
 import com.jme3.app.SimpleApplication;
+import com.jme3.collision.CollisionResults;
 import com.jme3.input.controls.ActionListener;
 import com.jme3.material.Material;
 import com.jme3.material.RenderState;
+import com.jme3.math.Ray;
 import com.jme3.renderer.queue.RenderQueue;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
@@ -24,11 +28,13 @@ public class ShootButton extends Node implements ActionListener{
     private SimpleApplication app;
     private float width; //screen width and height
     private float height;
+    private OperationBox opBox;
 
-    public ShootButton(SimpleApplication mainApp, float aCamWidth, float aCamHeight){
+    public ShootButton(SimpleApplication mainApp, float aCamWidth, float aCamHeight, OperationBox anOpBox){
         this.app = mainApp;
         this.width = aCamWidth;
         this.height = aCamHeight;
+        this.opBox = anOpBox;
         initialize();
     }
     
@@ -48,7 +54,15 @@ public class ShootButton extends Node implements ActionListener{
     
 
     @Override
-    public void onAction(String arg0, boolean arg1, float arg2) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void onAction(String name, boolean isClicked, float tpf) {
+        if(isClicked && name.equals("CLICK")){
+            Ray ray = MyRay.createRay(app);
+                CollisionResults results = new CollisionResults();
+                this.collideWith(ray, results);
+                if(results.size() > 0){
+                    opBox.changeAttackActionState(new ShootState());
+                    app.getStateManager().getState(MainPrepare.class).hideActionButtons();
+                }
+        }
     }
 }

@@ -6,6 +6,7 @@
 package Prepare;
 
 import Battle.Card;
+import Widgets.AttackActionState;
 import com.jme3.app.SimpleApplication;
 import com.jme3.material.Material;
 import com.jme3.scene.Geometry;
@@ -24,6 +25,7 @@ public class OperationBox extends Node{
     private float width; //screen width and height
     private float height;
     private Card player1;
+    private AttackActionState actionState;
     
     
     public OperationBox(SimpleApplication mainApp, float aCamWidth, float aCamHeight, OperationButton anOpButtonNode){
@@ -60,5 +62,9 @@ public class OperationBox extends Node{
             player1.setLocalTranslation((float)(-1f/15f)*width, width*(0.24f/9), 1);
             this.attachChild(player1);
         }
+    }
+    
+    public void changeAttackActionState(AttackActionState state){
+        this.actionState = state;
     }
 }

@@ -56,7 +56,7 @@ public class OperationButton extends Node implements ActionListener{
                 CollisionResults results = new CollisionResults();
                 this.collideWith(ray, results);
                 if(results.size() > 0){
-                    app.getStateManager().getState(MainPrepare.class).showButton();
+                    app.getStateManager().getState(MainPrepare.class).showActionButtons();
                 }
         }
     }

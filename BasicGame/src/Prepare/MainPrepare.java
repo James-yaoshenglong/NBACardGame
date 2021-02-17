@@ -80,12 +80,11 @@ public class MainPrepare extends BaseAppState{
         //construct the background
         constructBackground();
         //Game initalize
-        
-        this.shootButton = new ShootButton(app, camZ*ratio, camZ);
-        this.breakthroughButton = new BreakthroughButton(app, camZ*ratio, camZ);
-        this.passButton = new PassButton(app, camZ*ratio, camZ);
         this.opButtonNode = new OperationButton(app, camZ*ratio, camZ);
         this.opBox = new OperationBox(app, camZ*ratio, camZ, opButtonNode);
+        this.shootButton = new ShootButton(app, camZ*ratio, camZ, opBox);
+        this.breakthroughButton = new BreakthroughButton(app, camZ*ratio, camZ, opBox);
+        this.passButton = new PassButton(app, camZ*ratio, camZ, opBox);
         prepareNode.attachChild(opBox);
         
         this.pauseButton = new PauseButton(app, camZ*ratio, camZ);
@@ -114,6 +113,10 @@ public class MainPrepare extends BaseAppState{
         inputManager.addListener(selfCardsNode,CLICK);
         inputManager.addListener(pauseButton, CLICK, PAUSE);
         inputManager.addListener(opButtonNode, CLICK);
+        
+        inputManager.addListener(shootButton, CLICK);
+        inputManager.addListener(passButton, CLICK);
+        inputManager.addListener(breakthroughButton, CLICK);
 //        cardManager.enterScene();
     }
     
@@ -126,6 +129,9 @@ public class MainPrepare extends BaseAppState{
         inputManager.deleteMapping(CLICK);
         inputManager.removeListener(pauseButton);
         inputManager.removeListener(opButtonNode);
+        inputManager.removeListener(shootButton);
+        inputManager.removeListener(passButton);
+        inputManager.removeListener(breakthroughButton);
     }
     
     private void constructBackground(){
@@ -154,17 +160,16 @@ public class MainPrepare extends BaseAppState{
         camZ = cam.getLocation().getZ()-15; //No Idea why I need to subtract 15
     }
     
-    public void showButton(){
-        if(buttonShown){
-            shootButton.removeFromParent();
-            breakthroughButton.removeFromParent();
-            passButton.removeFromParent();
-        }
-        else{
-            prepareNode.attachChild(shootButton);
-            prepareNode.attachChild(breakthroughButton);
-            prepareNode.attachChild(passButton);
-        }
-        buttonShown = !buttonShown;
+    public void showActionButtons(){
+        prepareNode.attachChild(shootButton);
+        prepareNode.attachChild(breakthroughButton);
+        prepareNode.attachChild(passButton);
+    }
+    
+    public void hideActionButtons(){
+        shootButton.removeFromParent();
+        breakthroughButton.removeFromParent();
+        passButton.removeFromParent();
+
     }
 }
