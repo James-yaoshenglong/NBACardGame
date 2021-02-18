@@ -60,7 +60,7 @@ public class SelfCardsNode extends Node implements ActionListener, RawInputListe
     
     @Override
     public void onAction(String name, boolean isClicked, float tpf) {
-        if(isClicked){
+        if(isClicked && this.getParent() != null){
             if(name.equals("CLICK")){
                 choose();
             }

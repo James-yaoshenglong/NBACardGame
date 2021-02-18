@@ -55,7 +55,7 @@ public class ShootButton extends Node implements ActionListener{
 
     @Override
     public void onAction(String name, boolean isClicked, float tpf) {
-        if(isClicked && name.equals("CLICK")){
+        if(isClicked && name.equals("CLICK") && this.getParent() != null){
             Ray ray = MyRay.createRay(app);
                 CollisionResults results = new CollisionResults();
                 this.collideWith(ray, results);

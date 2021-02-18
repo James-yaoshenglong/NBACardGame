@@ -53,7 +53,7 @@ public class ConfirmButton extends Node implements ActionListener{
 
     @Override
     public void onAction(String name, boolean isClicked, float tpf) {
-        if(isClicked && name.equals("CLICK")){
+        if(isClicked && name.equals("CLICK") && this.getParent() != null){
             if(selfCardsNode.checkLineup()){
                 Ray ray = MyRay.createRay(app);
                 CollisionResults results = new CollisionResults();

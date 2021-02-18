@@ -52,7 +52,7 @@ public class PauseButton extends Node implements ActionListener{
         if(name.equals("PAUSE") && isClicked){
             ((Main)app).switchToPause();
         }
-        if(isClicked && name.equals("CLICK")){
+        if(isClicked && name.equals("CLICK") && this.getParent() != null){
             Ray ray = MyRay.createRay(app);
             CollisionResults results = new CollisionResults();
             this.collideWith(ray, results);
