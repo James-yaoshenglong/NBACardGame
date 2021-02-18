@@ -7,6 +7,7 @@ package Prepare;
 
 import Battle.Card;
 import Battle.MainGame;
+import Widgets.ButtonState;
 import Widgets.MyRay;
 import com.jme3.app.SimpleApplication;
 import com.jme3.collision.CollisionResults;
@@ -30,6 +31,7 @@ public class SelfCardsNode extends Node implements ActionListener{
     private float width; //screen width and height
     private float height;
     private OperationBox opBox;
+    private ButtonState cardsState;
     
     public SelfCardsNode(SimpleApplication mainApp, float aCamWidth, float aCamHeight, OperationBox opBox){
         this.app = mainApp;
@@ -75,11 +77,14 @@ public class SelfCardsNode extends Node implements ActionListener{
                     ca.setPicNormalColor();
                 }
                 targetCardGeom.getMaterial().setColor("Color", new ColorRGBA(0.2f,0.2f,0.2f,1f));
-                opBox.choosePlayer1(targetCardNode.getID());
+                cardsState.changePlayerButton(targetCardNode);
                 app.getStateManager().getState(MainPrepare.class).hidePlayerLists();
     //            app.getStateManager().getState(MainPrepare.class).showButton();
             }
         }
     }
     
+    public void changeCardsState(ButtonState state){
+        cardsState = state;
+    }
 }

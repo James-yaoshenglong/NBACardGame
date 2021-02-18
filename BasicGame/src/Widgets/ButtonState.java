@@ -5,6 +5,7 @@
  */
 package Widgets;
 
+import Battle.Card;
 import Prepare.OperationBox;
 import com.jme3.app.SimpleApplication;
 
@@ -15,7 +16,7 @@ import com.jme3.app.SimpleApplication;
 public interface ButtonState {
     void showActionButton();
     void showCards();
-    void changePlayerButton();
+    void changePlayerButton(Card targetCardNode);
     void changeOperationBUtton(AttackActionState state);
     void setOperator(SimpleApplication mainApp, OperationBox anOpBox);
 }

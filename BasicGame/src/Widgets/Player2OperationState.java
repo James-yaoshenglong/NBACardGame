@@ -5,6 +5,7 @@
  */
 package Widgets;
 
+import Battle.Card;
 import Prepare.MainPrepare;
 import Prepare.OperationBox;
 import com.jme3.app.SimpleApplication;
@@ -34,10 +35,13 @@ public class Player2OperationState implements ButtonState{
 
     @Override
     public void showCards() {
+        app.getStateManager().getState(MainPrepare.class).showPlayerLists();
+        app.getStateManager().getState(MainPrepare.class).changeCardsState(this);
     }
 
     @Override
-    public void changePlayerButton() {
+    public void changePlayerButton(Card targetCardNode) {
+        opBox.choosePlayer1(targetCardNode.getID());
     }
 
     @Override

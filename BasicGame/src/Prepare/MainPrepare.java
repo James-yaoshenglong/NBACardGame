@@ -88,10 +88,10 @@ public class MainPrepare extends BaseAppState{
         constructBackground();
         //Game initalize     
         this.opButtonNode1 = new OperationButton(app, camZ*ratio, camZ, Player1OperationState.getInstance());
-        this.playerButtonNode1 = new PlayerButton(app, camZ*ratio, camZ);
+        this.playerButtonNode1 = new PlayerButton(app, camZ*ratio, camZ, Player1OperationState.getInstance());
         this.opBox1 = new OperationBox(app, camZ*ratio, camZ, opButtonNode1,playerButtonNode1);
         this.opButtonNode2 = new OperationButton(app, camZ*ratio, camZ, Player2OperationState.getInstance());
-        this.playerButtonNode2 = new PlayerButton(app, camZ*ratio, camZ);
+        this.playerButtonNode2 = new PlayerButton(app, camZ*ratio, camZ, Player2OperationState.getInstance());
         this.opBox2 = new OperationBox(app, camZ*ratio, camZ, opButtonNode2,playerButtonNode2);
         this.shootButton = new ShootButton(app, camZ*ratio, camZ, opBox1);
         this.breakthroughButton = new BreakthroughButton(app, camZ*ratio, camZ, opBox1);
@@ -209,5 +209,9 @@ public class MainPrepare extends BaseAppState{
     public void changeActionButtonState(ButtonState state){
         shootButton.changeButtonState(state);
         breakthroughButton.changeButtonState(state);
+    }
+    
+    public void changeCardsState(ButtonState state){
+        selfCardsNode.changeCardsState(state);
     }
 }
