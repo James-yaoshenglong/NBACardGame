@@ -6,6 +6,7 @@
 package Widgets;
 
 import Prepare.MainPrepare;
+import Prepare.OperationBox;
 import com.jme3.app.SimpleApplication;
 
 /**
@@ -13,10 +14,16 @@ import com.jme3.app.SimpleApplication;
  * @author shenglyao2
  */
 public class Player2OperationState implements ButtonState{
-        private SimpleApplication app;
+    private SimpleApplication app;
+    private OperationBox opBox;
     
-    public Player2OperationState(SimpleApplication mainApp){
-        this.app = mainApp;
+    private static Player2OperationState instance = new Player2OperationState();
+    
+    public static Player2OperationState getInstance(){
+        return instance;
+    }
+    
+    public Player2OperationState(){
     }
     
     @Override
@@ -34,6 +41,12 @@ public class Player2OperationState implements ButtonState{
 
     @Override
     public void changeOperationBUtton() {
+    }
+
+    @Override
+    public void setOperator(SimpleApplication mainApp, OperationBox anOpBox) {
+        this.app = mainApp;
+        this.opBox = anOpBox;
     }
 
     

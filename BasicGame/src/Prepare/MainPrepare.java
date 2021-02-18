@@ -85,11 +85,11 @@ public class MainPrepare extends BaseAppState{
 //        battleNode.attachChild(buttonNode);
         //construct the background
         constructBackground();
-        //Game initalize
-        this.opButtonNode1 = new OperationButton(app, camZ*ratio, camZ, new Player1OperationState(app));
+        //Game initalize     
+        this.opButtonNode1 = new OperationButton(app, camZ*ratio, camZ, Player1OperationState.getInstance());
         this.playerButtonNode1 = new PlayerButton(app, camZ*ratio, camZ);
         this.opBox1 = new OperationBox(app, camZ*ratio, camZ, opButtonNode1,playerButtonNode1);
-        this.opButtonNode2 = new OperationButton(app, camZ*ratio, camZ, new Player2OperationState(app));
+        this.opButtonNode2 = new OperationButton(app, camZ*ratio, camZ, Player2OperationState.getInstance());
         this.playerButtonNode2 = new PlayerButton(app, camZ*ratio, camZ);
         this.opBox2 = new OperationBox(app, camZ*ratio, camZ, opButtonNode2,playerButtonNode2);
         this.shootButton = new ShootButton(app, camZ*ratio, camZ, opBox1);

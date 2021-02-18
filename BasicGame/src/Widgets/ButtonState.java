@@ -5,6 +5,9 @@
  */
 package Widgets;
 
+import Prepare.OperationBox;
+import com.jme3.app.SimpleApplication;
+
 /**
  *
  * @author shenglyao2
@@ -14,4 +17,5 @@ public interface ButtonState {
     void showCards();
     void changePlayerButton();
     void changeOperationBUtton();
+    void setOperator(SimpleApplication mainApp, OperationBox anOpBox);
 }

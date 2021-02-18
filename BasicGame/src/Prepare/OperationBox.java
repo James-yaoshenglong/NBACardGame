@@ -49,6 +49,7 @@ public class OperationBox extends Node{
         this.attachChild(BgGeom);
         this.attachChild(opButtonNode);
         this.attachChild(playerButtonNode);
+        opButtonNode.getState().setOperator(app, this);
     }
     
     public void choosePlayer1(int id){

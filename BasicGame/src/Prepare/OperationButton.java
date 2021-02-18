@@ -120,5 +120,8 @@ public class OperationButton extends Node implements ActionListener{
         this.attachChild(passGeom);
     }
     
+    public ButtonState getState(){
+        return opButtonState;
+    }
 }
     
