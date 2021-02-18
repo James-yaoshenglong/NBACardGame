@@ -13,6 +13,7 @@ import static Battle.MainGame.CLICK;
 import static Battle.MainGame.PAUSE;
 import Pause.PauseButton;
 import Widgets.Player1OperationState;
+import Widgets.Player2OperationState;
 import com.jme3.app.Application;
 import com.jme3.app.SimpleApplication;
 import com.jme3.app.state.AppStateManager;
@@ -88,10 +89,15 @@ public class MainPrepare extends BaseAppState{
         this.opButtonNode1 = new OperationButton(app, camZ*ratio, camZ, new Player1OperationState(app));
         this.playerButtonNode1 = new PlayerButton(app, camZ*ratio, camZ);
         this.opBox1 = new OperationBox(app, camZ*ratio, camZ, opButtonNode1,playerButtonNode1);
+        this.opButtonNode2 = new OperationButton(app, camZ*ratio, camZ, new Player2OperationState(app));
+        this.playerButtonNode2 = new PlayerButton(app, camZ*ratio, camZ);
+        this.opBox2 = new OperationBox(app, camZ*ratio, camZ, opButtonNode2,playerButtonNode2);
         this.shootButton = new ShootButton(app, camZ*ratio, camZ, opBox1);
         this.breakthroughButton = new BreakthroughButton(app, camZ*ratio, camZ, opBox1);
         this.passButton = new PassButton(app, camZ*ratio, camZ, opBox1);
         prepareNode.attachChild(opBox1);
+        prepareNode.attachChild(opBox2);
+        opBox2.setLocalTranslation(10, 10, 1);
         
         this.pauseButton = new PauseButton(app, camZ*ratio, camZ);
         prepareNode.attachChild(pauseButton);
@@ -119,6 +125,9 @@ public class MainPrepare extends BaseAppState{
         inputManager.addListener(opButtonNode1, CLICK);
         inputManager.addListener(playerButtonNode1, CLICK);
         
+        inputManager.addListener(opButtonNode2, CLICK);
+        inputManager.addListener(playerButtonNode2, CLICK);
+        
         inputManager.addListener(shootButton, CLICK);
         inputManager.addListener(passButton, CLICK);
         inputManager.addListener(breakthroughButton, CLICK);
@@ -138,6 +147,9 @@ public class MainPrepare extends BaseAppState{
         inputManager.removeListener(passButton);
         inputManager.removeListener(breakthroughButton);
         inputManager.removeListener(playerButtonNode1);
+        inputManager.removeListener(opButtonNode1);
+        inputManager.removeListener(playerButtonNode2);
+        inputManager.removeListener(opButtonNode2);
     }
     
     private void constructBackground(){
