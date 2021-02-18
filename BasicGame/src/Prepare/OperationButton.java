@@ -5,6 +5,7 @@
  */
 package Prepare;
 
+import Widgets.ButtonState;
 import Widgets.MyRay;
 import com.jme3.app.SimpleApplication;
 import com.jme3.collision.CollisionResults;
@@ -28,11 +29,13 @@ public class OperationButton extends Node implements ActionListener{
     private SimpleApplication app;
     private float width; //screen width and height
     private float height;
+    private ButtonState opButtonState;
     
-    public OperationButton(SimpleApplication mainApp, float aCamWidth, float aCamHeight){
+    public OperationButton(SimpleApplication mainApp, float aCamWidth, float aCamHeight, ButtonState anOpButtonState){
         this.app = mainApp;
         this.width = aCamWidth;
         this.height = aCamHeight;
+        this.opButtonState = anOpButtonState;
         initialize();
     }
     
@@ -60,7 +63,7 @@ public class OperationButton extends Node implements ActionListener{
                 CollisionResults results = new CollisionResults();
                 this.collideWith(ray, results);
                 if(results.size() > 0){
-                    app.getStateManager().getState(MainPrepare.class).showActionButtons();
+                    opButtonState.showActionButton();
                 }
         }
     }

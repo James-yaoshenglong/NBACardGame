@@ -12,6 +12,7 @@ import Battle.ConfirmButton;
 import static Battle.MainGame.CLICK;
 import static Battle.MainGame.PAUSE;
 import Pause.PauseButton;
+import Widgets.Player1OperationState;
 import com.jme3.app.Application;
 import com.jme3.app.SimpleApplication;
 import com.jme3.app.state.AppStateManager;
@@ -48,10 +49,13 @@ public class MainPrepare extends BaseAppState{
     private SelfCardsNode selfCardsNode;
     private PassButton passButton;
     private ShootButton shootButton;
-    private OperationBox opBox;
     private BreakthroughButton breakthroughButton;
-    private OperationButton opButtonNode;
-    private PlayerButton playerButtonNode;
+    private OperationBox opBox1;
+    private OperationButton opButtonNode1;
+    private PlayerButton playerButtonNode1;
+    private OperationBox opBox2;
+    private OperationButton opButtonNode2;
+    private PlayerButton playerButtonNode2;
     private float camZ;
     private float ratio;
     public final static String PAUSE = "PAUSE"; //the pause message
@@ -81,13 +85,13 @@ public class MainPrepare extends BaseAppState{
         //construct the background
         constructBackground();
         //Game initalize
-        this.opButtonNode = new OperationButton(app, camZ*ratio, camZ);
-        this.playerButtonNode = new PlayerButton(app, camZ*ratio, camZ);
-        this.opBox = new OperationBox(app, camZ*ratio, camZ, opButtonNode,playerButtonNode);
-        this.shootButton = new ShootButton(app, camZ*ratio, camZ, opBox);
-        this.breakthroughButton = new BreakthroughButton(app, camZ*ratio, camZ, opBox);
-        this.passButton = new PassButton(app, camZ*ratio, camZ, opBox);
-        prepareNode.attachChild(opBox);
+        this.opButtonNode1 = new OperationButton(app, camZ*ratio, camZ, new Player1OperationState(app));
+        this.playerButtonNode1 = new PlayerButton(app, camZ*ratio, camZ);
+        this.opBox1 = new OperationBox(app, camZ*ratio, camZ, opButtonNode1,playerButtonNode1);
+        this.shootButton = new ShootButton(app, camZ*ratio, camZ, opBox1);
+        this.breakthroughButton = new BreakthroughButton(app, camZ*ratio, camZ, opBox1);
+        this.passButton = new PassButton(app, camZ*ratio, camZ, opBox1);
+        prepareNode.attachChild(opBox1);
         
         this.pauseButton = new PauseButton(app, camZ*ratio, camZ);
         prepareNode.attachChild(pauseButton);
@@ -103,21 +107,18 @@ public class MainPrepare extends BaseAppState{
     protected void onEnable() {
         
         //initialize the background
-        this.selfCardsNode = new SelfCardsNode(app, camZ*ratio, camZ, opBox); // here pay attention
+        this.selfCardsNode = new SelfCardsNode(app, camZ*ratio, camZ, opBox1); // here pay attention
         rootNode.attachChild(prepareNode);
         
         //add event listener
         inputManager.addMapping(PAUSE, new KeyTrigger(KeyInput.KEY_DELETE));
         
         inputManager.addMapping(CLICK, new MouseButtonTrigger(MouseInput.BUTTON_LEFT));
-        inputManager.addListener(selfCardsNode,CLICK);
         inputManager.addListener(pauseButton, CLICK, PAUSE);
-        inputManager.addListener(opButtonNode, CLICK);
-        inputManager.addListener(playerButtonNode, CLICK);
+        inputManager.addListener(opButtonNode1, CLICK);
+        inputManager.addListener(playerButtonNode1, CLICK);
         
-        inputManager.addListener(shootButton, CLICK);
-        inputManager.addListener(passButton, CLICK);
-        inputManager.addListener(breakthroughButton, CLICK);
+
 //        cardManager.enterScene();
     }
     
@@ -129,11 +130,11 @@ public class MainPrepare extends BaseAppState{
         inputManager.removeListener(selfCardsNode);
         inputManager.deleteMapping(CLICK);
         inputManager.removeListener(pauseButton);
-        inputManager.removeListener(opButtonNode);
+        inputManager.removeListener(opButtonNode1);
         inputManager.removeListener(shootButton);
         inputManager.removeListener(passButton);
         inputManager.removeListener(breakthroughButton);
-        inputManager.removeListener(playerButtonNode);
+        inputManager.removeListener(playerButtonNode1);
     }
     
     private void constructBackground(){
@@ -162,13 +163,28 @@ public class MainPrepare extends BaseAppState{
         camZ = cam.getLocation().getZ()-15; //No Idea why I need to subtract 15
     }
     
-    public void showActionButtons(){
+    public void showPlayer1ActionButtons(){
         prepareNode.attachChild(shootButton);
         prepareNode.attachChild(breakthroughButton);
         prepareNode.attachChild(passButton);
+        inputManager.addListener(shootButton, CLICK);
+        inputManager.addListener(passButton, CLICK);
+        inputManager.addListener(breakthroughButton, CLICK);
+    }
+    
+    public void showPlayer2ActionButtons(){
+        prepareNode.attachChild(shootButton);
+        prepareNode.attachChild(breakthroughButton);
     }
     
     public void hideActionButtons(){
+//        System.out.println("before shoot button");
+//        inputManager.removeListener(shootButton);
+//        System.out.println("before pass button");
+//        inputManager.removeListener(passButton);
+//        System.out.println("before break button");
+//        inputManager.removeListener(breakthroughButton);
+//        System.out.println("after break button");
         shootButton.removeFromParent();
         breakthroughButton.removeFromParent();
         passButton.removeFromParent();
@@ -178,9 +194,11 @@ public class MainPrepare extends BaseAppState{
     public void showPlayerLists(){
         prepareNode.attachChild(selfCardsNode);
         selfCardsNode.licensing();
+        inputManager.addListener(selfCardsNode,CLICK);
     }
     
     public void hidePlayerLists(){
         selfCardsNode.removeFromParent();
+        inputManager.removeListener(selfCardsNode);
     }
 }
