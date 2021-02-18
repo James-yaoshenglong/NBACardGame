@@ -76,6 +76,7 @@ public class SelfCardsNode extends Node implements ActionListener{
                 }
                 targetCardGeom.getMaterial().setColor("Color", new ColorRGBA(0.2f,0.2f,0.2f,1f));
                 opBox.choosePlayer1(targetCardNode.getID());
+                app.getStateManager().getState(MainPrepare.class).hidePlayerLists();
     //            app.getStateManager().getState(MainPrepare.class).showButton();
             }
         }

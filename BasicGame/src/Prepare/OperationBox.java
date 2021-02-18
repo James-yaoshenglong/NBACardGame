@@ -21,6 +21,7 @@ import com.jme3.texture.Texture;
 public class OperationBox extends Node{
     private Geometry BgGeom;
     private OperationButton opButtonNode;
+    private PlayerButton playerButtonNode;
     private SimpleApplication app;
     private float width; //screen width and height
     private float height;
@@ -28,11 +29,12 @@ public class OperationBox extends Node{
     private AttackActionState actionState;
     
     
-    public OperationBox(SimpleApplication mainApp, float aCamWidth, float aCamHeight, OperationButton anOpButtonNode){
+    public OperationBox(SimpleApplication mainApp, float aCamWidth, float aCamHeight, OperationButton anOpButtonNode, PlayerButton apButtonNode){
         this.app = mainApp;
         this.width = aCamWidth;
         this.height = aCamHeight;
         this.opButtonNode = anOpButtonNode;
+        this.playerButtonNode = apButtonNode;
         initialize();
     }
     

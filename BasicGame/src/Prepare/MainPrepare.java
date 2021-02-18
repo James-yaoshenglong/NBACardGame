@@ -51,6 +51,7 @@ public class MainPrepare extends BaseAppState{
     private OperationBox opBox;
     private BreakthroughButton breakthroughButton;
     private OperationButton opButtonNode;
+    private PlayerButton playerButtonNode;
     private float camZ;
     private float ratio;
     public final static String PAUSE = "PAUSE"; //the pause message
@@ -81,7 +82,8 @@ public class MainPrepare extends BaseAppState{
         constructBackground();
         //Game initalize
         this.opButtonNode = new OperationButton(app, camZ*ratio, camZ);
-        this.opBox = new OperationBox(app, camZ*ratio, camZ, opButtonNode);
+        this.playerButtonNode = new PlayerButton(app, camZ*ratio, camZ);
+        this.opBox = new OperationBox(app, camZ*ratio, camZ, opButtonNode,playerButtonNode);
         this.shootButton = new ShootButton(app, camZ*ratio, camZ, opBox);
         this.breakthroughButton = new BreakthroughButton(app, camZ*ratio, camZ, opBox);
         this.passButton = new PassButton(app, camZ*ratio, camZ, opBox);
@@ -102,9 +104,7 @@ public class MainPrepare extends BaseAppState{
         
         //initialize the background
         this.selfCardsNode = new SelfCardsNode(app, camZ*ratio, camZ, opBox); // here pay attention
-        prepareNode.attachChild(selfCardsNode);
         rootNode.attachChild(prepareNode);
-        selfCardsNode.licensing();
         
         //add event listener
         inputManager.addMapping(PAUSE, new KeyTrigger(KeyInput.KEY_DELETE));
@@ -113,6 +113,7 @@ public class MainPrepare extends BaseAppState{
         inputManager.addListener(selfCardsNode,CLICK);
         inputManager.addListener(pauseButton, CLICK, PAUSE);
         inputManager.addListener(opButtonNode, CLICK);
+        inputManager.addListener(playerButtonNode, CLICK);
         
         inputManager.addListener(shootButton, CLICK);
         inputManager.addListener(passButton, CLICK);
@@ -132,6 +133,7 @@ public class MainPrepare extends BaseAppState{
         inputManager.removeListener(shootButton);
         inputManager.removeListener(passButton);
         inputManager.removeListener(breakthroughButton);
+        inputManager.removeListener(playerButtonNode);
     }
     
     private void constructBackground(){
@@ -171,5 +173,14 @@ public class MainPrepare extends BaseAppState{
         breakthroughButton.removeFromParent();
         passButton.removeFromParent();
 
+    }
+    
+    public void showPlayerLists(){
+        prepareNode.attachChild(selfCardsNode);
+        selfCardsNode.licensing();
+    }
+    
+    public void hidePlayerLists(){
+        selfCardsNode.removeFromParent();
     }
 }
