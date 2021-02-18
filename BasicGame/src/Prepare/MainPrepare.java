@@ -12,6 +12,7 @@ import Battle.ConfirmButton;
 import static Battle.MainGame.CLICK;
 import static Battle.MainGame.PAUSE;
 import Pause.PauseButton;
+import Widgets.ButtonState;
 import Widgets.Player1OperationState;
 import Widgets.Player2OperationState;
 import com.jme3.app.Application;
@@ -203,5 +204,10 @@ public class MainPrepare extends BaseAppState{
     
     public void hidePlayerLists(){
         selfCardsNode.removeFromParent();
+    }
+    
+    public void changeActionButtonState(ButtonState state){
+        shootButton.changeButtonState(state);
+        breakthroughButton.changeButtonState(state);
     }
 }

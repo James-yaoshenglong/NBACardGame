@@ -6,6 +6,7 @@
 package Prepare;
 
 import Widgets.BreakState;
+import Widgets.ButtonState;
 import Widgets.MyRay;
 import Widgets.ShootState;
 import com.jme3.app.SimpleApplication;
@@ -30,6 +31,7 @@ public class BreakthroughButton extends Node implements ActionListener{
     private float width; //screen width and height
     private float height;
     private OperationBox opBox;
+        private ButtonState breakButtonState;
 
 
     public BreakthroughButton(SimpleApplication mainApp, float aCamWidth, float aCamHeight, OperationBox anOpBox){
@@ -62,16 +64,20 @@ public class BreakthroughButton extends Node implements ActionListener{
 
     @Override
     public void onAction(String name, boolean isClicked, float tpf) {
-            if(isClicked && name.equals("CLICK") && this.getParent() != null){
-                Ray ray = MyRay.createRay(app);
-                    CollisionResults results = new CollisionResults();
-                    this.collideWith(ray, results);
-                    if(results.size() > 0){
-                        opBox.changeAttackActionState(new BreakState());
-                        app.getStateManager().getState(MainPrepare.class).hideActionButtons();
-                    }
-            }
+        if(isClicked && name.equals("CLICK") && this.getParent() != null){
+            Ray ray = MyRay.createRay(app);
+                CollisionResults results = new CollisionResults();
+                this.collideWith(ray, results);
+                if(results.size() > 0){
+                    breakButtonState.changeOperationBUtton(new BreakState());
+                    app.getStateManager().getState(MainPrepare.class).hideActionButtons();
+                }
         }
+    }
+    
+    public void changeButtonState(ButtonState state){
+        breakButtonState = state;
+    }
 }
 
 

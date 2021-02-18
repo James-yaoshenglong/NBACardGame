@@ -16,6 +16,6 @@ public interface ButtonState {
     void showActionButton();
     void showCards();
     void changePlayerButton();
-    void changeOperationBUtton();
+    void changeOperationBUtton(AttackActionState state);
     void setOperator(SimpleApplication mainApp, OperationBox anOpBox);
 }

@@ -29,6 +29,7 @@ public class Player2OperationState implements ButtonState{
     @Override
     public void showActionButton() {
         app.getStateManager().getState(MainPrepare.class).showPlayer2ActionButtons();
+        app.getStateManager().getState(MainPrepare.class).changeActionButtonState(this);
     }
 
     @Override
@@ -40,7 +41,8 @@ public class Player2OperationState implements ButtonState{
     }
 
     @Override
-    public void changeOperationBUtton() {
+    public void changeOperationBUtton(AttackActionState state) {
+        opBox.changeAttackActionState(state);
     }
 
     @Override

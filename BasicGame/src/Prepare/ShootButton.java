@@ -5,6 +5,7 @@
  */
 package Prepare;
 
+import Widgets.ButtonState;
 import Widgets.MyRay;
 import Widgets.ShootState;
 import com.jme3.app.SimpleApplication;
@@ -29,6 +30,7 @@ public class ShootButton extends Node implements ActionListener{
     private float width; //screen width and height
     private float height;
     private OperationBox opBox;
+    private ButtonState shootButtonState;
 
     public ShootButton(SimpleApplication mainApp, float aCamWidth, float aCamHeight, OperationBox anOpBox){
         this.app = mainApp;
@@ -60,9 +62,13 @@ public class ShootButton extends Node implements ActionListener{
                 CollisionResults results = new CollisionResults();
                 this.collideWith(ray, results);
                 if(results.size() > 0){
-                    opBox.changeAttackActionState(new ShootState());
+                    shootButtonState.changeOperationBUtton(new ShootState());
                     app.getStateManager().getState(MainPrepare.class).hideActionButtons();
                 }
         }
+    }
+    
+    public void changeButtonState(ButtonState state){
+        shootButtonState = state;
     }
 }
