@@ -187,6 +187,7 @@ public class MainPrepare extends BaseAppState{
     }
     
     public void showPlayer2ActionButtons(){
+        hideActionButtons();
         hidePlayerLists();
         prepareNode.attachChild(shootButton);
         prepareNode.attachChild(breakthroughButton);
