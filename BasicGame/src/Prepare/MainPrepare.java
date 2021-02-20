@@ -180,12 +180,14 @@ public class MainPrepare extends BaseAppState{
     }
     
     public void showPlayer1ActionButtons(){
+        hidePlayerLists();
         prepareNode.attachChild(shootButton);
         prepareNode.attachChild(breakthroughButton);
         prepareNode.attachChild(passButton);
     }
     
     public void showPlayer2ActionButtons(){
+        hidePlayerLists();
         prepareNode.attachChild(shootButton);
         prepareNode.attachChild(breakthroughButton);
     }
@@ -198,6 +200,7 @@ public class MainPrepare extends BaseAppState{
     }
     
     public void showPlayerLists(){
+        hideActionButtons();
         prepareNode.attachChild(selfCardsNode);
         selfCardsNode.licensing();
     }
