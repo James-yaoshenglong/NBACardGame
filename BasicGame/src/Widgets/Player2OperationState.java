@@ -29,14 +29,18 @@ public class Player2OperationState implements ButtonState{
     
     @Override
     public void showActionButton() {
-        app.getStateManager().getState(MainPrepare.class).showPlayer2ActionButtons();
-        app.getStateManager().getState(MainPrepare.class).changeActionButtonState(this);
+        if(app.getStateManager().getState(MainPrepare.class).getPlayer1ActionState() != null && app.getStateManager().getState(MainPrepare.class).getPlayer1ActionState().getClass() == PassState.class){
+            app.getStateManager().getState(MainPrepare.class).showPlayer2ActionButtons();
+            app.getStateManager().getState(MainPrepare.class).changeActionButtonState(this);
+        }
     }
 
     @Override
     public void showCards() {
-        app.getStateManager().getState(MainPrepare.class).showPlayerLists();
-        app.getStateManager().getState(MainPrepare.class).changeCardsState(this);
+        if(app.getStateManager().getState(MainPrepare.class).getPlayer1ActionState() != null && app.getStateManager().getState(MainPrepare.class).getPlayer1ActionState().getClass() == PassState.class){
+            app.getStateManager().getState(MainPrepare.class).showPlayerLists();
+            app.getStateManager().getState(MainPrepare.class).changeCardsState(this);
+        }
     }
 
     @Override

@@ -72,4 +72,8 @@ public class OperationBox extends Node{
         this.actionState = state;
         actionState.showIcon(opButtonNode);
     }
+    
+    public AttackActionState getAttackActionState(){
+        return actionState;
+    }
 }

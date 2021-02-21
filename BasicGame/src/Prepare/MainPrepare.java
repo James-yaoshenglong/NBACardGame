@@ -12,6 +12,7 @@ import Battle.ConfirmButton;
 import static Battle.MainGame.CLICK;
 import static Battle.MainGame.PAUSE;
 import Pause.PauseButton;
+import Widgets.AttackActionState;
 import Widgets.ButtonState;
 import Widgets.Player1OperationState;
 import Widgets.Player2OperationState;
@@ -218,5 +219,9 @@ public class MainPrepare extends BaseAppState{
     
     public void changeCardsState(ButtonState state){
         selfCardsNode.changeCardsState(state);
+    }
+    
+    public AttackActionState getPlayer1ActionState(){
+        return opBox1.getAttackActionState();
     }
 }
