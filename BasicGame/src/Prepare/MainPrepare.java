@@ -98,7 +98,8 @@ public class MainPrepare extends BaseAppState{
         this.passButton = new PassButton(app, camZ*ratio, camZ, opBox1);
         prepareNode.attachChild(opBox1);
         prepareNode.attachChild(opBox2);
-        opBox2.setLocalTranslation(10, 10, 1);
+        opBox1.setLocalTranslation((camZ*ratio)*(-0.25f),0,0);
+        opBox2.setLocalTranslation((camZ*ratio)*(0.25f), 0, 0);
         
         this.pauseButton = new PauseButton(app, camZ*ratio, camZ);
         prepareNode.attachChild(pauseButton);

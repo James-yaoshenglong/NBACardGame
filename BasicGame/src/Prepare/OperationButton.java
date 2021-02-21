@@ -41,13 +41,13 @@ public class OperationButton extends Node implements ActionListener{
     
     
     private void initialize(){
-        Quad quad = new Quad(width*(0.32f/3f-0.002f),width*(0.24f*7f/9f-0.003f));
+        Quad quad = new Quad(width*(0.32f/3f),width*(0.24f*7f/9f));
         buttonGeom = new Geometry("operation_button",quad);
         Texture tex = app.getAssetManager().loadTexture("Textures/pic/action_button.jpg");
         Material mat = new Material(app.getAssetManager(),"Common/MatDefs/Misc/Unshaded.j3md");
         mat.setTexture("ColorMap", tex);
         buttonGeom.setMaterial(mat);
-        buttonGeom.setLocalTranslation(width*(0.32f/12f), width*(0.24f/9f), 2);
+        buttonGeom.setLocalTranslation(width*(0.32f/12f), width*(0.24f/9f), 0.1f);
         this.attachChild(buttonGeom);
         
         shoot_init();
@@ -69,33 +69,33 @@ public class OperationButton extends Node implements ActionListener{
     }
     
     private void shoot_init(){
-        Quad quad = new Quad(width*(0.32f/3f-0.002f),width*(0.24f*7f/9f-0.003f));
+        Quad quad = new Quad(width*(0.32f/3f),width*(0.24f*7f/9f));
         shootGeom = new Geometry("shoot_chosen",quad);
         Texture tex = app.getAssetManager().loadTexture("Textures/pic/shoot_chosen.jpg");
         Material mat = new Material(app.getAssetManager(),"Common/MatDefs/Misc/Unshaded.j3md");
         mat.setTexture("ColorMap", tex);
         shootGeom.setMaterial(mat);
-        shootGeom.setLocalTranslation(width*(0.32f/12f), width*(0.24f/9f), 2);
+        shootGeom.setLocalTranslation(width*(0.32f/12f), width*(0.24f/9f), 0.2f);
     }
     
     private void breakthrough_init(){
-        Quad quad = new Quad(width*(0.32f/3f-0.002f),width*(0.24f*7f/9f-0.003f));
+        Quad quad = new Quad(width*(0.32f/3f),width*(0.24f*7f/9f));
         breakthroughGeom = new Geometry("breakthrough_chosen",quad);
         Texture tex = app.getAssetManager().loadTexture("Textures/pic/breakthrough_chosen.jpg");
         Material mat = new Material(app.getAssetManager(),"Common/MatDefs/Misc/Unshaded.j3md");
         mat.setTexture("ColorMap", tex);
         breakthroughGeom.setMaterial(mat);
-        breakthroughGeom.setLocalTranslation(width*(0.32f/12f), width*(0.24f/9f), 2);
+        breakthroughGeom.setLocalTranslation(width*(0.32f/12f), width*(0.24f/9f), 0.2f);
     }
     
     private void pass_init(){
-        Quad quad = new Quad(width*(0.32f/3f-0.002f),width*(0.24f*7f/9f-0.003f));
+        Quad quad = new Quad(width*(0.32f/3f),width*(0.24f*7f/9f));
         passGeom = new Geometry("pass_chosen",quad);
         Texture tex = app.getAssetManager().loadTexture("Textures/pic/pass_chosen.jpg");
         Material mat = new Material(app.getAssetManager(),"Common/MatDefs/Misc/Unshaded.j3md");
         mat.setTexture("ColorMap", tex);
         passGeom.setMaterial(mat);
-        passGeom.setLocalTranslation(width*(0.32f/12f), width*(0.24f/9f), 2);
+        passGeom.setLocalTranslation(width*(0.32f/12f), width*(0.24f/9f), 0.2f);
     }
     
     

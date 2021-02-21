@@ -56,14 +56,14 @@ public class OperationBox extends Node{
         if(player1 == null){
             player1 = new Card(id,width,app); 
             player1.setSize(0.8f);
-            player1.setLocalTranslation((float)(-1f/15f)*width, width*(0.24f/9), 3);
+            player1.setLocalTranslation((float)(-1f/15f)*width, width*(0.24f/9), 0.2f);
             this.attachChild(player1);
         }
         else if(player1.getID() != id){
             player1.removeFromParent();
             player1 = new Card(id,width,app);
             player1.setSize(0.8f);
-            player1.setLocalTranslation((float)(-1f/15f)*width, width*(0.24f/9), 3);
+            player1.setLocalTranslation((float)(-1f/15f)*width, width*(0.24f/9), 0.2f);
             this.attachChild(player1);
         }
     }

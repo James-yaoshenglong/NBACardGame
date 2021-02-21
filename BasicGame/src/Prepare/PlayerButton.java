@@ -42,7 +42,7 @@ public class PlayerButton extends Node implements ActionListener{
         Material mat = new Material(app.getAssetManager(),"Common/MatDefs/Misc/Unshaded.j3md");
         mat.setTexture("ColorMap", tex);
         buttonGeom.setMaterial(mat);
-        buttonGeom.setLocalTranslation(width*(0.32f*(-5f/12f)), width*(0.24f/9f), 2);
+        buttonGeom.setLocalTranslation(width*(0.32f*(-5f/12f)), width*(0.24f/9f), 0.1f);
         this.attachChild(buttonGeom);
     }
     
