@@ -7,7 +7,6 @@ package Prepare;
 
 import Action.ClickListener;
 import Action.PauseListener;
-import Battle.ConfirmButton;
 //import Battle.MainController;
 import static Battle.MainGame.CLICK;
 import static Battle.MainGame.PAUSE;
@@ -65,6 +64,7 @@ public class MainPrepare extends BaseAppState{
     public final static String CLICK = "CLICK"; //the CLICK message
     
     private PauseButton pauseButton;
+    private ConfirmButton confirmButton;
     
     private boolean buttonShown = false;
     
@@ -87,7 +87,10 @@ public class MainPrepare extends BaseAppState{
 //        battleNode.attachChild(buttonNode);
         //construct the background
         constructBackground();
-        //Game initalize     
+        //Game initalize   
+        this.confirmButton = new ConfirmButton(app, camZ*ratio, camZ);
+        prepareNode.attachChild(confirmButton);
+        
         this.opButtonNode1 = new OperationButton(app, camZ*ratio, camZ, Player1OperationState.getInstance());
         this.playerButtonNode1 = new PlayerButton(app, camZ*ratio, camZ, Player1OperationState.getInstance());
         this.opBox1 = new OperationBox(app, camZ*ratio, camZ, opButtonNode1,playerButtonNode1);
@@ -134,6 +137,8 @@ public class MainPrepare extends BaseAppState{
         inputManager.addListener(shootButton, CLICK);
         inputManager.addListener(passButton, CLICK);
         inputManager.addListener(breakthroughButton, CLICK);
+        
+        inputManager.addListener(confirmButton, CLICK);
 //        cardManager.enterScene();
     }
     
@@ -153,6 +158,7 @@ public class MainPrepare extends BaseAppState{
         inputManager.removeListener(opButtonNode1);
         inputManager.removeListener(playerButtonNode2);
         inputManager.removeListener(opButtonNode2);
+        inputManager.removeListener(confirmButton);
     }
     
     private void constructBackground(){
