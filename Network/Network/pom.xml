@@ -4,6 +4,20 @@
   <artifactId>Network</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>pom</packaging>
+  <properties>
+	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	<maven.compiler.encoding>UTF-8</maven.compiler.encoding>
+	<java.version>14</java.version>
+	<maven.compiler.source>14</maven.compiler.source>
+	<maven.compiler.target>14</maven.compiler.target>
+  </properties>
+  <dependencies>
+  	<dependency>
+  		<groupId>io.netty</groupId>
+  		<artifactId>netty-all</artifactId>
+  		<version>4.1.20.Final</version>
+  	</dependency>
+  </dependencies>
   <modules>
   	<module>GameServer</module>
   	<module>GameClient</module>
