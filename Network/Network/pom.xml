@@ -21,5 +21,6 @@
   <modules>
   	<module>GameServer</module>
   	<module>GameClient</module>
+  	<module>Data</module>
   </modules>
 </project>
