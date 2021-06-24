@@ -15,6 +15,15 @@ public class LoginData implements TransferedData{
 	public void process() {
 		//检验数据
 		//数据库查询
+		DatabaseConnector.getInstance().loginCheck(this);
 		//做出相应回应
+	}
+	
+	public String getUserName() {
+		return userName;
+	}
+
+	public String getPassword() {
+		return password;
 	}
 }
