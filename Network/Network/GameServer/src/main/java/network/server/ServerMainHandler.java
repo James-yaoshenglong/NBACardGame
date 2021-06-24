@@ -7,11 +7,15 @@ import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import network.data.TransferedData;
+import network.user.UserPair;
 
 public class ServerMainHandler extends ChannelInboundHandlerAdapter{	
+	private UserPair pair;
+	
 	@Override
 	public void handlerAdded(ChannelHandlerContext ctx) {
 		System.out.println("New client ["+ctx.channel().remoteAddress()+"] in");
+		pair = new UserPair(ctx.channel());
 	}
 
     @Override
@@ -19,7 +23,7 @@ public class ServerMainHandler extends ChannelInboundHandlerAdapter{
         System.out.println("Server received new message");
         TransferedData input = (TransferedData)decode(msg);
         if(input != null) {
-        	input.process();
+        	input.process(pair);
         }
     }
     

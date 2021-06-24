@@ -1,5 +1,7 @@
 package network.data;
 
+import network.user.UserPair;
+
 public class LoginData implements TransferedData{
 	private static final long serialVersionUID = 5021324296670286304L;
 	
@@ -12,11 +14,15 @@ public class LoginData implements TransferedData{
 	}
 	
 	@Override
-	public void process() {
+	public void process(UserPair pair) {
 		//检验数据
 		//数据库查询
-		DatabaseConnector.getInstance().loginCheck(this);
-		//做出相应回应
+		if(DatabaseConnector.getInstance().loginCheck(this)) {
+			pair.reLogin(new LoginResponse(true));
+		}
+		else {
+			pair.reLogin(new LoginResponse(false));
+		}
 	}
 	
 	public String getUserName() {
