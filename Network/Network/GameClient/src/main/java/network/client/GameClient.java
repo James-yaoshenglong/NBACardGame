@@ -9,6 +9,7 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
+import network.code.DataObjectEncoder;
 
 public class GameClient {
 	private final String host;
@@ -29,6 +30,7 @@ public class GameClient {
              .handler(new ChannelInitializer<SocketChannel>() {  
                  @Override
                  public void initChannel(SocketChannel ch) throws Exception {
+                     ch.pipeline().addLast(new DataObjectEncoder());
                      ch.pipeline().addLast(new ClientTestHandler());
                  }
              });

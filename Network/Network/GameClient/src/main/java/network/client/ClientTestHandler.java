@@ -1,11 +1,6 @@
 package network.client;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
-
 import io.netty.buffer.ByteBuf;
-import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.util.CharsetUtil;
@@ -15,7 +10,7 @@ public class ClientTestHandler extends SimpleChannelInboundHandler<ByteBuf> {
 
     @Override
     public void channelActive(ChannelHandlerContext ctx) {
-    	ctx.writeAndFlush(encode(new LoginData("hhh","hhh")));
+    	ctx.writeAndFlush(new LoginData("hhh","hhh"));
     }
 
     @Override
@@ -28,32 +23,6 @@ public class ClientTestHandler extends SimpleChannelInboundHandler<ByteBuf> {
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {         
         cause.printStackTrace();
         ctx.close();
-    }
-    
-    private ByteBuf encode(Object obj) {
-    	byte[] bytes = null;
-        ByteArrayOutputStream bo = new ByteArrayOutputStream();
-        ObjectOutputStream oo = null;
-        try {
-            oo = new ObjectOutputStream(bo);
-            oo.writeObject(obj);
-            bytes = bo.toByteArray();
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                bo.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            try {
-                oo.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        ByteBuf buf = Unpooled.wrappedBuffer(bytes);
-    	return buf;
     }
 }
 

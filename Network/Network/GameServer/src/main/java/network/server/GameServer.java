@@ -6,6 +6,8 @@ import io.netty.channel.ChannelInitializer;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
+import network.code.DataObjectDecoder;
+import network.code.DataObjectEncoder;
 
 public class GameServer {
 	private final int port;
@@ -28,6 +30,8 @@ public class GameServer {
              .childHandler(new ChannelInitializer<SocketChannel>() {
                  @Override
                  public void initChannel(SocketChannel ch) throws Exception {
+                	 ch.pipeline().addLast(new DataObjectEncoder());//this two may be can be replaced netty builtin object encoder and decoder
+                	 ch.pipeline().addLast(new DataObjectDecoder());
                      ch.pipeline().addLast(new ServerMainHandler());
                  }
              });
