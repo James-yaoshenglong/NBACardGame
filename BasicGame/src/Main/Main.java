@@ -4,6 +4,7 @@ import Battle.MainGame;
 import Pause.PauseInterface;
 import Prepare.MainPrepare;
 import Welcome.WelcomeInterface;
+import Login.LoginInterface;
 import com.jme3.app.SimpleApplication;
 import com.jme3.app.state.BaseAppState;
 import com.jme3.light.AmbientLight;
@@ -31,6 +32,7 @@ import com.jme3.ui.Picture;
  */
 public class Main extends SimpleApplication {
     private WelcomeInterface welcomeUI;
+    private LoginInterface loginUI;
     private MainGame mainGame;
     private PauseInterface pauseUI;
     private MainPrepare mainPrepare;
@@ -48,15 +50,22 @@ public class Main extends SimpleApplication {
     public void simpleInitApp() {
         //setting the fly cam disable;
         this.getFlyByCamera().setEnabled(false);
-        welcomeUI = new WelcomeInterface();
+        loginUI = new LoginInterface();
         pauseUI = new PauseInterface();
-        currentState = welcomeUI;
+        currentState = loginUI;
 
-        stateManager.attach(welcomeUI);
+        stateManager.attach(loginUI);
         stateManager.attach(pauseUI);
         stateManager.getState(PauseInterface.class).setEnabled(false);
     }
-
+    
+    public void switchfromLogtoWel(){
+        stateManager.getState(LoginInterface.class).setEnabled(false);
+        welcomeUI = new WelcomeInterface();
+        stateManager.attach(welcomeUI);
+        currentState = welcomeUI;
+    }
+    
     public void switchfromWeltoMain(){
         stateManager.getState(WelcomeInterface.class).setEnabled(false);
         mainGame = new MainGame();
