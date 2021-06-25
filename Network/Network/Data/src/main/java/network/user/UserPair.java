@@ -13,6 +13,6 @@ public class UserPair {
 	}
 	
 	public void reLogin(LoginResponse response) {
-
+		selfChannel.writeAndFlush(response);
 	}
 }

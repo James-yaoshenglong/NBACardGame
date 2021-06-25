@@ -1,5 +1,6 @@
 package network.data;
 
+import network.user.OnlineUserGroup;
 import network.user.UserPair;
 
 public class LoginData implements TransferedData{
@@ -18,6 +19,7 @@ public class LoginData implements TransferedData{
 		//检验数据
 		//数据库查询
 		if(DatabaseConnector.getInstance().loginCheck(this)) {
+			OnlineUserGroup.getInstance().addUser(pair);
 			pair.reLogin(new LoginResponse(true));
 		}
 		else {
