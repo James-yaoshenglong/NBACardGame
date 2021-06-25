@@ -4,6 +4,7 @@ import io.netty.channel.Channel;
 import network.data.LoginResponse;
 
 public class UserPair {
+	private String userName;
 	private Channel selfChannel;
 	private Channel rivalChannel;
 	
@@ -14,5 +15,9 @@ public class UserPair {
 	
 	public void reLogin(LoginResponse response) {
 		selfChannel.writeAndFlush(response);
+	}
+
+	public void setUserName(String name) {
+		this.userName=name;
 	}
 }

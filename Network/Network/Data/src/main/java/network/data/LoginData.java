@@ -19,6 +19,7 @@ public class LoginData implements TransferedData{
 		//检验数据
 		//数据库查询
 		if(DatabaseConnector.getInstance().loginCheck(this)) {
+			pair.setUserName(userName);
 			OnlineUserGroup.getInstance().addUser(pair);
 			pair.reLogin(new LoginResponse(true));
 		}

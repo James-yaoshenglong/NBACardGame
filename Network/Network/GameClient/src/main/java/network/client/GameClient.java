@@ -10,6 +10,7 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.channel.Channel;
+import network.code.DataObjectDecoder;
 import network.code.DataObjectEncoder;
 import network.data.LoginData;
 
@@ -34,16 +35,17 @@ public class GameClient {
                  @Override
                  public void initChannel(SocketChannel ch) throws Exception {
                      ch.pipeline().addLast(new DataObjectEncoder());
+                     ch.pipeline().addLast(new DataObjectDecoder());
                      ch.pipeline().addLast(new ClientTestHandler());
                  }
              });
 
             ChannelFuture f = b.connect().sync();      
-            f.channel().closeFuture().sync();
+//            f.channel().closeFuture().sync();
             channel = f.channel();
         } finally {
-            group.shutdownGracefully().sync();     
-            System.out.println("closed");
+//            group.shutdownGracefully().sync();     
+//            System.out.println("closed");
         }
     }
 

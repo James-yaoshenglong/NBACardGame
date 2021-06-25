@@ -6,17 +6,17 @@ import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.util.CharsetUtil;
 import network.data.LoginData;
 
-public class ClientTestHandler extends SimpleChannelInboundHandler<ByteBuf> {
+public class ClientTestHandler extends SimpleChannelInboundHandler<Object> {
 
     @Override
     public void channelActive(ChannelHandlerContext ctx) {
-    	ctx.writeAndFlush(new LoginData("hhh","hhh"));
+//    	ctx.writeAndFlush(new LoginData("hhh","hhh"));
     }
 
     @Override
-    public void channelRead0(ChannelHandlerContext ctx, ByteBuf in) {
-        System.out.println("Client received: " + in.toString(CharsetUtil.UTF_8));
-        ctx.close();
+    public void channelRead0(ChannelHandlerContext ctx, Object in) {
+        System.out.println("Client received: " + in.toString());
+//        ctx.close();
     }
 
     @Override
