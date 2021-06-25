@@ -9,11 +9,14 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
+import io.netty.channel.Channel;
 import network.code.DataObjectEncoder;
+import network.data.LoginData;
 
 public class GameClient {
 	private final String host;
     private final int port;
+    private Channel channel;
 
     public GameClient(String host, int port) {
         this.host = host;
@@ -36,11 +39,16 @@ public class GameClient {
              });
 
             ChannelFuture f = b.connect().sync();      
-            f.channel().closeFuture().sync();        
+            f.channel().closeFuture().sync();
+            channel = f.channel();
         } finally {
             group.shutdownGracefully().sync();     
             System.out.println("closed");
         }
+    }
+
+    public void transportData(LoginData data){
+        channel.writeAndFlush(data);
     }
 
     public static void main(String[] args) throws Exception {

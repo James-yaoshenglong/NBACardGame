@@ -24,6 +24,11 @@ import com.jme3.scene.shape.Box;
 import com.jme3.scene.shape.Quad;
 import com.jme3.texture.Texture;
 import com.jme3.ui.Picture;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import network.client.GameClient;
+
 
 /**
  * This is the Main Class of your Game. You should only do initialization here.
@@ -37,6 +42,7 @@ public class Main extends SimpleApplication {
     private PauseInterface pauseUI;
     private MainPrepare mainPrepare;
     private BaseAppState currentState; //do not count pause
+    private GameClient client;
     
     
     public static void main(String[] args) {
@@ -47,7 +53,7 @@ public class Main extends SimpleApplication {
 
     @Override
 
-    public void simpleInitApp() {
+    public void simpleInitApp(){
         //setting the fly cam disable;
         this.getFlyByCamera().setEnabled(false);
         loginUI = new LoginInterface();
@@ -57,6 +63,13 @@ public class Main extends SimpleApplication {
         stateManager.attach(loginUI);
         stateManager.attach(pauseUI);
         stateManager.getState(PauseInterface.class).setEnabled(false);
+        
+        client = new GameClient("127.0.0.1",8888);
+        try {
+            client.start();
+        } catch (Exception ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     public void switchfromLogtoWel(){
@@ -198,5 +211,9 @@ public class Main extends SimpleApplication {
         backgroundGeom.setLocalTranslation(-(width / 2), -(height/ 2), 0); //Need to Divide by two because the quad origin is bottom left
 
         rootNode.attachChild(backgroundGeom);
+    }
+    
+    public GameClient getClient(){
+        return client;
     }
 }

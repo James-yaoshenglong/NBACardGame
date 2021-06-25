@@ -40,6 +40,11 @@ import com.simsilica.lemur.component.QuadBackgroundComponent;
 import com.simsilica.lemur.style.ElementId;
 import com.simsilica.lemur.style.Styles;
 import com.simsilica.lemur.text.*;
+
+import network.client.GameClient;
+import network.client.ClientTestHandler;
+import network.data.LoginData;
+
 /**
  *
  * @author yuchwang7
@@ -55,6 +60,7 @@ public class LoginInterface extends BaseAppState{
     private float height;
     private Node rootNode;
     private Node sceneNode;
+    private GameClient client;
     
     @Override
     protected void initialize(Application mainApp) {
@@ -62,6 +68,7 @@ public class LoginInterface extends BaseAppState{
         this.assetManager = mainApp.getAssetManager();
         this.stateManager = mainApp.getStateManager();
         this.inputManager = mainApp.getInputManager();
+        this.client = ((Main)app).getClient();
         this.cam = mainApp.getCamera();
         this.guiNode = app.getGuiNode();
         this.width = cam.getWidth();
@@ -132,6 +139,8 @@ public class LoginInterface extends BaseAppState{
         clickMe.addClickCommands(new Command<Button>() {
                 @Override
                 public void execute(Button source) {
+                        LoginData Info = new LoginData(username.getText(),password.getText());
+                        client.transportData(Info);
                         System.out.println(username.getText());
                         System.out.println(password.getText());
                         //((Main)app).switchfromLogtoWel();
