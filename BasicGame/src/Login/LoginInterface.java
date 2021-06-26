@@ -44,12 +44,15 @@ import com.simsilica.lemur.text.*;
 import network.client.GameClient;
 import network.client.ClientTestHandler;
 import network.data.LoginData;
+import network.data.ResponseData;
+import network.data.ResponseOperation;
+import network.data.LoginResponse;
 
 /**
  *
  * @author yuchwang7
  */
-public class LoginInterface extends BaseAppState{
+public class LoginInterface extends BaseAppState implements ResponseOperation{
     private SimpleApplication app;
     private AssetManager assetManager;
     private AppStateManager stateManager;
@@ -68,7 +71,7 @@ public class LoginInterface extends BaseAppState{
         this.assetManager = mainApp.getAssetManager();
         this.stateManager = mainApp.getStateManager();
         this.inputManager = mainApp.getInputManager();
-        this.client = ((Main)app).getClient();
+        this.client = GameClient.getInstance();
         this.cam = mainApp.getCamera();
         this.guiNode = app.getGuiNode();
         this.width = cam.getWidth();
@@ -146,6 +149,7 @@ public class LoginInterface extends BaseAppState{
                         //((Main)app).switchfromLogtoWel();
                 }
         });
+        
 
 //        Container text = new Container();
 //        sceneNode.attachChild(text);
@@ -163,6 +167,7 @@ public class LoginInterface extends BaseAppState{
         
     }
 
+    
     @Override
     protected void onDisable() {
         sceneNode.removeFromParent();
@@ -201,5 +206,17 @@ public class LoginInterface extends BaseAppState{
     
     private void makeButton(){
         
+    }
+
+    @Override
+    public void operate(ResponseData rd) {
+        boolean isSuccessful;
+        isSuccessful = ((LoginResponse)rd).getStatus();
+        if(isSuccessful){
+            ((Main)app).switchfromLogtoWel();
+        }
+        else{
+            System.out.println("Login Failed");
+        }
     }
 }

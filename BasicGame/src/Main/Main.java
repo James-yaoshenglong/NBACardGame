@@ -28,6 +28,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import network.client.GameClient;
+import network.data.ResponseOperation;
 
 
 /**
@@ -64,12 +65,13 @@ public class Main extends SimpleApplication {
         stateManager.attach(pauseUI);
         stateManager.getState(PauseInterface.class).setEnabled(false);
         
-        client = new GameClient("127.0.0.1",8888);
+        client = GameClient.getInstance();
         try {
             client.start();
         } catch (Exception ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
+        client.registerOperation(loginUI);
     }
     
     public void switchfromLogtoWel(){
@@ -213,7 +215,4 @@ public class Main extends SimpleApplication {
         rootNode.attachChild(backgroundGeom);
     }
     
-    public GameClient getClient(){
-        return client;
-    }
 }
