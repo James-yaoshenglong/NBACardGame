@@ -5,6 +5,7 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.util.CharsetUtil;
 import network.data.LoginData;
+import network.data.LoginResponse;
 
 public class ClientTestHandler extends SimpleChannelInboundHandler<Object> {
 
@@ -15,6 +16,7 @@ public class ClientTestHandler extends SimpleChannelInboundHandler<Object> {
 
     @Override
     public void channelRead0(ChannelHandlerContext ctx, Object in) {
+        System.out.println(((LoginResponse)in).getStatus());
         System.out.println("Client received: " + in.toString());
 //        ctx.close();
     }

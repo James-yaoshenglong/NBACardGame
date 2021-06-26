@@ -7,4 +7,8 @@ public class LoginResponse implements ResponseData{
 	public LoginResponse(boolean success) {
 		this.isSuccess = success;
 	}
+
+	public boolean getStatus(){
+		return isSuccess;
+	}
 }

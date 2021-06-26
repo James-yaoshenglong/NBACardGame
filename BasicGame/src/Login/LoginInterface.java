@@ -114,7 +114,7 @@ public class LoginInterface extends BaseAppState{
         panelUser.setLocalTranslation(width/2-150f, height/2+45f, 1);
         final TextField username = new TextField(new DefaultDocumentModel());
         username.setFontSize(20f);
-        username.setColor(ColorRGBA.Blue);
+        username.setColor(ColorRGBA.White);
         username.setPreferredSize(new Vector3f(300f, 30f,1));
         panelUser.addChild(username);
         sceneNode.attachChild(panelUser);
@@ -127,7 +127,7 @@ public class LoginInterface extends BaseAppState{
         final TextField password = new TextField(new DefaultDocumentModel());
         password.setPreferredSize(new Vector3f(300f, 30f,1));
         password.setFontSize(20f);
-        password.setColor(ColorRGBA.Blue);
+        password.setColor(ColorRGBA.White);
         panelPass.addChild(password);
         sceneNode.attachChild(panelPass);        
         
