@@ -2,6 +2,7 @@ package network.user;
 
 import io.netty.channel.Channel;
 import network.data.LoginResponse;
+import network.data.MatchResponse;
 
 public class UserPair {
 	private String userName;
@@ -19,5 +20,12 @@ public class UserPair {
 
 	public void setUserName(String name) {
 		this.userName=name;
+	}
+	
+	public void match(UserPair another) {
+		rivalChannel = another.selfChannel;
+		another.rivalChannel = selfChannel;
+		selfChannel.writeAndFlush(new MatchResponse(another.userName));
+		rivalChannel.writeAndFlush(new MatchResponse(userName));
 	}
 }
