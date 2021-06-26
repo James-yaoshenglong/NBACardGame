@@ -6,6 +6,7 @@ import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.util.CharsetUtil;
 import network.data.LoginData;
 import network.data.LoginResponse;
+import network.data.ResponseData;
 
 public class ClientTestHandler extends SimpleChannelInboundHandler<Object> {
 
@@ -18,6 +19,7 @@ public class ClientTestHandler extends SimpleChannelInboundHandler<Object> {
     public void channelRead0(ChannelHandlerContext ctx, Object in) {
         System.out.println(((LoginResponse)in).getStatus());
         System.out.println("Client received: " + in.toString());
+        ((ResponseData)in).process(GameClient.getInstance());
 //        ctx.close();
     }
 

@@ -12,17 +12,27 @@ import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.channel.Channel;
 import network.code.DataObjectDecoder;
 import network.code.DataObjectEncoder;
-import network.data.LoginData;
+import network.data.ClientInterface;
+import network.data.ResponseOperation;
+import network.data.TransferedData;
 
-public class GameClient {
+public class GameClient implements ClientInterface{
+	private static GameClient instance = new GameClient("127.0.0.1", 8888);
+	
+	private GameClient(String host, int port) {
+        this.host = host;
+        this.port = port;
+    } 
+	
+	public static GameClient getInstance() {
+		return instance;
+	}
+	
 	private final String host;
     private final int port;
     private Channel channel;
+    private ResponseOperation operation;
 
-    public GameClient(String host, int port) {
-        this.host = host;
-        this.port = port;
-    }
 
     public void start() throws Exception {
         EventLoopGroup group = new NioEventLoopGroup();
@@ -49,12 +59,21 @@ public class GameClient {
         }
     }
 
-    public void transportData(LoginData data){
+    public void transportData(TransferedData data){
         channel.writeAndFlush(data);
+    }
+    
+    public void registerOperation(ResponseOperation op) {
+    	this.operation = op;
+    }
+    
+    @Override
+    public ResponseOperation getOperation() {
+    	return operation;
     }
 
     public static void main(String[] args) throws Exception {
-        new GameClient("127.0.0.1", 8888).start();
+        GameClient.getInstance().start();
     }
 }
 

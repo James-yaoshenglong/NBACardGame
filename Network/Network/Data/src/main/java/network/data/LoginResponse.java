@@ -11,4 +11,9 @@ public class LoginResponse implements ResponseData{
 	public boolean getStatus(){
 		return isSuccess;
 	}
+
+	@Override
+	public void process(ClientInterface client) {
+		client.getOperation().operate(this);
+	}
 }
