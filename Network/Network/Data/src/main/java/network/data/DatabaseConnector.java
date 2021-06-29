@@ -14,7 +14,7 @@ public class DatabaseConnector {
 	}
 	
 	final String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";  
-    final String DB_URL = "jdbc:mysql://localhost:3306/gamedata?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC";
+    final String DB_URL = "jdbc:mysql://localhost:3306/gamedata?useSSL=false&amp;allowPublicKeyRetrieval=true&amp;serverTimezone=UTC";
     
     final String USER = "root";
     final String PASS = "bujiangwude";
@@ -38,20 +38,23 @@ public class DatabaseConnector {
             		rawData.getUserName(),
             		rawData.getPassword());
             ResultSet rs = statement.executeQuery(sql);
-        
+            
+            boolean rtval;
             // 展开结果集数据库
            if(rs.next()) {
         	   String userName = rs.getString("userName");
         	   System.out.printf("%s login success\n", userName);
-        	   return true;
+        	   rtval = true;
            }
            else {
         	   System.out.printf("%s has not registered\n", rawData.getUserName());
+               rtval = false;
            }
             // 完成后关闭
             rs.close();
             statement.close();
             connection.close();
+            return rtval;
         }catch(SQLException se){
             // 处理 JDBC 错误
             se.printStackTrace();
@@ -70,7 +73,7 @@ public class DatabaseConnector {
                 se.printStackTrace();
             }
         }
-        return true;
+        return false;
     }
     
 }

@@ -36,6 +36,7 @@ import com.jme3.ui.Picture;
 import com.simsilica.lemur.HAlignment;
 import com.simsilica.lemur.LayerComparator;
 import com.simsilica.lemur.Panel;
+import com.simsilica.lemur.VAlignment;
 import com.simsilica.lemur.component.QuadBackgroundComponent;
 import com.simsilica.lemur.style.ElementId;
 import com.simsilica.lemur.style.Styles;
@@ -217,6 +218,33 @@ public class LoginInterface extends BaseAppState implements ResponseOperation{
         }
         else{
             System.out.println("Login Failed");
+            constructLoginFailed();
         }
+    }
+    
+    private void constructLoginFailed(){
+        //guiNode.detachChild(sceneNode);
+        Container panel = new Container("glass");
+        Texture tex = assetManager.loadTexture("Textures/pic/red.jpg");
+        panel.setBackground(new QuadBackgroundComponent(tex));
+        panel.setPreferredSize(new Vector3f(600f,450f,0));
+        panel.setLocalTranslation(width/2-300f, height/2+200f, 5);
+        guiNode.attachChild(panel);
+        Label fail = panel.addChild(new Label("Login Failed","glass"));
+        fail.setFontSize(75f);
+        fail.setTextHAlignment(HAlignment.Center);
+        fail.setTextVAlignment(VAlignment.Center);
+        fail.setColor(ColorRGBA.Red);
+        Button relogin = panel.addChild(new Button("Try again"));
+        relogin.setFontSize(75f);
+        relogin.setTextHAlignment(HAlignment.Center);
+        relogin.setTextVAlignment(VAlignment.Center);
+        relogin.addClickCommands(new Command<Button>() {
+                @Override
+                public void execute(Button source) {
+                        guiNode.detachChild(source.getParent());
+                        //guiNode.attachChild(sceneNode);
+                }
+        });
     }
 }
