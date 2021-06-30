@@ -1,8 +1,8 @@
 package network.user;
 
 import io.netty.channel.Channel;
-import network.data.LoginResponse;
 import network.data.MatchResponse;
+import network.data.ResponseData;
 
 public class UserPair {
 	private String userName;
@@ -14,7 +14,7 @@ public class UserPair {
 		this.rivalChannel = null;
 	}
 	
-	public void reLogin(LoginResponse response) {
+	public void replySingle(ResponseData response) {
 		selfChannel.writeAndFlush(response);
 	}
 

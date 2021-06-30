@@ -21,10 +21,10 @@ public class LoginData implements TransferedData{
 		if(DatabaseConnector.getInstance().loginCheck(this)) {
 			pair.setUserName(userName);
 			OnlineUserGroup.getInstance().addUser(pair);
-			pair.reLogin(new LoginResponse(true));
+			pair.replySingle(new LoginResponse(true));
 		}
 		else {
-			pair.reLogin(new LoginResponse(false));
+			pair.replySingle(new LoginResponse(false));
 		}
 	}
 	
