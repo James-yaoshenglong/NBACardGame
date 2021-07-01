@@ -17,7 +17,6 @@ public class ClientTestHandler extends SimpleChannelInboundHandler<Object> {
 
     @Override
     public void channelRead0(ChannelHandlerContext ctx, Object in) {
-        System.out.println(((LoginResponse)in).getStatus());
         System.out.println("Client received: " + in.toString());
         ((ResponseData)in).process(GameClient.getInstance());
 //        ctx.close();

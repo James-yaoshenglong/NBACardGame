@@ -48,6 +48,8 @@ import network.data.LoginData;
 import network.data.ResponseData;
 import network.data.ResponseOperation;
 import network.data.LoginResponse;
+import network.data.SignUpData;
+import network.data.SignUpResponse;
 
 /**
  *
@@ -65,6 +67,7 @@ public class LoginInterface extends BaseAppState implements ResponseOperation{
     private Node rootNode;
     private Node sceneNode;
     private GameClient client;
+    private int flag = 0; //flag = 1 means that the recent operation is login and the flag = 0 means that the recent operation is register
     
     @Override
     protected void initialize(Application mainApp) {
@@ -101,15 +104,6 @@ public class LoginInterface extends BaseAppState implements ResponseOperation{
         // 将'glass'设置为GUI默认样式
         GuiGlobals.getInstance().getStyles().setDefaultStyle("glass");
 
-        // 创建一个Container作为窗口中其他GUI元素的容器
-        Container myWindow = new Container();
-        sceneNode.attachChild(myWindow);
-
-        // 设置窗口在屏幕上的坐标
-       // myWindow.setPreferredSize(new Vector3f(1000f, 1000f,1000f));
-        // 注意：Lemur的GUI元素是以控件左上角为原点，向右、向下生成的。
-        // 然而，作为一个Spatial，它在GuiNode中的坐标原点依然是屏幕的左下角。
-        myWindow.setLocalTranslation(width/2-50f, height/2-130f, 0);
         
         // Input Text
         Container panelUser = new Container("glass");
@@ -135,23 +129,44 @@ public class LoginInterface extends BaseAppState implements ResponseOperation{
         panelPass.addChild(password);
         sceneNode.attachChild(panelPass);        
         
-        // 添加一个Button控件
-        Button clickMe = myWindow.addChild(new Button("Login"));
-        clickMe.setFontSize(20f);
-        clickMe.setTextHAlignment(HAlignment.Center);
-        clickMe.setPreferredSize(new Vector3f(100f, 30f,0));
-        clickMe.addClickCommands(new Command<Button>() {
+        // Login Button
+        //创建一个Container作为窗口中其他GUI元素的容器
+        Container myWindowLogin = new Container();
+        sceneNode.attachChild(myWindowLogin);
+        myWindowLogin.setLocalTranslation(width/2-50f, height/2-130f, 0);
+        Button login = myWindowLogin.addChild(new Button("Login"));
+        login.setFontSize(20f);
+        login.setTextHAlignment(HAlignment.Center);
+        login.setPreferredSize(new Vector3f(100f, 30f,0));
+        login.addClickCommands(new Command<Button>() {
                 @Override
                 public void execute(Button source) {
                         LoginData Info = new LoginData(username.getText(),password.getText());
+                        flag = 1;
                         client.transportData(Info);
-                        System.out.println(username.getText());
-                        System.out.println(password.getText());
-                        //((Main)app).switchfromLogtoWel();
                 }
         });
         
-
+        // Register Button
+        Container myWindowRegister = new Container();
+        sceneNode.attachChild(myWindowRegister);
+        myWindowRegister.setLocalTranslation(width/2-75f, height/2-180f, 0);
+        Button register = myWindowRegister.addChild(new Button("Click to register"));
+        register.setFontSize(20f);
+        register.setTextHAlignment(HAlignment.Center);
+        register.setPreferredSize(new Vector3f(150f, 40f,0));
+        register.addClickCommands(new Command<Button>() {
+                @Override
+                public void execute(Button source) {
+                        SignUpData Info = new SignUpData(username.getText(),password.getText());
+                        flag = 0;
+                        client.transportData(Info);
+                        System.out.println(username.getText());
+                        System.out.println(password.getText());
+                        System.out.printf("flag is %d",flag);
+                }
+        });
+        
 //        Container text = new Container();
 //        sceneNode.attachChild(text);
 
@@ -211,15 +226,29 @@ public class LoginInterface extends BaseAppState implements ResponseOperation{
 
     @Override
     public void operate(ResponseData rd) {
-        boolean isSuccessful;
-        isSuccessful = ((LoginResponse)rd).getStatus();
-        if(isSuccessful){
-            ((Main)app).switchfromLogtoWel();
+        if(this.flag==1){
+            boolean isSuccessful;
+            isSuccessful = ((LoginResponse)rd).getStatus();
+            if(isSuccessful){
+                ((Main)app).switchfromLogtoWel();
+            }
+            else{
+                System.out.println("Login Failed");
+                constructLoginFailed();
+            }
         }
         else{
-            System.out.println("Login Failed");
-            constructLoginFailed();
+            boolean isSuccessful;
+            isSuccessful = ((SignUpResponse)rd).getStatus();
+            if(isSuccessful){
+                constructRegisterSuccessfull();
+            }
+            else{
+                System.out.println("Sign up Failed");
+                constructRegisterFailed();
+            }            
         }
+        
     }
     
     private void constructLoginFailed(){
@@ -236,6 +265,58 @@ public class LoginInterface extends BaseAppState implements ResponseOperation{
         fail.setTextVAlignment(VAlignment.Center);
         fail.setColor(ColorRGBA.Red);
         Button relogin = panel.addChild(new Button("Try again"));
+        relogin.setFontSize(75f);
+        relogin.setTextHAlignment(HAlignment.Center);
+        relogin.setTextVAlignment(VAlignment.Center);
+        relogin.addClickCommands(new Command<Button>() {
+                @Override
+                public void execute(Button source) {
+                        guiNode.detachChild(source.getParent());
+                        //guiNode.attachChild(sceneNode);
+                }
+        });
+    }
+    
+    private void constructRegisterFailed(){
+        //guiNode.detachChild(sceneNode);
+        Container panel = new Container("glass");
+        Texture tex = assetManager.loadTexture("Textures/pic/red.jpg");
+        panel.setBackground(new QuadBackgroundComponent(tex));
+        panel.setPreferredSize(new Vector3f(600f,450f,0));
+        panel.setLocalTranslation(width/2-300f, height/2+200f, 5);
+        guiNode.attachChild(panel);
+        Label fail = panel.addChild(new Label("The account already exists","glass"));
+        fail.setFontSize(75f);
+        fail.setTextHAlignment(HAlignment.Center);
+        fail.setTextVAlignment(VAlignment.Center);
+        fail.setColor(ColorRGBA.Red);
+        Button relogin = panel.addChild(new Button("Try again"));
+        relogin.setFontSize(75f);
+        relogin.setTextHAlignment(HAlignment.Center);
+        relogin.setTextVAlignment(VAlignment.Center);
+        relogin.addClickCommands(new Command<Button>() {
+                @Override
+                public void execute(Button source) {
+                        guiNode.detachChild(source.getParent());
+                        //guiNode.attachChild(sceneNode);
+                }
+        });
+    }
+    
+    private void constructRegisterSuccessfull(){
+        //guiNode.detachChild(sceneNode);
+        Container panel = new Container("glass");
+        Texture tex = assetManager.loadTexture("Textures/pic/red.jpg");
+        panel.setBackground(new QuadBackgroundComponent(tex));
+        panel.setPreferredSize(new Vector3f(600f,450f,0));
+        panel.setLocalTranslation(width/2-300f, height/2+200f, 5);
+        guiNode.attachChild(panel);
+        Label fail = panel.addChild(new Label("Registered Successfully","glass"));
+        fail.setFontSize(75f);
+        fail.setTextHAlignment(HAlignment.Center);
+        fail.setTextVAlignment(VAlignment.Center);
+        fail.setColor(ColorRGBA.Red);
+        Button relogin = panel.addChild(new Button("Login Now"));
         relogin.setFontSize(75f);
         relogin.setTextHAlignment(HAlignment.Center);
         relogin.setTextVAlignment(VAlignment.Center);

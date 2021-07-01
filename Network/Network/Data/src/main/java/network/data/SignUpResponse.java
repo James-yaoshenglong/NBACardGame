@@ -13,5 +13,8 @@ public class SignUpResponse implements ResponseData{
 	public void process(ClientInterface client) {
 		client.getOperation().operate(this);
 	}
-
+	
+	public boolean getStatus(){
+		return isSuccess;
+	}
 }
