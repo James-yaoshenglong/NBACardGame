@@ -1,6 +1,7 @@
 package Main;
 
 import Battle.MainGame;
+import Defend.MainDefend;
 import Pause.PauseInterface;
 import Prepare.MainPrepare;
 import Welcome.WelcomeInterface;
@@ -42,6 +43,7 @@ public class Main extends SimpleApplication {
     private MainGame mainGame;
     private PauseInterface pauseUI;
     private MainPrepare mainPrepare;
+    private MainDefend mainDefend;
     private BaseAppState currentState; //do not count pause
     private GameClient client;
     
@@ -85,9 +87,12 @@ public class Main extends SimpleApplication {
         stateManager.getState(WelcomeInterface.class).setEnabled(false);
         mainGame = new MainGame();
         mainPrepare = new MainPrepare();
+        mainDefend = new MainDefend();
         stateManager.attach(mainGame);
         stateManager.attach(mainPrepare);
+        stateManager.attach(mainDefend);
         stateManager.getState(MainPrepare.class).setEnabled(false);
+        stateManager.getState(MainDefend.class).setEnabled(false);
         currentState = mainGame;
     }
     
@@ -96,6 +101,7 @@ public class Main extends SimpleApplication {
         stateManager.getState(WelcomeInterface.class).setEnabled(true);
         stateManager.detach(mainGame);
         stateManager.detach(mainPrepare);
+        stateManager.detach(mainDefend);
     }
     
 //    public void switchfromMaintoPause(){
@@ -113,6 +119,12 @@ public class Main extends SimpleApplication {
         stateManager.getState(MainGame.class).setEnabled(false);
         stateManager.getState(MainPrepare.class).setEnabled(true);
         currentState = mainPrepare;
+    }
+    
+    public void switchfromMaintoDefend(){
+        stateManager.getState(MainGame.class).setEnabled(false);
+        stateManager.getState(MainDefend.class).setEnabled(true);
+        currentState = mainDefend;
     }
     
     public void returnBackFromPause(){
