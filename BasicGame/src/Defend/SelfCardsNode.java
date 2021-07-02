@@ -36,6 +36,10 @@ public class SelfCardsNode extends Node implements ActionListener, RawInputListe
     private SimpleApplication app;
     private float width; //screen width and height
     private float height;
+    private Boolean isPressed = false; //check whether the mouse is pressed
+    private Card targetCardNode; //the chosen card
+    private float relativeWidth; //the relative distance between the click position and the node
+    private float relativeHeight;
     
     public SelfCardsNode(SimpleApplication mainApp, float aCamWidth, float aCamHeight){
         this.myTeam = new ArrayList<>();
@@ -45,18 +49,6 @@ public class SelfCardsNode extends Node implements ActionListener, RawInputListe
         this.height = aCamHeight;
         deal();
         licensing(myTeam);
-    }
-    
-    private void playin(Card c){
-        lineup.add(c);
-    }
-    
-    private void exitlineup(Card c){
-        lineup.remove(c);
-    }
-    
-    private int chosenplayer(){
-        return lineup.size();
     }
     
     @Override
@@ -75,19 +67,11 @@ public class SelfCardsNode extends Node implements ActionListener, RawInputListe
         if(results.size() > 0){
             Geometry targetCardGeom = results.getFarthestCollision().getGeometry(); //get the closest target in our eyes
             if(targetCardGeom.getParent().getClass() == Card.class){
-                Card targetCardNode = (Card)targetCardGeom.getParent();
-                if(targetCardNode.getStatus() == false){
-                    if(chosenplayer()<5){
-                       targetCardGeom.getMaterial().setColor("Color", new ColorRGBA(0.2f,0.2f,0.2f,1f));
-                       playin(targetCardNode);
-                       targetCardNode.toggleStatus();
-                    }
-                }
-                else{
-                    targetCardGeom.getMaterial().setColor("Color", new ColorRGBA(1f,1f,1f,0f));
-                    exitlineup(targetCardNode);
-                    targetCardNode.toggleStatus();
-                }  
+                Vector2f screenCoord = app.getInputManager().getCursorPosition();
+                targetCardNode = (Card)targetCardGeom.getParent();
+                isPressed = true;
+                relativeWidth = width/app.getCamera().getWidth()*screenCoord.getX()-width/2-targetCardNode.getLocalTranslation().getX();
+                relativeHeight = height/app.getCamera().getHeight()*screenCoord.getY()-height/2-targetCardNode.getLocalTranslation().getY();
             }
         }
     }
@@ -170,21 +154,11 @@ public class SelfCardsNode extends Node implements ActionListener, RawInputListe
 
     @Override
     public void onMouseMotionEvent(MouseMotionEvent evt) {
-        Ray ray = MyRay.createRay(app);
-        CollisionResults results = new CollisionResults();
-        this.collideWith(ray, results);
-        if(results.size() > 0){
-            //may be can use Z value test to solve the stack pic problem 
-            Geometry targetCardGeom = results.getFarthestCollision().getGeometry(); //get the closest target in our eyes
-            if(targetCardGeom.getParent().getClass() == Card.class){
-                Card targetCardNode = (Card)targetCardGeom.getParent();
-                targetCardNode.showBattleValue();
-            }
-        }
-        else{
-            for(Card c : myTeam){
-                c.hideBattleValue();
-            }
+        if(isPressed && targetCardNode != null){
+            Vector2f screenCoord = app.getInputManager().getCursorPosition();          
+            targetCardNode.setLocalTranslation(width/app.getCamera().getWidth()*screenCoord.getX()-width/2-relativeWidth,
+                                                height/app.getCamera().getHeight()*screenCoord.getY()-height/2-relativeHeight,
+                                                0f);
         }
     }
 

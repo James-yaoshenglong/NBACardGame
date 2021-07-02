@@ -104,6 +104,8 @@ public class MainDefend extends BaseAppState{
         inputManager.addMapping(CLICK, new MouseButtonTrigger(MouseInput.BUTTON_LEFT));
         inputManager.addListener(selfCardsNode,CLICK);
         inputManager.addListener(pauseButton, CLICK, PAUSE);
+        
+        inputManager.addRawInputListener(selfCardsNode);
 //        cardManager.enterScene();
     }
     
@@ -115,6 +117,7 @@ public class MainDefend extends BaseAppState{
         inputManager.removeListener(selfCardsNode);
         inputManager.deleteMapping(CLICK);
         inputManager.removeListener(pauseButton);
+        inputManager.removeRawInputListener(selfCardsNode);
     }
     
     private void constructBackground(){
