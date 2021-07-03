@@ -50,6 +50,7 @@ public class MainDefend extends BaseAppState{
     private Node rootNode;
     private Node defendNode;
     private SelfCardsNode selfCardsNode;
+    private PositionsNode positionsNode;
     private float camZ;
     private float ratio;
     public final static String PAUSE = "PAUSE"; //the pause message
@@ -79,8 +80,6 @@ public class MainDefend extends BaseAppState{
         //construct the background
         constructBackground();
         //Game initalize   
-        this.selfCardsNode = new SelfCardsNode(app, camZ*ratio, camZ);
-        defendNode.attachChild(selfCardsNode);
         
         this.pauseButton = new PauseButton(app, camZ*ratio, camZ);
         defendNode.attachChild(pauseButton);
@@ -96,6 +95,10 @@ public class MainDefend extends BaseAppState{
     protected void onEnable() {
         
         //initialize the background
+        positionsNode = new PositionsNode(app, camZ*ratio, camZ); //this should later move to the init
+        defendNode.attachChild(positionsNode);
+        this.selfCardsNode = new SelfCardsNode(app, camZ*ratio, camZ);
+        defendNode.attachChild(selfCardsNode);
         rootNode.attachChild(defendNode);
         
         //add event listener

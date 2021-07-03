@@ -6,6 +6,7 @@
 package Defend;
 
 import Battle.Card;
+import Battle.MainGame;
 import Widgets.MyRay;
 import com.jme3.app.SimpleApplication;
 import com.jme3.collision.CollisionResults;
@@ -26,29 +27,27 @@ import com.jme3.scene.Node;
 import java.util.ArrayList;
 import java.util.Random;
 
-/**
- *
- * @author 影音娱乐剪辑
- */
 public class SelfCardsNode extends Node implements ActionListener, RawInputListener{
-    private ArrayList<Card> myTeam;
     private ArrayList<Card> lineup;
     private SimpleApplication app;
     private float width; //screen width and height
     private float height;
     private Boolean isPressed = false; //check whether the mouse is pressed
     private Card targetCardNode; //the chosen card
+    private Vector3f originPosition; //this is an object reference
     private float relativeWidth; //the relative distance between the click position and the node
     private float relativeHeight;
     
     public SelfCardsNode(SimpleApplication mainApp, float aCamWidth, float aCamHeight){
-        this.myTeam = new ArrayList<>();
         this.lineup = new ArrayList<>();
         this.app = mainApp;
         this.width = aCamWidth;
         this.height = aCamHeight;
-        deal();
-        licensing(myTeam);
+        for(Card c : app.getStateManager().getState(MainGame.class).getLineupCards()){
+            Card card = new Card(c.getID(),width,app);
+            lineup.add(card);
+        }
+        licensing();
     }
     
     @Override
@@ -56,6 +55,11 @@ public class SelfCardsNode extends Node implements ActionListener, RawInputListe
         if(isClicked && this.getParent() != null){
             if(name.equals("CLICK")){
                 choose();
+            }
+        }
+        if(!isClicked && this.getParent() != null){
+            if(name.equals("CLICK")){
+                drop();
             }
         }
     }
@@ -70,70 +74,43 @@ public class SelfCardsNode extends Node implements ActionListener, RawInputListe
                 Vector2f screenCoord = app.getInputManager().getCursorPosition();
                 targetCardNode = (Card)targetCardGeom.getParent();
                 isPressed = true;
+                originPosition = new Vector3f(targetCardNode.getLocalTranslation());
                 relativeWidth = width/app.getCamera().getWidth()*screenCoord.getX()-width/2-targetCardNode.getLocalTranslation().getX();
                 relativeHeight = height/app.getCamera().getHeight()*screenCoord.getY()-height/2-targetCardNode.getLocalTranslation().getY();
             }
         }
     }
+    
+    private void drop(){
+        if(targetCardNode != null){
+            isPressed = false;
+            Ray ray = MyRay.createRay(app);
+            CollisionResults results = new CollisionResults();
+            this.getParent().getChild("positionsNode").collideWith(ray, results);
+            if(results.size() > 0){
+                Geometry positionGeom = results.getFarthestCollision().getGeometry(); //get the closest target in our eyes
+                if(positionGeom.getParent().getParent().getClass() == PositionsNode.class){
+                    Card positionNode = (Card)positionGeom.getParent();
+                    targetCardNode.setLocalTranslation(positionNode.getLocalTranslation());
+                    targetCardNode = null;
+                    originPosition = null;
+                    return;
+                }
+            }
+            targetCardNode.setLocalTranslation(originPosition);
+            targetCardNode = null;
+            originPosition = null;
+        }
+    }
         
     
     
-    public void licensing(ArrayList<Card> cardList){
-        for(int i =0; i<cardList.size(); i++){
-//            float[] angles = new float[3];
-//            angles[0] = (float) Math.toRadians(i*0f);
-//            angles[1] = (float) Math.toRadians(i*0f);
-//            angles[2] = (float) Math.toRadians(i*5f);
-//
-//            Quaternion rot = new Quaternion(angles);
-            
-            Card card = cardList.get(i);
-//            this.attachChild(card);
-            if(i<5){
-                card.setLocalTranslation((i%5-2)*(width/5),height/20,0);
-            }
-            else{
-                card.setLocalTranslation((i%5-2)*(width/5), (float)(height*(-0.4)), 0);
-            }
-            
-            this.attachChild(card);
-//            card.rotate(rot);
-            
+    public void licensing(){
+        for(int i =0; i<lineup.size(); i++){
+            Card card = lineup.get(i);
+            card.setLocalTranslation((i%5-2)*(width/5),height*(-0.45f),0);
+            this.attachChild(card);          
         }
-    }
-    
-    
-    private void deal(){
-        int teamSize = 10;
-        int totalPlayerSize = 100; 
-        //random assign player to player's team
-        Random r = new Random();
-        ArrayList<Integer> arr = new ArrayList<>();
-        int count = 0;
-        while(count < teamSize){
-            int number = r.nextInt(totalPlayerSize);  
-            if(!arr.contains(number)){
-                arr.add(number);
-                count++;
-            }
-        }
-        
-        //later need to send this id list to the server
-        ArrayList<Integer> EnemyIdList = arr;
-        for(int i=0; i<teamSize; i++){
-            myTeam.add(new Card(arr.get(i),width,app));
-        }
-    }
-    
-    public ArrayList<Card> getLineup(){
-        return lineup;
-    }
-    
-    public boolean checkLineup(){
-        if(lineup.size() == 5){
-            return true;
-        }
-        return false;
     }
 
     @Override
