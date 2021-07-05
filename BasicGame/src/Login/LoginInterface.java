@@ -32,6 +32,8 @@ import com.simsilica.lemur.component.TextComponent;
 import com.simsilica.lemur.style.BaseStyles;
 import com.jme3.font.BitmapFont;
 import com.jme3.font.BitmapText;
+import com.jme3.light.Light;
+import com.jme3.renderer.queue.RenderQueue;
 import com.jme3.ui.Picture;
 import com.simsilica.lemur.HAlignment;
 import com.simsilica.lemur.LayerComparator;

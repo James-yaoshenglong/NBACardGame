@@ -95,10 +95,10 @@ public class MainDefend extends BaseAppState{
     protected void onEnable() {
         
         //initialize the background
-        positionsNode = new PositionsNode(app, camZ*ratio, camZ); //this should later move to the init
-        defendNode.attachChild(positionsNode);
         this.selfCardsNode = new SelfCardsNode(app, camZ*ratio, camZ);
         defendNode.attachChild(selfCardsNode);
+        positionsNode = new PositionsNode(app, camZ*ratio, camZ); //this should later move to the init
+        defendNode.attachChild(positionsNode);
         rootNode.attachChild(defendNode);
         
         //add event listener

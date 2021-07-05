@@ -90,8 +90,9 @@ public class SelfCardsNode extends Node implements ActionListener, RawInputListe
             if(results.size() > 0){
                 Geometry positionGeom = results.getFarthestCollision().getGeometry(); //get the closest target in our eyes
                 if(positionGeom.getParent().getParent().getClass() == PositionsNode.class){
-                    Card positionNode = (Card)positionGeom.getParent();
-                    targetCardNode.setLocalTranslation(positionNode.getLocalTranslation());
+                    DefendPositionNode positionNode = (DefendPositionNode)positionGeom.getParent();
+                    Vector3f targetPosition = positionNode.getLocalTranslation();
+                    targetCardNode.setLocalTranslation(new Vector3f(targetPosition.getX(),targetPosition.getY(),targetPosition.getZ()+0.1f));
                     targetCardNode = null;
                     originPosition = null;
                     return;

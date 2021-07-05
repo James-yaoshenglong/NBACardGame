@@ -8,11 +8,16 @@ package Defend;
 import Battle.Card;
 import Battle.MainGame;
 import com.jme3.app.SimpleApplication;
+import com.jme3.bounding.BoundingBox;
+import com.jme3.material.Material;
+import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
+import com.jme3.scene.shape.Quad;
+import com.jme3.texture.Texture;
 import java.util.ArrayList;
 
 public class PositionsNode extends Node{
-    private ArrayList<Card> lineup;
+    private ArrayList<DefendPositionNode> lineup;
     private SimpleApplication app;
     private float width; //screen width and height
     private float height;
@@ -25,18 +30,24 @@ public class PositionsNode extends Node{
         this.app = mainApp;
         this.width = aCamWidth;
         this.height = aCamHeight;
-        for(Card c : app.getStateManager().getState(MainGame.class).getLineupCards()){
-            Card card = new Card(c.getID(),width,app);
-            lineup.add(card);
+        //for(Card c : app.getStateManager().getState(MainGame.class).getLineupCards()){
+        //    Card card = new Card(c.getID(),width,app);
+        //    lineup.add(card);
+        //}
+        for(int i=0; i<5;i++){
+            DefendPositionNode defensenode = new DefendPositionNode(app,width,height);
+            lineup.add(defensenode);
         }
         licensing();
     }
     
-    public void licensing(){
-        for(int i =0; i<lineup.size(); i++){
-            Card card = lineup.get(i);
-            card.setLocalTranslation((i%5-2)*(width/5),height/20,0f);
-            this.attachChild(card);
+    private void licensing(){
+        for(int i=0; i<lineup.size();i++){
+            DefendPositionNode defendNode = lineup.get(i);
+            System.out.println(defendNode);
+            defendNode.setLocalTranslation((i%5-2)*(width/5),height/20,0);
+            this.attachChild(defendNode);
         }
     }
 }
+
