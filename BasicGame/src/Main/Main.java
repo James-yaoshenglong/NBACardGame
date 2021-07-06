@@ -46,6 +46,7 @@ public class Main extends SimpleApplication {
     private MainDefend mainDefend;
     private BaseAppState currentState; //do not count pause
     private GameClient client;
+    private int order; //show current is attack or defend
     
     
     public static void main(String[] args) {
@@ -73,7 +74,6 @@ public class Main extends SimpleApplication {
         } catch (Exception ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
-        client.registerOperation(loginUI);
     }
     
     public void switchfromLogtoWel(){
@@ -227,4 +227,11 @@ public class Main extends SimpleApplication {
         rootNode.attachChild(backgroundGeom);
     }
     
+    public void setOrder(int or){
+        this.order = or;
+    }
+    
+    public int getOrder(){
+        return order;
+    }     
 }

@@ -25,7 +25,7 @@ public class UserPair {
 	public void match(UserPair another) {
 		rivalChannel = another.selfChannel;
 		another.rivalChannel = selfChannel;
-		selfChannel.writeAndFlush(new MatchResponse(another.userName));
-		rivalChannel.writeAndFlush(new MatchResponse(userName));
+		selfChannel.writeAndFlush(new MatchResponse(another.userName, 1));
+		rivalChannel.writeAndFlush(new MatchResponse(userName, 2));
 	}
 }

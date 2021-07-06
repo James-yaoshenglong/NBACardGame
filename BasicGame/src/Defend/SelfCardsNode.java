@@ -136,7 +136,7 @@ public class SelfCardsNode extends Node implements ActionListener, RawInputListe
             Vector2f screenCoord = app.getInputManager().getCursorPosition();          
             targetCardNode.setLocalTranslation(width/app.getCamera().getWidth()*screenCoord.getX()-width/2-relativeWidth,
                                                 height/app.getCamera().getHeight()*screenCoord.getY()-height/2-relativeHeight,
-                                                0f);
+                                                0.1f);
         }
     }
 

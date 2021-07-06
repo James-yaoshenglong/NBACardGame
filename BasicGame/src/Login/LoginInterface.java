@@ -145,6 +145,7 @@ public class LoginInterface extends BaseAppState implements ResponseOperation{
                 public void execute(Button source) {
                         LoginData Info = new LoginData(username.getText(),password.getText());
                         flag = 1;
+                        client.registerOperation(LoginInterface.this);
                         client.transportData(Info);
                 }
         });
@@ -162,6 +163,7 @@ public class LoginInterface extends BaseAppState implements ResponseOperation{
                 public void execute(Button source) {
                         SignUpData Info = new SignUpData(username.getText(),password.getText());
                         flag = 0;
+                        client.registerOperation(LoginInterface.this);
                         client.transportData(Info);
                         System.out.println(username.getText());
                         System.out.println(password.getText());

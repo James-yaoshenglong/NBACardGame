@@ -34,11 +34,16 @@ import com.jme3.font.BitmapFont;
 import com.jme3.font.BitmapText;
 import com.jme3.ui.Picture;
 import com.simsilica.lemur.HAlignment;
+import network.client.GameClient;
+import network.data.MatchData;
+import network.data.MatchResponse;
+import network.data.ResponseData;
+import network.data.ResponseOperation;
 /**
  *
  * @author shenglyao2
  */
-public class WelcomeInterface extends BaseAppState{
+public class WelcomeInterface extends BaseAppState implements ResponseOperation{
     private SimpleApplication app;
     private AssetManager assetManager;
     private AppStateManager stateManager;
@@ -49,6 +54,7 @@ public class WelcomeInterface extends BaseAppState{
     private float height;
     private Node rootNode;
     private Node sceneNode;
+    private GameClient client;
     
     @Override
     protected void initialize(Application mainApp) {
@@ -61,6 +67,7 @@ public class WelcomeInterface extends BaseAppState{
         this.width = cam.getWidth();
         this.height = cam.getHeight();
         this.rootNode = app.getRootNode();
+        this.client = GameClient.getInstance();
         sceneNode = new Node();
     }
 
@@ -103,7 +110,8 @@ public class WelcomeInterface extends BaseAppState{
         clickMe.addClickCommands(new Command<Button>() {
                 @Override
                 public void execute(Button source) {
-                        ((Main)app).switchfromWeltoMain();
+                    client.registerOperation(WelcomeInterface.this);
+                    client.transportData(new MatchData());
                 }
         });
 
@@ -161,5 +169,11 @@ public class WelcomeInterface extends BaseAppState{
     
     private void makeButton(){
         
+    }
+
+    @Override
+    public void operate(ResponseData rd) {
+        ((Main)app).setOrder(((MatchResponse)rd).getOrder());
+        ((Main)app).switchfromWeltoMain();
     }
 }
