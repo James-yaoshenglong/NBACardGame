@@ -237,14 +237,21 @@ public class MainPrepare extends BaseAppState{
     }
     
     public void sendMessage(){
-        System.out.println(opBox1.getPlayer().getID());
-        System.out.println(opBox1.getAttackActionState().getName());
-        System.out.println(opBox2.getPlayer().getID());
-        System.out.println(opBox2.getAttackActionState().getName());
-        client.transportData(new AttackData(
+        if(opBox1.getPlayer() != null && opBox1.getAttackActionState() != null){
+            if(!opBox1.getAttackActionState().getName().equals("pass")){
+                client.transportData(new AttackData(
                                             opBox1.getPlayer().getID(),
                                             opBox1.getAttackActionState().getName(),
-                                            opBox2.getPlayer().getID(),
-                                            opBox2.getAttackActionState().getName()));
+                                            -1,
+                                            null));
+            }
+            else if(opBox2.getPlayer() != null && opBox2.getAttackActionState() != null){
+                client.transportData(new AttackData(
+                                    opBox1.getPlayer().getID(),
+                                    opBox1.getAttackActionState().getName(),
+                                    opBox2.getPlayer().getID(),
+                                    opBox2.getAttackActionState().getName()));
+            }
+        }
     }
 }
