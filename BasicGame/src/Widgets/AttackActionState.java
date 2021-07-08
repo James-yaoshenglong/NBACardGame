@@ -13,5 +13,5 @@ import Prepare.OperationButton;
  */
 public interface AttackActionState {
     void showIcon(OperationButton opButton);
-    void sendMessage(); 
+    String getName(); 
 }

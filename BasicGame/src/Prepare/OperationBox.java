@@ -76,4 +76,8 @@ public class OperationBox extends Node{
     public AttackActionState getAttackActionState(){
         return actionState;
     }
+    
+    public Card getPlayer(){
+        return player1;
+    }
 }

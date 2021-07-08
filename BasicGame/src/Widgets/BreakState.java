@@ -12,6 +12,7 @@ import Prepare.OperationButton;
  * @author shenglyao2
  */
 public class BreakState implements AttackActionState{
+    private final String name = "break";
 
     @Override
     public void showIcon(OperationButton opButton) {
@@ -19,7 +20,8 @@ public class BreakState implements AttackActionState{
     }
 
     @Override
-    public void sendMessage() {
+    public String getName() {
+        return name;
     }
     
 }

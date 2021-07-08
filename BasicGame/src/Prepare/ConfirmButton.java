@@ -53,7 +53,7 @@ public class ConfirmButton extends Node implements ActionListener{
             CollisionResults results = new CollisionResults();
             this.collideWith(ray, results);
             if(results.size() > 0){
-                System.out.println("Confirm");
+                app.getStateManager().getState(MainPrepare.class).sendMessage();
             }
         }
     }

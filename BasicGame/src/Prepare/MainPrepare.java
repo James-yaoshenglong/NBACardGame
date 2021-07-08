@@ -36,6 +36,8 @@ import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
 import com.jme3.scene.shape.Quad;
 import com.jme3.texture.Texture;
+import network.client.GameClient;
+import network.data.AttackData;
 /**
  *
  * @author feegee2000
@@ -68,6 +70,8 @@ public class MainPrepare extends BaseAppState{
     
     private boolean buttonShown = false;
     
+    private GameClient client;
+    
     @Override
     protected void initialize(Application mainApp) {
         //add a copy of reference of some common use attributes from app
@@ -77,6 +81,7 @@ public class MainPrepare extends BaseAppState{
         this.inputManager = mainApp.getInputManager();
         this.cam = mainApp.getCamera();
         this.rootNode = app.getRootNode();
+        this.client = GameClient.getInstance();
         //setting the screen, this should be first
         screenSetting();
         
@@ -229,5 +234,17 @@ public class MainPrepare extends BaseAppState{
     
     public AttackActionState getPlayer1ActionState(){
         return opBox1.getAttackActionState();
+    }
+    
+    public void sendMessage(){
+        System.out.println(opBox1.getPlayer().getID());
+        System.out.println(opBox1.getAttackActionState().getName());
+        System.out.println(opBox2.getPlayer().getID());
+        System.out.println(opBox2.getAttackActionState().getName());
+        client.transportData(new AttackData(
+                                            opBox1.getPlayer().getID(),
+                                            opBox1.getAttackActionState().getName(),
+                                            opBox2.getPlayer().getID(),
+                                            opBox2.getAttackActionState().getName()));
     }
 }
