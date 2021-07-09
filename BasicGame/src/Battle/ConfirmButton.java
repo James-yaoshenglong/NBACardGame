@@ -63,7 +63,7 @@ public class ConfirmButton extends Node implements ActionListener{
                         ((Main)app).switchfromMaintoPrepare();
                     }
                     else{
-                        ((Main)app).switchfromMaintoDefend();
+                        ((Main)app).switchfromMaintoDefendModeChoice();
                     }
                 }
             }

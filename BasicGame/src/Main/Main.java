@@ -6,6 +6,7 @@ import Pause.PauseInterface;
 import Prepare.MainPrepare;
 import Welcome.WelcomeInterface;
 import Login.LoginInterface;
+import Defend.DefendMode;
 import com.jme3.app.SimpleApplication;
 import com.jme3.app.state.BaseAppState;
 import com.jme3.light.AmbientLight;
@@ -44,6 +45,7 @@ public class Main extends SimpleApplication {
     private PauseInterface pauseUI;
     private MainPrepare mainPrepare;
     private MainDefend mainDefend;
+    private DefendMode defendMode;
     private BaseAppState currentState; //do not count pause
     private GameClient client;
     private int order; //show current is attack or defend
@@ -88,11 +90,14 @@ public class Main extends SimpleApplication {
         mainGame = new MainGame();
         mainPrepare = new MainPrepare();
         mainDefend = new MainDefend();
+        defendMode = new DefendMode();
         stateManager.attach(mainGame);
         stateManager.attach(mainPrepare);
         stateManager.attach(mainDefend);
+        stateManager.attach(defendMode);
         stateManager.getState(MainPrepare.class).setEnabled(false);
         stateManager.getState(MainDefend.class).setEnabled(false);
+        stateManager.getState(DefendMode.class).setEnabled(false);
         currentState = mainGame;
     }
     
@@ -102,6 +107,7 @@ public class Main extends SimpleApplication {
         stateManager.detach(mainGame);
         stateManager.detach(mainPrepare);
         stateManager.detach(mainDefend);
+        stateManager.detach(defendMode);
     }
     
 //    public void switchfromMaintoPause(){
@@ -121,8 +127,14 @@ public class Main extends SimpleApplication {
         currentState = mainPrepare;
     }
     
-    public void switchfromMaintoDefend(){
+    public void switchfromMaintoDefendModeChoice(){
         stateManager.getState(MainGame.class).setEnabled(false);
+        stateManager.getState(DefendMode.class).setEnabled(true);
+        currentState = defendMode;
+    }
+
+    public void switchfromDefendModeChoicetoDefend(){
+        stateManager.getState(DefendMode.class).setEnabled(false);
         stateManager.getState(MainDefend.class).setEnabled(true);
         currentState = mainDefend;
     }
