@@ -13,7 +13,7 @@ public class LoginResponse implements ResponseData{
 	}
 
 	@Override
-	public void process(ClientInterface client) {
+	public void reProcess(ClientInterface client) {
 		client.getOperation().operate(this);
 	}
 }
