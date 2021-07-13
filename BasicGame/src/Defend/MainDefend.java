@@ -37,6 +37,7 @@ import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
 import com.jme3.scene.shape.Quad;
 import com.jme3.texture.Texture;
+import java.util.ArrayList;
 /**
  *
  * @author feegee2000
@@ -51,6 +52,7 @@ public class MainDefend extends BaseAppState{
     private Node defendNode;
     private SelfCardsNode selfCardsNode;
     private PositionsNode positionsNode;
+    private DoubleTeamNode doubleteam;
     private float camZ;
     private float ratio;
     public final static String PAUSE = "PAUSE"; //the pause message
@@ -97,8 +99,10 @@ public class MainDefend extends BaseAppState{
         //initialize the background
         this.selfCardsNode = new SelfCardsNode(app, camZ*ratio, camZ);
         defendNode.attachChild(selfCardsNode);
-        positionsNode = new PositionsNode(app, camZ*ratio, camZ); //this should later move to the init
+        this.positionsNode = new PositionsNode(app, camZ*ratio, camZ); //this should later move to the init
         defendNode.attachChild(positionsNode);
+        this.doubleteam = new DoubleTeamNode(app, camZ*ratio, camZ);
+        defendNode.attachChild(doubleteam);
         rootNode.attachChild(defendNode);
         
         //add event listener
@@ -106,6 +110,7 @@ public class MainDefend extends BaseAppState{
         
         inputManager.addMapping(CLICK, new MouseButtonTrigger(MouseInput.BUTTON_LEFT));
         inputManager.addListener(selfCardsNode,CLICK);
+        inputManager.addListener(doubleteam, CLICK);
         inputManager.addListener(pauseButton, CLICK, PAUSE);
         
         inputManager.addRawInputListener(selfCardsNode);
@@ -120,6 +125,7 @@ public class MainDefend extends BaseAppState{
         inputManager.removeListener(selfCardsNode);
         inputManager.deleteMapping(CLICK);
         inputManager.removeListener(pauseButton);
+        inputManager.removeListener(doubleteam);
         inputManager.removeRawInputListener(selfCardsNode);
     }
     
