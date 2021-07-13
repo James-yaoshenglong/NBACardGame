@@ -28,4 +28,8 @@ public class UserPair {
 		selfChannel.writeAndFlush(new MatchResponse(another.userName, 1));
 		rivalChannel.writeAndFlush(new MatchResponse(userName, 2));
 	}
+	
+	public void sendToRival(ResponseData response) {
+		selfChannel.writeAndFlush(response);
+	}
 }

@@ -2,7 +2,7 @@ package network.data;
 
 import network.user.UserPair;
 
-public class AttackData implements TransferedData{
+public class AttackData implements TransferedData, ResponseData{
 	private static final long serialVersionUID = -6745118712315161585L;
 	
 	private int player1;
@@ -19,10 +19,12 @@ public class AttackData implements TransferedData{
 
 	@Override
 	public void process(UserPair pair) {
-		System.out.println(player1);
-		System.out.println(op1);
-		System.out.println(player2);
-		System.out.println(op2);
+//		pair.sendToRival(this);
+	}
+
+	@Override
+	public void reProcess(ClientInterface client) {
+		client.getOperation().operate(this);
 	}
 
 }
