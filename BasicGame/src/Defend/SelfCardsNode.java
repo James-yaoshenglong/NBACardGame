@@ -34,7 +34,6 @@ public class SelfCardsNode extends Node implements ActionListener, RawInputListe
     private float height;
     private Boolean isPressed = false; //check whether the mouse is pressed
     private Card targetCardNode; //the chosen card
-    private Vector3f originPosition; //this is an object reference
     private float relativeWidth; //the relative distance between the click position and the node
     private float relativeHeight;
     
@@ -74,7 +73,6 @@ public class SelfCardsNode extends Node implements ActionListener, RawInputListe
                 Vector2f screenCoord = app.getInputManager().getCursorPosition();
                 targetCardNode = (Card)targetCardGeom.getParent();
                 isPressed = true;
-                originPosition = new Vector3f(targetCardNode.getLocalTranslation());
                 relativeWidth = width/app.getCamera().getWidth()*screenCoord.getX()-width/2-targetCardNode.getLocalTranslation().getX();
                 relativeHeight = height/app.getCamera().getHeight()*screenCoord.getY()-height/2-targetCardNode.getLocalTranslation().getY();
             }
@@ -94,13 +92,11 @@ public class SelfCardsNode extends Node implements ActionListener, RawInputListe
                     Vector3f targetPosition = positionNode.getLocalTranslation();
                     targetCardNode.setLocalTranslation(new Vector3f(targetPosition.getX(),targetPosition.getY(),targetPosition.getZ()+0.1f));
                     targetCardNode = null;
-                    originPosition = null;
                     return;
                 }
             }
-            targetCardNode.setLocalTranslation(originPosition);
+            targetCardNode.backInitPosition();
             targetCardNode = null;
-            originPosition = null;
         }
     }
         
@@ -110,7 +106,8 @@ public class SelfCardsNode extends Node implements ActionListener, RawInputListe
         for(int i =0; i<lineup.size(); i++){
             Card card = lineup.get(i);
             card.setLocalTranslation((i%5-2)*(width/5),height*(-0.45f),0);
-            this.attachChild(card);          
+            this.attachChild(card);    
+            card.setInitPosition();
         }
     }
 

@@ -47,6 +47,7 @@ public class Card extends Node{
     Geometry geom;
     boolean isInLineup;
     BattleValueSphere valueSphere;
+    private Vector3f initPosition;
     
     public final static int PLAIN = 0;// 普通
     public final static int BOLD = 1;// 粗体
@@ -140,6 +141,12 @@ public class Card extends Node{
     public void hideBattleValue(){
         valueSphere.removeFromParent();
     }
-   
+    
+    public void setInitPosition(){
+        this.initPosition = new Vector3f(this.getLocalTranslation());
+    }
             
+    public void backInitPosition(){
+        this.setLocalTranslation(initPosition);
+    }
 }
