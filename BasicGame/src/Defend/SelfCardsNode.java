@@ -76,6 +76,14 @@ public class SelfCardsNode extends Node implements ActionListener, RawInputListe
                 relativeWidth = width/app.getCamera().getWidth()*screenCoord.getX()-width/2-targetCardNode.getLocalTranslation().getX();
                 relativeHeight = height/app.getCamera().getHeight()*screenCoord.getY()-height/2-targetCardNode.getLocalTranslation().getY();
             }
+            this.getParent().getChild("positionsNode").collideWith(ray, results);
+            if(results.size() > 0){
+                Geometry positionGeom = results.getFarthestCollision().getGeometry();
+                if(positionGeom.getParent().getParent().getClass() == PositionsNode.class){
+                    DefendPositionNode positionNode = (DefendPositionNode)positionGeom.getParent();
+                    positionNode.detatch();
+                }
+            }
         }
     }
     
@@ -89,10 +97,13 @@ public class SelfCardsNode extends Node implements ActionListener, RawInputListe
                 Geometry positionGeom = results.getFarthestCollision().getGeometry(); //get the closest target in our eyes
                 if(positionGeom.getParent().getParent().getClass() == PositionsNode.class){
                     DefendPositionNode positionNode = (DefendPositionNode)positionGeom.getParent();
-                    Vector3f targetPosition = positionNode.getLocalTranslation();
-                    targetCardNode.setLocalTranslation(new Vector3f(targetPosition.getX(),targetPosition.getY(),targetPosition.getZ()+0.1f));
-                    targetCardNode = null;
-                    return;
+                    if(positionNode.getCurrenntCard() == null){
+                        Vector3f targetPosition = positionNode.getLocalTranslation();
+                        targetCardNode.setLocalTranslation(new Vector3f(targetPosition.getX(),targetPosition.getY(),targetPosition.getZ()+0.1f));
+                        positionNode.attach(targetCardNode);
+                        targetCardNode = null;
+                        return;
+                    }
                 }
             }
             targetCardNode.backInitPosition();

@@ -22,6 +22,7 @@ public class DefendPositionNode extends Node{
     private float height;
     private float relativeWidth; //the relative distance between the click position and the node
     private float relativeHeight;
+    private Card currentCard;
     
     public DefendPositionNode(SimpleApplication mainApp, float aCamWidth, float aCamHeight){
         this.app = mainApp;
@@ -39,5 +40,17 @@ public class DefendPositionNode extends Node{
         geom.setMaterial(mat);
         geom.setLocalTranslation(-((BoundingBox)geom.getWorldBound()).getXExtent(),0.0f,0.0f);
         this.attachChild(geom);
+    }
+    
+    public void attach(Card card){
+        this.currentCard = card;
+    }
+    
+    public void detatch(){
+        this.currentCard = null;
+    }
+    
+    public Card getCurrenntCard(){
+        return currentCard;
     }
 }
