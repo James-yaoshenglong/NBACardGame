@@ -145,6 +145,9 @@ public class MainPrepare extends BaseAppState{
         
         inputManager.addListener(confirmButton, CLICK);
 //        cardManager.enterScene();
+
+        //register operation
+        GameClient.getInstance().registerOperation(confirmButton);
     }
     
         @Override
@@ -236,7 +239,7 @@ public class MainPrepare extends BaseAppState{
         return opBox1.getAttackActionState();
     }
     
-    public void sendMessage(){
+    public void sendMessage(ConfirmButton button){
         if(opBox1.getPlayer() != null && opBox1.getAttackActionState() != null){
             if(!opBox1.getAttackActionState().getName().equals("pass")){
                 client.transportData(new AttackData(
@@ -244,6 +247,7 @@ public class MainPrepare extends BaseAppState{
                                             opBox1.getAttackActionState().getName(),
                                             -1,
                                             null));
+                button.switchState();
             }
             else if(opBox2.getPlayer() != null && opBox2.getAttackActionState() != null){
                 client.transportData(new AttackData(
@@ -251,6 +255,7 @@ public class MainPrepare extends BaseAppState{
                                     opBox1.getAttackActionState().getName(),
                                     opBox2.getPlayer().getID(),
                                     opBox2.getAttackActionState().getName()));
+                button.switchState();
             }
         }
     }

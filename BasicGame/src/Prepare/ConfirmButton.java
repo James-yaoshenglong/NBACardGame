@@ -15,21 +15,32 @@ import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
 import com.jme3.scene.shape.Quad;
 import com.jme3.texture.Texture;
+import network.client.GameClient;
+import network.data.AttackData;
+import network.data.DefendData;
+import network.data.ResponseData;
+import network.data.ResponseOperation;
 
 /**
  *
  * @author shenglyao2
  */
-public class ConfirmButton extends Node implements ActionListener{
+public class ConfirmButton extends Node implements ActionListener, ResponseOperation{
     private Geometry buttonGeom;
     private SimpleApplication app;
     private float width; //screen width and height
     private float height;
+    private int switchFlag;
+    private DefendData defendData;
+    private AttackData attackData;
+    private boolean sendFlag;
     
     public ConfirmButton(SimpleApplication mainApp, float aCamWidth, float aCamHeight){
         this.app = mainApp;
         this.width = aCamWidth;
         this.height = aCamHeight;
+        this.switchFlag = 0;
+        this.sendFlag = false;
         initialize();
     }
     
@@ -52,10 +63,30 @@ public class ConfirmButton extends Node implements ActionListener{
             Ray ray = MyRay.createRay(app);
             CollisionResults results = new CollisionResults();
             this.collideWith(ray, results);
-            if(results.size() > 0){
-                app.getStateManager().getState(MainPrepare.class).sendMessage();
+            if(results.size() > 0 && !sendFlag){
+                app.getStateManager().getState(MainPrepare.class).sendMessage(this);
             }
         }
     }
+
+    @Override
+    public void operate(ResponseData rd) {
+        if(rd instanceof AttackData){
+            switchFlag++;
+            attackData = (AttackData)rd;
+        }
+        if(rd instanceof DefendData){
+            switchFlag++;
+            defendData = (DefendData)rd;
+        }
+        if(switchFlag == 2){
+            switchFlag = 0;
+            System.out.println("Enter the compare page");
+            switchState();
+        }
+    }
     
+    public void switchState(){
+        sendFlag = !sendFlag;
+    }
 }

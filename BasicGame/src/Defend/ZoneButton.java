@@ -18,21 +18,32 @@ import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
 import com.jme3.scene.shape.Quad;
 import com.jme3.texture.Texture;
+import network.client.GameClient;
+import network.data.AttackData;
+import network.data.DefendData;
+import network.data.ResponseData;
+import network.data.ResponseOperation;
 
 /**
  *
  * @author yuchwang7
  */
-public class ZoneButton extends Node implements ActionListener{
+public class ZoneButton extends Node implements ActionListener, ResponseOperation{
     private Geometry buttonGeom;
     private SimpleApplication app;
     private float width; //screen width and height
     private float height;
+    private int switchFlag;
+    private DefendData defendData;
+    private AttackData attackData;
+    private boolean sendFlag;
     
     public ZoneButton(SimpleApplication mainApp, float aCamWidth, float aCamHeight){
         this.app = mainApp;
         this.width = aCamWidth;
         this.height = aCamHeight;
+        this.switchFlag = 0;
+        this.sendFlag = false;
         initialize();
     }
     
@@ -57,10 +68,33 @@ public class ZoneButton extends Node implements ActionListener{
             this.collideWith(ray, results);
             if(results.size() > 0){
                 //((Main)app).switchfromDefendModeChoicetoDefend();
+                DefendData data = new DefendData();
+                GameClient.getInstance().transportData(data);
+                switchState();
             }
         }
 
     }
-    
+
+    @Override
+    public void operate(ResponseData rd) {
+        if(rd instanceof AttackData){
+            switchFlag++;
+            attackData = (AttackData)rd;
+        }
+        if(rd instanceof DefendData){
+            switchFlag++;
+            defendData = (DefendData)rd;
+        }
+        if(switchFlag == 2){
+            switchFlag = 0;
+            System.out.println("Enter the compare page");
+            switchState();
+        }
+    }
+
+    public void switchState(){
+        sendFlag = !sendFlag;
+    }
     
 }

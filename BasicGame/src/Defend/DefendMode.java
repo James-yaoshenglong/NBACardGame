@@ -31,6 +31,7 @@ import com.jme3.scene.Spatial;
 import com.jme3.scene.shape.Quad;
 import com.jme3.texture.Texture;
 import java.util.ArrayList;
+import network.client.GameClient;
 
 /**
  *
@@ -113,6 +114,9 @@ public class DefendMode extends BaseAppState{
 
         
         inputManager.addListener(pauseButton, CLICK, PAUSE);
+        
+        //register operation
+        GameClient.getInstance().registerOperation(zoneButton);
     }
 
     @Override

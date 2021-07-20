@@ -19,7 +19,8 @@ public class AttackData implements TransferedData, ResponseData{
 
 	@Override
 	public void process(UserPair pair) {
-//		pair.sendToRival(this);
+		pair.sendToRival(this);
+		pair.replySingle(this);
 	}
 
 	@Override

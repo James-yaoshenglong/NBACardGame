@@ -30,6 +30,6 @@ public class UserPair {
 	}
 	
 	public void sendToRival(ResponseData response) {
-		selfChannel.writeAndFlush(response);
+		rivalChannel.writeAndFlush(response);
 	}
 }
