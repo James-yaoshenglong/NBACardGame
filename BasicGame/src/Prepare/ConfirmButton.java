@@ -5,6 +5,8 @@
  */
 package Prepare;
 
+import ActualCombat.MainActualCombat;
+import Main.Main;
 import Widgets.MyRay;
 import com.jme3.app.SimpleApplication;
 import com.jme3.collision.CollisionResults;
@@ -82,6 +84,8 @@ public class ConfirmButton extends Node implements ActionListener, ResponseOpera
         if(switchFlag == 2){
             switchFlag = 0;
             System.out.println("Enter the compare page");
+            app.getStateManager().getState(MainActualCombat.class).setData(attackData, defendData);
+            ((Main)app).switchToActual();
             switchState();
         }
     }

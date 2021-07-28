@@ -1,5 +1,6 @@
 package Main;
 
+import ActualCombat.MainActualCombat;
 import Battle.MainGame;
 import Defend.MainDefend;
 import Pause.PauseInterface;
@@ -46,6 +47,7 @@ public class Main extends SimpleApplication {
     private MainPrepare mainPrepare;
     private MainDefend mainDefend;
     private DefendMode defendMode;
+    private MainActualCombat mainCombat;
     private BaseAppState currentState; //do not count pause
     private GameClient client;
     private int order; //show current is attack or defend
@@ -91,13 +93,16 @@ public class Main extends SimpleApplication {
         mainPrepare = new MainPrepare();
         mainDefend = new MainDefend();
         defendMode = new DefendMode();
+        mainCombat = new MainActualCombat();
         stateManager.attach(mainGame);
         stateManager.attach(mainPrepare);
         stateManager.attach(mainDefend);
         stateManager.attach(defendMode);
+        stateManager.attach(mainCombat);
         stateManager.getState(MainPrepare.class).setEnabled(false);
         stateManager.getState(MainDefend.class).setEnabled(false);
         stateManager.getState(DefendMode.class).setEnabled(false);
+        stateManager.getState(MainActualCombat.class).setEnabled(false);
         currentState = mainGame;
     }
     
@@ -108,6 +113,7 @@ public class Main extends SimpleApplication {
         stateManager.detach(mainPrepare);
         stateManager.detach(mainDefend);
         stateManager.detach(defendMode);
+        stateManager.detach(mainCombat);
     }
     
 //    public void switchfromMaintoPause(){
@@ -148,6 +154,12 @@ public class Main extends SimpleApplication {
         stateManager.getState(MainGame.class).setEnabled(false);
         stateManager.getState(MainPrepare.class).setEnabled(false);
         stateManager.getState(PauseInterface.class).setEnabled(true);
+    }
+    
+    public void switchToActual(){
+        stateManager.getState(currentState.getClass()).setEnabled(false);
+        stateManager.getState(MainActualCombat.class).setEnabled(true);
+        currentState = mainCombat;
     }
     
     /**
