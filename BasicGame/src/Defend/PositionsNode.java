@@ -49,5 +49,9 @@ public class PositionsNode extends Node{
             this.attachChild(defendNode);
         }
     }
+    
+    public DefendPositionNode getNode(int id){
+        return lineup.get(id);
+    }
 }
 

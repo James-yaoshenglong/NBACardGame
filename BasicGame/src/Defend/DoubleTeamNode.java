@@ -35,17 +35,21 @@ public class DoubleTeamNode extends Node implements ActionListener{
     private SimpleApplication app;
     private float width; //screen width and height
     private float height;
+    private PositionsNode pNode;
+    private DoubleTeamCardsNode dtCardsNode;
     
     public DoubleTeamNode(SimpleApplication mainApp, float aCamWidth, float aCamHeight){
         this.app = mainApp;
         this.width = aCamWidth;
         this.height = aCamHeight;
         this.buttons = new ArrayList<>();
+        this.dtCardsNode = new DoubleTeamCardsNode(app,width,height);
         for(int i=0;i<5;i++){
             DoubleTeamButton dbt = new DoubleTeamButton(app,width,height);
             buttons.add(dbt);
         }
         arrange(buttons);
+        this.attachChild(dtCardsNode);
     }
     
     public void arrange(ArrayList<DoubleTeamButton> buttons){
@@ -54,6 +58,10 @@ public class DoubleTeamNode extends Node implements ActionListener{
             dtb.setLocalTranslation((i%5-2)*(width/5),height*(-1/64),0);
             this.attachChild(dtb);
         }
+    }
+    
+    public void setPNode(PositionsNode node){
+        pNode = node;
     }
     
     
@@ -66,9 +74,31 @@ public class DoubleTeamNode extends Node implements ActionListener{
             Geometry targetDTGeom = results.getFarthestCollision().getGeometry(); //get the closest target in our eyes
             if(targetDTGeom.getParent().getClass() == DoubleTeamButton.class){
                 DoubleTeamButton targetDT = (DoubleTeamButton)targetDTGeom.getParent();
-                this.detachChild(targetDT);
+                int id=0;
+                for(DoubleTeamButton button : buttons){
+                    if(button.equals(targetDT)){
+                        break;
+                    }
+                    id++;
+                }
+                Card currentCard = pNode.getNode(id).getCurrenntCard();
+                if(currentCard != null){
+                    showCardList(currentCard);
+                }
+            }
+            if(targetDTGeom.getParent().getClass() == Card.class){
+                this.detachChild(dtCardsNode);
             }
         }
+    }
+    
+    public void showCardList(Card card){
+        this.attachChild(dtCardsNode);
+        dtCardsNode.licensing(card);
+    }
+    
+    public void hideCardList(){
+        this.detachChild(dtCardsNode);
     }
     
 }

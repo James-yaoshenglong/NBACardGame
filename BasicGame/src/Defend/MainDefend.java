@@ -102,6 +102,7 @@ public class MainDefend extends BaseAppState{
         this.positionsNode = new PositionsNode(app, camZ*ratio, camZ); //this should later move to the init
         defendNode.attachChild(positionsNode);
         this.doubleteam = new DoubleTeamNode(app, camZ*ratio, camZ);
+        doubleteam.setPNode(positionsNode);
         defendNode.attachChild(doubleteam);
         rootNode.attachChild(defendNode);
         
