@@ -1,5 +1,7 @@
 package network.data;
 
+import java.util.ArrayList;
+
 import network.user.UserPair;
 
 public class AttackData implements TransferedData, ResponseData{
@@ -9,6 +11,7 @@ public class AttackData implements TransferedData, ResponseData{
 	private String op1;
 	private int player2;
 	private String op2;
+	private ArrayList<Integer> lineUp;
 	
 	public AttackData(int p1, String o1, int p2, String o2) {
 		this.player1 = p1;
@@ -26,6 +29,10 @@ public class AttackData implements TransferedData, ResponseData{
 	@Override
 	public void reProcess(ClientInterface client) {
 		client.getOperation().operate(this);
+	}
+	
+	public void setLineUp(ArrayList<Integer> arr) {
+		this.lineUp = arr;
 	}
 
 }

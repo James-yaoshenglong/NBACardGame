@@ -6,6 +6,8 @@
 package Prepare;
 
 import ActualCombat.MainActualCombat;
+import Battle.Card;
+import Battle.MainGame;
 import Main.Main;
 import Widgets.MyRay;
 import com.jme3.app.SimpleApplication;
@@ -17,6 +19,7 @@ import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
 import com.jme3.scene.shape.Quad;
 import com.jme3.texture.Texture;
+import java.util.ArrayList;
 import network.client.GameClient;
 import network.data.AttackData;
 import network.data.DefendData;
@@ -66,7 +69,12 @@ public class ConfirmButton extends Node implements ActionListener, ResponseOpera
             CollisionResults results = new CollisionResults();
             this.collideWith(ray, results);
             if(results.size() > 0 && !sendFlag){
-                app.getStateManager().getState(MainPrepare.class).sendMessage(this);
+                AttackData msg = app.getStateManager().getState(MainPrepare.class).setMessage();
+                if(msg != null){
+                    msg.setLineUp(getLineUpId());
+                    switchState();
+                    GameClient.getInstance().transportData(msg);
+                }
             }
         }
     }
@@ -92,5 +100,13 @@ public class ConfirmButton extends Node implements ActionListener, ResponseOpera
     
     public void switchState(){
         sendFlag = !sendFlag;
+    }
+    
+    private ArrayList<Integer> getLineUpId(){
+        ArrayList<Integer> tmp = new ArrayList<>(); 
+        for(Card c : app.getStateManager().getState(MainGame.class).getLineupCards()){
+            tmp.add(c.getID());
+        }
+        return tmp;
     }
 }

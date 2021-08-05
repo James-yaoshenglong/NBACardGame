@@ -239,24 +239,23 @@ public class MainPrepare extends BaseAppState{
         return opBox1.getAttackActionState();
     }
     
-    public void sendMessage(ConfirmButton button){
+    public AttackData setMessage(){
         if(opBox1.getPlayer() != null && opBox1.getAttackActionState() != null){
             if(!opBox1.getAttackActionState().getName().equals("pass")){
-                client.transportData(new AttackData(
+                return new AttackData(
                                             opBox1.getPlayer().getID(),
                                             opBox1.getAttackActionState().getName(),
                                             -1,
-                                            null));
-                button.switchState();
+                                            null);
             }
             else if(opBox2.getPlayer() != null && opBox2.getAttackActionState() != null){
-                client.transportData(new AttackData(
+                return new AttackData(
                                     opBox1.getPlayer().getID(),
                                     opBox1.getAttackActionState().getName(),
                                     opBox2.getPlayer().getID(),
-                                    opBox2.getAttackActionState().getName()));
-                button.switchState();
+                                    opBox2.getAttackActionState().getName());
             }
         }
+        return null;
     }
 }
