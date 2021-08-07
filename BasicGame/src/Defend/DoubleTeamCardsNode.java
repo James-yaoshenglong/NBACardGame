@@ -56,7 +56,7 @@ public class DoubleTeamCardsNode extends Node{
             if(card.getID()==currentCard.getID()){
                 continue;
             }
-            card.setLocalTranslation((2*id-3)*(width/8),(float)(height*(-0.4)),1f);
+            card.setLocalTranslation((2*id-3)*(width/8),(float)(height*(-0.45)),1f);
             id++;
             this.attachChild(card);
 

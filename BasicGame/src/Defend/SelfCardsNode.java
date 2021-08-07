@@ -84,7 +84,7 @@ public class SelfCardsNode extends Node implements ActionListener, RawInputListe
                     positionNode.detatch();
                 }
             }
-        }
+        }       
     }
     
     private void drop(){
@@ -106,7 +106,7 @@ public class SelfCardsNode extends Node implements ActionListener, RawInputListe
                     }
                 }
             }
-            targetCardNode.backInitPosition();
+            targetCardNode.backInitPosition();            
             targetCardNode = null;
         }
     }

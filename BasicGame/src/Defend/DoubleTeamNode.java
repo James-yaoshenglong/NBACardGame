@@ -37,6 +37,8 @@ public class DoubleTeamNode extends Node implements ActionListener{
     private float height;
     private PositionsNode pNode;
     private DoubleTeamCardsNode dtCardsNode;
+    private DoubleTeamShow dtShow;
+    private int hasShown;
     
     public DoubleTeamNode(SimpleApplication mainApp, float aCamWidth, float aCamHeight){
         this.app = mainApp;
@@ -44,12 +46,14 @@ public class DoubleTeamNode extends Node implements ActionListener{
         this.height = aCamHeight;
         this.buttons = new ArrayList<>();
         this.dtCardsNode = new DoubleTeamCardsNode(app,width,height);
+        this.dtShow = new DoubleTeamShow(app,width,height);
         for(int i=0;i<5;i++){
             DoubleTeamButton dbt = new DoubleTeamButton(app,width,height);
             buttons.add(dbt);
         }
-        arrange(buttons);
+        hasShown=0;
         this.attachChild(dtCardsNode);
+        this.attachChild(dtShow);
     }
     
     public void arrange(ArrayList<DoubleTeamButton> buttons){
@@ -60,18 +64,50 @@ public class DoubleTeamNode extends Node implements ActionListener{
         }
     }
     
+    public void hideButtons(ArrayList<DoubleTeamButton> buttons){
+        for(int i = 0; i<buttons.size();i++){
+            DoubleTeamButton dtb = buttons.get(i);
+            this.detachChild(dtb);
+        }        
+    }
+    
     public void setPNode(PositionsNode node){
         pNode = node;
     }
     
-    
     @Override
-    public void onAction(String name, boolean isPressed, float tpf) {
+    public void onAction(String name, boolean isClicked, float tpf) {
+        if(isClicked && this.getParent() != null){
+            if(name.equals("CLICK")){
+                handle();
+            }
+        }
+
+    }
+    
+    private void handle(){
         Ray ray = MyRay.createRay(app);
         CollisionResults results = new CollisionResults();
         this.collideWith(ray, results);
         if(results.size() > 0){
             Geometry targetDTGeom = results.getFarthestCollision().getGeometry(); //get the closest target in our eyes
+            if(targetDTGeom.getParent().getClass() == DoubleTeamShow.class){
+                System.out.println(pNode.getChosen());
+                if(pNode.getChosen()==5){
+                    if(hasShown==0){
+                        arrange(buttons);
+                        hasShown+=1;
+                    }
+                    else if(hasShown==1){
+                        hideButtons(buttons);
+                        hasShown-=1;
+                    }
+                    else if(hasShown==2){
+                        this.detachChild(dtCardsNode);
+                        hasShown-=1;
+                    }                    
+                }
+            }
             if(targetDTGeom.getParent().getClass() == DoubleTeamButton.class){
                 DoubleTeamButton targetDT = (DoubleTeamButton)targetDTGeom.getParent();
                 int id=0;
@@ -84,21 +120,19 @@ public class DoubleTeamNode extends Node implements ActionListener{
                 Card currentCard = pNode.getNode(id).getCurrenntCard();
                 if(currentCard != null){
                     showCardList(currentCard);
+                    hasShown++;
                 }
             }
             if(targetDTGeom.getParent().getClass() == Card.class){
                 this.detachChild(dtCardsNode);
+                hasShown-=1;
             }
-        }
+        }        
     }
     
     public void showCardList(Card card){
         this.attachChild(dtCardsNode);
         dtCardsNode.licensing(card);
-    }
-    
-    public void hideCardList(){
-        this.detachChild(dtCardsNode);
     }
     
 }

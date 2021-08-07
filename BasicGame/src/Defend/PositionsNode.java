@@ -53,5 +53,14 @@ public class PositionsNode extends Node{
     public DefendPositionNode getNode(int id){
         return lineup.get(id);
     }
+    
+    public int getChosen(){
+        int number = 0;
+        for(int i=0; i<lineup.size();i++){
+            DefendPositionNode defendNode = lineup.get(i);
+            number += defendNode.isChosen();
+        }
+        return number;
+    }
 }
 

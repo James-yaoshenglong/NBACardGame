@@ -23,6 +23,7 @@ public class DefendPositionNode extends Node{
     private float relativeWidth; //the relative distance between the click position and the node
     private float relativeHeight;
     private Card currentCard;
+    private int hasChosen;
     
     public DefendPositionNode(SimpleApplication mainApp, float aCamWidth, float aCamHeight){
         this.app = mainApp;
@@ -44,13 +45,19 @@ public class DefendPositionNode extends Node{
     
     public void attach(Card card){
         this.currentCard = card;
+        hasChosen = 1;
     }
     
     public void detatch(){
         this.currentCard = null;
+        hasChosen = 0;
     }
     
     public Card getCurrenntCard(){
         return currentCard;
+    }
+    
+    public int isChosen(){
+        return hasChosen;
     }
 }
