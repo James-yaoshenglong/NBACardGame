@@ -160,4 +160,37 @@ public class SelfCardsNode extends Node implements ActionListener, RawInputListe
     public void onTouchEvent(TouchEvent evt) {
     }
     
+    public void showCardDoubleTeam(Card card){
+        for(Card c:lineup){
+            if(c.equals(card)){
+                c.showDoubleTeam();
+            }
+        }
+    }
+    
+    public void hideCardDoubleTeam(Card card){
+        for(Card c:lineup){
+            if(c.equals(card)){
+                c.hideDoubleTeam();
+            }
+        }
+    }
+    
+    public void showCardUnguarded(Card card){
+        for(Card c:lineup){
+            if(c.getID()==card.getID()){
+                c.setPicDarkColor();
+                c.showUnguarded();
+            }
+        }
+    }
+    
+    public void hideCardUnguarded(Card card){
+        for(Card c:lineup){
+            if(c.getID()==card.getID()){
+                c.setPicNormalColor();
+                c.hideUnguarded();
+            }
+        }
+    }
 }

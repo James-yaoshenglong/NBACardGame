@@ -39,6 +39,10 @@ public class DoubleTeamNode extends Node implements ActionListener{
     private DoubleTeamCardsNode dtCardsNode;
     private DoubleTeamShow dtShow;
     private int hasShown;
+    private Card doubleteamCard;
+    private Card unguardedCard;
+    private Card lastdtCard;
+    private Card lastugCard;
     
     public DoubleTeamNode(SimpleApplication mainApp, float aCamWidth, float aCamHeight){
         this.app = mainApp;
@@ -92,7 +96,6 @@ public class DoubleTeamNode extends Node implements ActionListener{
         if(results.size() > 0){
             Geometry targetDTGeom = results.getFarthestCollision().getGeometry(); //get the closest target in our eyes
             if(targetDTGeom.getParent().getClass() == DoubleTeamShow.class){
-                System.out.println(pNode.getChosen());
                 if(pNode.getChosen()==5){
                     if(hasShown==0){
                         arrange(buttons);
@@ -117,13 +120,34 @@ public class DoubleTeamNode extends Node implements ActionListener{
                     }
                     id++;
                 }
-                Card currentCard = pNode.getNode(id).getCurrenntCard();
-                if(currentCard != null){
-                    showCardList(currentCard);
+                if(doubleteamCard != null){
+                    lastdtCard = doubleteamCard;
+                }
+                doubleteamCard = pNode.getNode(id).getCurrenntCard();
+                if(doubleteamCard != null){
+                    showCardList(doubleteamCard);
                     hasShown++;
                 }
             }
             if(targetDTGeom.getParent().getClass() == Card.class){
+                Card targetCard = (Card)targetDTGeom.getParent();
+                for(Card c:dtCardsNode.getLineups()){
+                    if(c.equals(targetCard)){
+                        if(unguardedCard != null){
+                            lastugCard = unguardedCard;
+                        }
+                        unguardedCard = c;
+                        break;
+                    }
+                }
+                if(lastdtCard != null){
+                    app.getStateManager().getState(MainDefend.class).hideCardDoubleteam(lastdtCard);
+                }
+                if(lastugCard != null){
+                    app.getStateManager().getState(MainDefend.class).hideCardUnguarded(lastugCard);
+                }
+                app.getStateManager().getState(MainDefend.class).showCardDoubleteam(doubleteamCard);
+                app.getStateManager().getState(MainDefend.class).showCardUnguarded(unguardedCard);
                 this.detachChild(dtCardsNode);
                 hasShown-=1;
             }

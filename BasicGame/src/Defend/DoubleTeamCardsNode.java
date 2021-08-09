@@ -62,5 +62,9 @@ public class DoubleTeamCardsNode extends Node{
 
         }
     }
+    
+    public ArrayList<Card> getLineups(){
+        return lineup;
+    }
 
 }

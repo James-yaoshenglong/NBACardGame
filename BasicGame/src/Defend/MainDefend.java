@@ -16,6 +16,7 @@ import Action.PauseListener;
 import static Battle.MainGame.CLICK;
 import static Battle.MainGame.PAUSE;
 import Pause.PauseButton;
+import Battle.Card;
 import com.jme3.app.Application;
 import com.jme3.app.SimpleApplication;
 import com.jme3.app.state.AppStateManager;
@@ -154,5 +155,21 @@ public class MainDefend extends BaseAppState{
         ratio = w/h; //the width-height ratio of the screen
         cam.setLocation(Vector3f.ZERO.add(new Vector3f(0.0f, 0.0f,100f)));//Move the Camera back
         camZ = cam.getLocation().getZ()-15; //No Idea why I need to subtract 15
+    }
+    
+    public void showCardDoubleteam(Card card){
+        selfCardsNode.showCardDoubleTeam(card);
+    }
+    
+    public void hideCardDoubleteam(Card card){
+        selfCardsNode.hideCardDoubleTeam(card);
+    }
+    
+    public void showCardUnguarded(Card card){
+        selfCardsNode.showCardUnguarded(card);
+    }
+    
+    public void hideCardUnguarded(Card card){
+        selfCardsNode.hideCardUnguarded(card);
     }
 }

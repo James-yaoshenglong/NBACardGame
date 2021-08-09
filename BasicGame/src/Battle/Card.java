@@ -35,18 +35,20 @@ import com.jme3.scene.shape.Quad;
 import com.jme3.texture.Texture;
 import com.jme3.ui.Picture;
 import java.util.ArrayList;
+import Defend.DoubleTeamDisplay;
 
 
 public class Card extends Node{
 //    private ArrayList<Player> allplayers;
-    float width;
-    float height;
-    Player player;
-    SimpleApplication app;
-    int power;
-    Geometry geom;
-    boolean isInLineup;
-    BattleValueSphere valueSphere;
+    private float width;
+    private float height;
+    private Player player;
+    private SimpleApplication app;
+    private int power;
+    private Geometry geom;
+    private boolean isInLineup;
+    private BattleValueSphere valueSphere;
+    private DoubleTeamDisplay dtDisplay;
     private Vector3f initPosition;
     
     public final static int PLAIN = 0;// 普通
@@ -67,6 +69,8 @@ public class Card extends Node{
         this.isInLineup = false;
         setPicGeom();
         setPicBattleValue();
+        dtDisplay = new DoubleTeamDisplay(app,camera_width);
+        this.attachChild(dtDisplay);
     }
     
 //    public Geometry getPic(){
@@ -134,8 +138,29 @@ public class Card extends Node{
         geom.setMaterial(geom.getMaterial());
     }
     
+    public void setPicDarkColor(){
+        geom.getMaterial().setColor("Color", new ColorRGBA(0.2f,0.2f,0.2f,1f));
+        geom.setMaterial(geom.getMaterial());
+    }
+    
     public void showBattleValue(){
         this.attachChild(valueSphere);
+    }
+    
+    public void showDoubleTeam(){
+        dtDisplay.dtDisplay();
+    }
+    
+    public void hideDoubleTeam(){
+        dtDisplay.dtVanish();
+    }
+    
+    public void showUnguarded(){
+        dtDisplay.ugDisplay();
+    }
+    
+    public void hideUnguarded(){
+        dtDisplay.ugVanish();
     }
     
     public void hideBattleValue(){
