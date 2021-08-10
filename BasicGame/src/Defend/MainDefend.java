@@ -172,4 +172,16 @@ public class MainDefend extends BaseAppState{
     public void hideCardUnguarded(Card card){
         selfCardsNode.hideCardUnguarded(card);
     }
+    
+    public void setLocked(Boolean b){
+        selfCardsNode.setChosen(b);
+    }
+    
+    public Card getCardDoubleteam(){
+        return doubleteam.getCardDoubleteam();
+    }
+    
+    public Card getCardUnguarded(){
+        return doubleteam.getCardUnguarded();
+    }
 }

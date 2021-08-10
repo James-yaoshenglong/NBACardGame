@@ -107,27 +107,32 @@ public class DoubleTeamNode extends Node implements ActionListener{
                     }
                     else if(hasShown==2){
                         this.detachChild(dtCardsNode);
+                        app.getStateManager().getState(MainDefend.class).setLocked(Boolean.FALSE);
                         hasShown-=1;
                     }                    
                 }
             }
             if(targetDTGeom.getParent().getClass() == DoubleTeamButton.class){
-                DoubleTeamButton targetDT = (DoubleTeamButton)targetDTGeom.getParent();
-                int id=0;
-                for(DoubleTeamButton button : buttons){
-                    if(button.equals(targetDT)){
-                        break;
+                if(pNode.getChosen()==5){
+                    DoubleTeamButton targetDT = (DoubleTeamButton)targetDTGeom.getParent();
+                    int id=0;
+                    for(DoubleTeamButton button : buttons){
+                        if(button.equals(targetDT)){
+                            break;
+                        }
+                        id++;
                     }
-                    id++;
+                    if(doubleteamCard != null){
+                        lastdtCard = doubleteamCard;
+                    }
+                    doubleteamCard = pNode.getNode(id).getCurrenntCard();
+                    if(doubleteamCard != null){
+                        showCardList(doubleteamCard);
+                        hasShown++;
+                    }
+                    app.getStateManager().getState(MainDefend.class).setLocked(Boolean.TRUE);                   
                 }
-                if(doubleteamCard != null){
-                    lastdtCard = doubleteamCard;
-                }
-                doubleteamCard = pNode.getNode(id).getCurrenntCard();
-                if(doubleteamCard != null){
-                    showCardList(doubleteamCard);
-                    hasShown++;
-                }
+
             }
             if(targetDTGeom.getParent().getClass() == Card.class){
                 Card targetCard = (Card)targetDTGeom.getParent();
@@ -150,6 +155,7 @@ public class DoubleTeamNode extends Node implements ActionListener{
                 app.getStateManager().getState(MainDefend.class).showCardUnguarded(unguardedCard);
                 this.detachChild(dtCardsNode);
                 hasShown-=1;
+                app.getStateManager().getState(MainDefend.class).setLocked(Boolean.FALSE);
             }
         }        
     }
@@ -157,6 +163,14 @@ public class DoubleTeamNode extends Node implements ActionListener{
     public void showCardList(Card card){
         this.attachChild(dtCardsNode);
         dtCardsNode.licensing(card);
+    }
+    
+    public Card getCardDoubleteam(){
+        return doubleteamCard;
+    }
+    
+    public Card getCardUnguarded(){
+        return unguardedCard;
     }
     
 }

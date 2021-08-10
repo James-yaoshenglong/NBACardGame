@@ -36,6 +36,9 @@ public class SelfCardsNode extends Node implements ActionListener, RawInputListe
     private Card targetCardNode; //the chosen card
     private float relativeWidth; //the relative distance between the click position and the node
     private float relativeHeight;
+    private Boolean isChosen = false;
+    private Card doubleteamCard;
+    private Card unguardedCard;
     
     public SelfCardsNode(SimpleApplication mainApp, float aCamWidth, float aCamHeight){
         this.lineup = new ArrayList<>();
@@ -47,20 +50,25 @@ public class SelfCardsNode extends Node implements ActionListener, RawInputListe
             lineup.add(card);
         }
         licensing();
+        doubleteamCard = null;
+        unguardedCard = null;
     }
     
     @Override
     public void onAction(String name, boolean isClicked, float tpf) {
-        if(isClicked && this.getParent() != null){
-            if(name.equals("CLICK")){
-                choose();
+        if(isChosen == false){
+            if(isClicked && this.getParent() != null){
+                if(name.equals("CLICK")){
+                    choose();
+                }
             }
+            if(!isClicked && this.getParent() != null){
+                if(name.equals("CLICK")){
+                    drop();
+                }
+            }            
         }
-        if(!isClicked && this.getParent() != null){
-            if(name.equals("CLICK")){
-                drop();
-            }
-        }
+
     }
     
     private void choose(){
@@ -89,6 +97,14 @@ public class SelfCardsNode extends Node implements ActionListener, RawInputListe
     
     private void drop(){
         if(targetCardNode != null){
+            doubleteamCard = app.getStateManager().getState(MainDefend.class).getCardDoubleteam();
+            unguardedCard = app.getStateManager().getState(MainDefend.class).getCardUnguarded();
+            if(doubleteamCard != null){
+                this.hideCardDoubleTeam(doubleteamCard);
+            }
+            if(unguardedCard != null){
+                this.hideCardUnguarded(unguardedCard);
+            }
             isPressed = false;
             Ray ray = MyRay.createRay(app);
             CollisionResults results = new CollisionResults();
@@ -192,5 +208,9 @@ public class SelfCardsNode extends Node implements ActionListener, RawInputListe
                 c.hideUnguarded();
             }
         }
+    }
+    
+    public void setChosen(Boolean b){
+        isChosen = b;
     }
 }
