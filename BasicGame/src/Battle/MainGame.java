@@ -8,6 +8,7 @@ package Battle;
 import Action.ClickListener;
 import Action.PauseListener;
 import Pause.PauseButton;
+import Widgets.CombatDataOperation;
 import com.jme3.app.Application;
 import com.jme3.app.SimpleApplication;
 import com.jme3.app.state.AppStateManager;
@@ -30,6 +31,7 @@ import com.jme3.scene.Spatial;
 import com.jme3.scene.shape.Quad;
 import com.jme3.texture.Texture;
 import java.util.ArrayList;
+import network.client.GameClient;
 
 /**
  *
@@ -114,6 +116,8 @@ public class MainGame extends BaseAppState{
 //        cardManager.enterScene();
 
         inputManager.addRawInputListener(selfCardsNode);
+        
+        GameClient.getInstance().registerOperation(CombatDataOperation.getInstance());
     }
 
     @Override

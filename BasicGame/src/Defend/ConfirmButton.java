@@ -8,6 +8,7 @@ package Defend;
 import ActualCombat.MainActualCombat;
 import Main.Main;
 import Prepare.MainPrepare;
+import Widgets.CombatDataOperation;
 import Widgets.MyRay;
 import com.jme3.app.SimpleApplication;
 import com.jme3.collision.CollisionResults;
@@ -28,22 +29,16 @@ import network.data.ResponseOperation;
  *
  * @author 影音娱乐剪辑
  */
-public class ConfirmButton extends Node implements ActionListener, ResponseOperation{
+public class ConfirmButton extends Node implements ActionListener{
     private Geometry buttonGeom;
     private SimpleApplication app;
     private float width; //screen width and height
     private float height;
-    private int switchFlag;
-    private DefendData defendData;
-    private AttackData attackData;
-    private boolean sendFlag;
     
     public ConfirmButton(SimpleApplication mainApp, float aCamWidth, float aCamHeight){
         this.app = mainApp;
         this.width = aCamWidth;
         this.height = aCamHeight;
-        this.switchFlag = 0;
-        this.sendFlag = false;
         initialize();
     }
     
@@ -66,36 +61,13 @@ public class ConfirmButton extends Node implements ActionListener, ResponseOpera
             Ray ray = MyRay.createRay(app);
             CollisionResults results = new CollisionResults();
             this.collideWith(ray, results);
-            if(results.size() > 0 && !sendFlag){
+            if(results.size() > 0 && !CombatDataOperation.getInstance().getSendFlag()){
                 DefendData msg = app.getStateManager().getState(MainDefend.class).setMessage();
                 if(msg != null){
-                    switchState();
+                    CombatDataOperation.getInstance().switchState();
                     GameClient.getInstance().transportData(msg);
                 }
             }
         }
     }
-
-    @Override
-    public void operate(ResponseData rd) {
-        if(rd instanceof AttackData){
-            switchFlag++;
-            attackData = (AttackData)rd;
-        }
-        if(rd instanceof DefendData){
-            switchFlag++;
-            defendData = (DefendData)rd;
-        }
-        if(switchFlag == 2){
-            switchFlag = 0;
-            System.out.println("Enter the compare page");
-            app.getStateManager().getState(MainActualCombat.class).setData(attackData, defendData);
-            ((Main)app).switchToActual();
-            switchState();
-        }
-    }
-    
-    public void switchState(){
-        sendFlag = !sendFlag;
-    }   
 }

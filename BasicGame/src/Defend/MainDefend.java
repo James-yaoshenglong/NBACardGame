@@ -125,8 +125,7 @@ public class MainDefend extends BaseAppState{
         inputManager.addListener(confirmButton, CLICK);
         
         inputManager.addRawInputListener(selfCardsNode);
-        
-        GameClient.getInstance().registerOperation(confirmButton);
+
 //        cardManager.enterScene();
     }
     

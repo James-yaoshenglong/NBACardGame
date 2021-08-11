@@ -147,7 +147,6 @@ public class MainPrepare extends BaseAppState{
 //        cardManager.enterScene();
 
         //register operation
-        GameClient.getInstance().registerOperation(confirmButton);
     }
     
         @Override

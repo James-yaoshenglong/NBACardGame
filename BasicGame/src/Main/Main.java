@@ -2,6 +2,7 @@ package Main;
 
 import ActualCombat.MainActualCombat;
 import Battle.MainGame;
+import Widgets.CombatDataOperation;
 import Defend.MainDefend;
 import Pause.PauseInterface;
 import Prepare.MainPrepare;
@@ -78,6 +79,8 @@ public class Main extends SimpleApplication {
         } catch (Exception ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        CombatDataOperation.getInstance().setApp(this);
     }
     
     public void switchfromLogtoWel(){

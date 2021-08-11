@@ -116,7 +116,6 @@ public class DefendMode extends BaseAppState{
         inputManager.addListener(pauseButton, CLICK, PAUSE);
         
         //register operation
-        GameClient.getInstance().registerOperation(zoneButton);
     }
 
     @Override
