@@ -6,6 +6,8 @@
 package Defend;
 
 import ActualCombat.MainActualCombat;
+import Battle.Card;
+import Battle.MainGame;
 import Main.Main;
 import Widgets.MyRay;
 import com.jme3.app.SimpleApplication;
@@ -19,6 +21,7 @@ import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
 import com.jme3.scene.shape.Quad;
 import com.jme3.texture.Texture;
+import java.util.ArrayList;
 import network.client.GameClient;
 import network.data.AttackData;
 import network.data.DefendData;
@@ -69,7 +72,7 @@ public class ZoneButton extends Node implements ActionListener, ResponseOperatio
             this.collideWith(ray, results);
             if(results.size() > 0){
                 //((Main)app).switchfromDefendModeChoicetoDefend();
-                DefendData data = new DefendData();
+                DefendData data = new DefendData(getLineUpId());
                 GameClient.getInstance().transportData(data);
                 switchState();
             }
@@ -98,6 +101,14 @@ public class ZoneButton extends Node implements ActionListener, ResponseOperatio
 
     public void switchState(){
         sendFlag = !sendFlag;
+    }
+    
+    private ArrayList<Integer> getLineUpId(){
+        ArrayList<Integer> tmp = new ArrayList<>(); 
+        for(Card c : app.getStateManager().getState(MainGame.class).getLineupCards()){
+            tmp.add(c.getID());
+        }
+        return tmp;
     }
     
 }

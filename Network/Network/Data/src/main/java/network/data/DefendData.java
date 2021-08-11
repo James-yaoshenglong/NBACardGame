@@ -9,9 +9,11 @@ public class DefendData implements TransferedData, ResponseData{
 	
 	private ArrayList<Integer> positionIDArr;
 	private boolean zoneFlag;
+	private int dtId; //these may later change to index later to avoid duplicate
+	private int ugId;
 	
-	public DefendData() {
-		this.positionIDArr = new ArrayList<>();
+	public DefendData(ArrayList<Integer> positions) {
+		this.positionIDArr = positions;
 	}
 	
 	@Override
@@ -23,6 +25,15 @@ public class DefendData implements TransferedData, ResponseData{
 	public void process(UserPair pair) {
 		pair.sendToRival(this);
 		pair.replySingle(this);
+	}
+	
+	public void setZoneFlag(Boolean flag) {
+		this.zoneFlag = flag;
+	}
+	
+	public void setDt(int dt, int ug) {
+		this.dtId = dt;
+		this.ugId = ug;
 	}
 
 }

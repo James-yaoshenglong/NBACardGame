@@ -62,5 +62,15 @@ public class PositionsNode extends Node{
         }
         return number;
     }
+    
+    public ArrayList<Integer> getPositionAllocation(){
+        ArrayList<Integer> res = new ArrayList<>();
+        for(DefendPositionNode pos : lineup){
+            if(pos.getCurrenntCard() != null){
+                res.add(pos.getCurrenntCard().getID());
+            }
+        }
+        return res;
+    }
 }
 

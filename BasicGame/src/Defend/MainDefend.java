@@ -39,6 +39,8 @@ import com.jme3.scene.Spatial;
 import com.jme3.scene.shape.Quad;
 import com.jme3.texture.Texture;
 import java.util.ArrayList;
+import network.client.GameClient;
+import network.data.DefendData;
 /**
  *
  * @author feegee2000
@@ -63,6 +65,8 @@ public class MainDefend extends BaseAppState{
     
     private boolean buttonShown = false;
     
+    private ConfirmButton confirmButton;
+    
     @Override
     protected void initialize(Application mainApp) {
         //add a copy of reference of some common use attributes from app
@@ -86,6 +90,9 @@ public class MainDefend extends BaseAppState{
         
         this.pauseButton = new PauseButton(app, camZ*ratio, camZ);
         defendNode.attachChild(pauseButton);
+        
+        this.confirmButton = new ConfirmButton(app, camZ*ratio, camZ);
+        defendNode.attachChild(confirmButton);
         
 //        clickListener = new ClickListener(app, handCardNode, cardManager);
     }
@@ -115,7 +122,11 @@ public class MainDefend extends BaseAppState{
         inputManager.addListener(doubleteam, CLICK);
         inputManager.addListener(pauseButton, CLICK, PAUSE);
         
+        inputManager.addListener(confirmButton, CLICK);
+        
         inputManager.addRawInputListener(selfCardsNode);
+        
+        GameClient.getInstance().registerOperation(confirmButton);
 //        cardManager.enterScene();
     }
     
@@ -129,6 +140,7 @@ public class MainDefend extends BaseAppState{
         inputManager.removeListener(pauseButton);
         inputManager.removeListener(doubleteam);
         inputManager.removeRawInputListener(selfCardsNode);
+        inputManager.removeListener(confirmButton);
     }
     
     private void constructBackground(){
@@ -183,5 +195,20 @@ public class MainDefend extends BaseAppState{
     
     public Card getCardUnguarded(){
         return doubleteam.getCardUnguarded();
+    }
+    
+    public DefendData setMessage(){
+        ArrayList<Integer> tmp = positionsNode.getPositionAllocation();
+        if(tmp.size() == 5){
+            DefendData res = new DefendData(tmp);
+            if(getCardDoubleteam() != null && getCardUnguarded() != null){
+                res.setDt(getCardDoubleteam().getID(), getCardUnguarded().getID());
+            }
+            else{
+                res.setDt(-1, -1);
+            }
+            return res;
+        }
+        return null;
     }
 }
