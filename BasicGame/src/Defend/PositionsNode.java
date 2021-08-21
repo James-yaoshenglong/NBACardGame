@@ -50,8 +50,8 @@ public class PositionsNode extends Node{
         }
     }
     
-    public DefendPositionNode getNode(int id){
-        return lineup.get(id);
+    public Card getDefendPlayer(int id){
+        return lineup.get(id).getCurrenntCard();
     }
     
     public int getChosen(){

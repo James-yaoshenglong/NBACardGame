@@ -36,28 +36,28 @@ public class DoubleTeamCardsNode extends Node{
     private SimpleApplication app;
     private float width; //screen width and height
     private float height;
+    //private Card currentCard;
     
-    public DoubleTeamCardsNode(SimpleApplication mainApp, float aCamWidth, float aCamHeight){
+    public DoubleTeamCardsNode(SimpleApplication mainApp, float aCamWidth, float aCamHeight, Card currentCard){
         this.lineup = new ArrayList<>();
         this.app = mainApp;
         this.width = aCamWidth;
         this.height = aCamHeight;
         for(Card c : app.getStateManager().getState(MainGame.class).getLineupCards()){
-            Card card = new Card(c.getID(),width,app);
-            lineup.add(card);
+            if(c.getID()!=currentCard.getID()){
+                Card card = new Card(c.getID(),width,app);
+                lineup.add(card);                
+            }
         }
+        licensing();
     }
     
     
-    public void licensing(Card currentCard){
-        int id = 0;
+    public void licensing(){
         for(int i =0; i<lineup.size(); i++){
             Card card = lineup.get(i);
-            if(card.getID()==currentCard.getID()){
-                continue;
-            }
-            card.setLocalTranslation((2*id-3)*(width/8),(float)(height*(-0.45)),1f);
-            id++;
+            System.out.printf("show card:%d\n",card.getID());
+            card.setLocalTranslation((2*i-3)*(width/8),(float)(height*(-0.45)),1f);
             this.attachChild(card);
 
         }

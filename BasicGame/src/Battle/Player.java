@@ -41,7 +41,9 @@ public class Player {
         this.DS = 10;
         this.DP = 10;
         this.power = 10;
-        this.image = "Textures/pic/1.jpg";
+        String image_str = String.format("Textures/pic/%d.jpg",id);
+        this.image = image_str;
+        //this.image = "Textures/pic/1.jpg";
         //database file read process should in this process 
     }
     

@@ -120,13 +120,13 @@ public class SelfCardsNode extends Node implements ActionListener, RawInputListe
     
     private void deal(){
         int teamSize = 10;
-        int totalPlayerSize = 100; 
+        int totalPlayerSize = 20; 
         //random assign player to player's team
         Random r = new Random();
         ArrayList<Integer> arr = new ArrayList<>();
         int count = 0;
         while(count < teamSize){
-            int number = r.nextInt(totalPlayerSize);  
+            int number = 1+r.nextInt(totalPlayerSize);  
             if(!arr.contains(number)){
                 arr.add(number);
                 count++;
