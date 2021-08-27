@@ -17,7 +17,7 @@ public class UserPair {
 	private Channel rivalChannel;
 	private File file;
 	private RandomAccessFile raf;
-	private final int CHUNK_LEN = 10;
+	private final int CHUNK_LEN = 10000;
 	
 	public UserPair(Channel self) {
 		this.selfChannel = self;
@@ -66,7 +66,7 @@ public class UserPair {
 				}
 				byte[] bytes = new byte[length];
 				int byteRead;
-				if ((byteRead = raf.read(bytes)) != -1) {
+				if ((byteRead = raf.read(bytes)) > 0) {
 					FileChunk fileChunk = new FileChunk();
 					fileChunk.setName(fileReq.getName());
 					fileChunk.setStartEnd(start, start+byteRead);
@@ -77,6 +77,7 @@ public class UserPair {
 					FileChunk fileChunk = new FileChunk();
 					fileChunk.setName(fileReq.getName());
 					fileChunk.setStartEnd(-1, start);
+					replySingle(fileChunk);
 	                raf.close();
 	                System.out.println("文件已经读完--------" + byteRead);
 	            }

@@ -1,5 +1,6 @@
 package network.data;
 
+
 public class FileChunk implements ResponseData{
 	private static final long serialVersionUID = 6039257886757108723L;
 	
@@ -10,7 +11,7 @@ public class FileChunk implements ResponseData{
 
 	@Override
 	public void reProcess(ClientInterface client) {
-		System.out.println(bytes);
+		client.getOperation().operate(this);
 	}
 	
 	public void setName(String name) {
@@ -25,5 +26,22 @@ public class FileChunk implements ResponseData{
 	public void setBytes(byte[] bytes) {
 		this.bytes = bytes;
 	}
+	
+	public String getName() {
+		return name;
+	}
+	
+	public int getStart() {
+		return start;
+	}
+	
+	public int getEnd() {
+		return end;
+	}
+	
+	public byte[] getBytes() {
+		return bytes;
+	}
+	
 
 }

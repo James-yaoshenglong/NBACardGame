@@ -43,9 +43,14 @@ import com.simsilica.lemur.component.QuadBackgroundComponent;
 import com.simsilica.lemur.style.ElementId;
 import com.simsilica.lemur.style.Styles;
 import com.simsilica.lemur.text.*;
+import java.io.File;
+import java.io.IOException;
+import java.io.RandomAccessFile;
 
 import network.client.GameClient;
 import network.client.ClientTestHandler;
+import network.data.FileChunk;
+import network.data.FileRequest;
 import network.data.LoginData;
 import network.data.ResponseData;
 import network.data.ResponseOperation;
@@ -230,11 +235,36 @@ public class LoginInterface extends BaseAppState implements ResponseOperation{
 
     @Override
     public void operate(ResponseData rd) {
-        if(this.flag==1){
+        if(rd instanceof FileChunk){
+            FileChunk fileChunk = (FileChunk)rd;
+            String name = fileChunk.getName();
+            int start = fileChunk.getStart();
+            int end = fileChunk.getEnd();
+            byte[] bytes = fileChunk.getBytes();
+            if(start >= 0) {
+    		System.out.println(bytes);
+    		File file = new File(name);
+                RandomAccessFile raf;
+                try {
+                    raf = new RandomAccessFile(file, "rw");
+                    raf.seek(start);
+                    raf.write(bytes);
+                    client.transportData(new FileRequest(name, end));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            else{
+                System.out.println("file transfer completed");
+                ((Main)app).switchfromLogtoWel();
+            }
+        }
+        else if(this.flag==1){
             boolean isSuccessful;
             isSuccessful = ((LoginResponse)rd).getStatus();
             if(isSuccessful){
-                ((Main)app).switchfromLogtoWel();
+                System.out.println("file transfer start");
+                client.transportData(new FileRequest("../test.txt", 0));
             }
             else{
                 System.out.println("Login Failed");
@@ -252,7 +282,6 @@ public class LoginInterface extends BaseAppState implements ResponseOperation{
                 constructRegisterFailed();
             }            
         }
-        
     }
     
     private void constructLoginFailed(){
