@@ -36,4 +36,23 @@ public class DefendData implements TransferedData, ResponseData{
 		this.ugId = ug;
 	}
 
+	public Boolean getZoneFlag(){
+		return zoneFlag;
+	}
+
+	public Boolean isDoubleTeam(){
+		return (dtId==-1);
+	}
+
+	public ArrayList<Integer> getMatchup(){
+		return positionIDArr;
+	}
+
+	public int getDoubleTeam(){
+		return dtId;
+	}
+
+	public int getUnguarded(){
+		return ugId;
+	}
 }

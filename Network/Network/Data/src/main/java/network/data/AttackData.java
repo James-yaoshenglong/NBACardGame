@@ -35,4 +35,23 @@ public class AttackData implements TransferedData, ResponseData{
 		this.lineUp = arr;
 	}
 
+	public int getPlayer1(){
+		return player1;
+	}
+
+	public String getOP1(){
+		return op1;
+	}
+
+	public int getPlayer2(){
+		return player2;
+	}
+
+	public String getOP2(){
+		return op2;
+	}
+
+	public ArrayList<Integer> getLineup(){
+		return lineUp;
+	}
 }

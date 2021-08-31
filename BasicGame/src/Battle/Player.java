@@ -5,6 +5,7 @@
  */
 package Battle;
 
+import static java.lang.Math.floor;
 import java.util.ArrayList;
 
 /**
@@ -92,6 +93,30 @@ public class Player {
     
     public int getDP(){
         return DP;
+    }
+    
+    public void setDB(float p){
+        this.DB = (int) floor(DB*p);
+    }
+    
+    public void setDP(float p){
+        this.DP = (int) floor(DP*p);
+    }
+    
+    public void setDS(float p){
+        this.DP = (int) floor(DS*p);
+    }
+    
+    public void setB(float p){
+        this.DB = (int) floor(B*p);
+    }
+    
+    public void setP(float p){
+        this.DP = (int) floor(P*p);
+    }
+    
+    public void setS(float p){
+        this.DP = (int) floor(S*p);
     }
     
 }
