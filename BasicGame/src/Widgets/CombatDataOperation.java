@@ -7,6 +7,7 @@ import network.data.AttackData;
 import network.data.DefendData;
 import network.data.ResponseData;
 import network.data.ResponseOperation;
+import network.data.TeamData;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -24,6 +25,8 @@ public class CombatDataOperation implements ResponseOperation{
     private AttackData attackData;
     private boolean sendFlag;
     private SimpleApplication app;
+    private TeamData myTeam;
+    private TeamData rivalTeam;
     
     private CombatDataOperation(){
         this.switchFlag = 0;
@@ -47,10 +50,22 @@ public class CombatDataOperation implements ResponseOperation{
             switchFlag++;
             defendData = (DefendData)rd;
         }
-        if(switchFlag == 2){
+        if(rd instanceof TeamData){
+            System.out.println("Received Team Data");
+            switchFlag++;
+            if(((TeamData) rd).getOrder()==((Main)app).getOrder()){
+                myTeam = (TeamData)rd;
+                System.out.println(myTeam.getOrder());
+            }
+            else{
+                rivalTeam = (TeamData)rd;
+                System.out.println(rivalTeam.getOrder());
+            }
+        }
+        if(switchFlag == 4){
             switchFlag = 0;
             System.out.println("Enter the compare page");
-            app.getStateManager().getState(MainActualCombat.class).setData(attackData, defendData);
+            app.getStateManager().getState(MainActualCombat.class).setData(attackData, defendData, myTeam,rivalTeam);
             ((Main)app).switchToActual();
             switchState();
         }

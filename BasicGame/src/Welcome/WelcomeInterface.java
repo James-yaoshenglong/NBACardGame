@@ -39,6 +39,7 @@ import network.data.MatchData;
 import network.data.MatchResponse;
 import network.data.ResponseData;
 import network.data.ResponseOperation;
+import network.data.TeamData;
 /**
  *
  * @author shenglyao2
@@ -173,7 +174,11 @@ public class WelcomeInterface extends BaseAppState implements ResponseOperation{
 
     @Override
     public void operate(ResponseData rd) {
-        ((Main)app).setOrder(((MatchResponse)rd).getOrder());
-        ((Main)app).switchfromWeltoMain();
+        if(rd instanceof MatchResponse){
+            ((Main)app).setOrder(((MatchResponse)rd).getOrder());
+            System.out.println(1);
+            ((Main)app).switchfromWeltoMain();
+                
+        }        
     }
 }

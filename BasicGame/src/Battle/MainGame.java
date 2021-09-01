@@ -8,6 +8,7 @@ package Battle;
 import Action.ClickListener;
 import Action.PauseListener;
 import Pause.PauseButton;
+import Main.Main;
 import Widgets.CombatDataOperation;
 import com.jme3.app.Application;
 import com.jme3.app.SimpleApplication;
@@ -32,6 +33,8 @@ import com.jme3.scene.shape.Quad;
 import com.jme3.texture.Texture;
 import java.util.ArrayList;
 import network.client.GameClient;
+import network.data.MatchResponse;
+import network.data.TeamData;
 
 /**
  *
@@ -87,7 +90,8 @@ public class MainGame extends BaseAppState{
         battleNode.attachChild(confirmButton);
         this.pauseButton = new PauseButton(app, camZ*ratio, camZ);
         battleNode.attachChild(pauseButton);
-        
+        GameClient.getInstance().registerOperation(CombatDataOperation.getInstance());
+        GameClient.getInstance().transportData(new TeamData(((Main)app).getOrder()));
 //        this.cardManager = new MainController(app,camZ*ratio,camZ,selfCardsNode,confirmButton);
 //        pauseListener = new PauseListener(app);
 //        clickListener = new ClickListener(app, handCardNode, cardManager);
@@ -117,7 +121,7 @@ public class MainGame extends BaseAppState{
 
         inputManager.addRawInputListener(selfCardsNode);
         
-        GameClient.getInstance().registerOperation(CombatDataOperation.getInstance());
+        
     }
 
     @Override

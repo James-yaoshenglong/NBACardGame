@@ -28,6 +28,7 @@ import com.jme3.scene.shape.Quad;
 import com.jme3.texture.Texture;
 import network.data.AttackData;
 import network.data.DefendData;
+import network.data.TeamData;
 import Battle.Card;
 import Battle.MainGame;
 import Battle.Player;
@@ -62,6 +63,8 @@ public class MainActualCombat extends BaseAppState{
     
     private AttackData attackData;
     private DefendData defendData;
+    private TeamData myTeam;
+    private TeamData rivalTeam;
     
     @Override
     protected void initialize(Application mainApp) {
@@ -83,6 +86,7 @@ public class MainActualCombat extends BaseAppState{
         //Game initalize
         this.pauseButton = new PauseButton(app, camZ*ratio, camZ);
         curNode.attachChild(pauseButton);
+        
         
 //        this.cardManager = new MainController(app,camZ*ratio,camZ,selfCardsNode,confirmButton);
 //        pauseListener = new PauseListener(app);
@@ -109,6 +113,7 @@ public class MainActualCombat extends BaseAppState{
 
         
         inputManager.addListener(pauseButton, CLICK, PAUSE);
+        judge_score();
         
         //register operation
     }
@@ -145,12 +150,17 @@ public class MainActualCombat extends BaseAppState{
         camZ = cam.getLocation().getZ()-15; //No Idea why I need to subtract 15
     }
     
-    public void setData(AttackData ad, DefendData dd){
+    public void setData(AttackData ad, DefendData dd, TeamData mT, TeamData rT){
         this.attackData = ad;
         this.defendData = dd;
+        this.myTeam = mT;
+        System.out.println(mT.getOrder());
+        this.rivalTeam = rT;
+        System.out.println(rT.getOrder());
     }
     
     private void judge_score(){
+        System.out.printf("your team score: %d, rival team score: %d \n", myTeam.getScore(),rivalTeam.getScore());
         ArrayList<Player> a_lineup = new ArrayList<Player>();
         ArrayList<Player> d_lineup = new ArrayList<Player>();
         for(int num : attackData.getLineup()){
